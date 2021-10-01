@@ -1,12 +1,16 @@
 package com.dev.sisgestionMercados.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dev.sisgestionMercados.Input.UserInput;
+import com.dev.sisgestionMercados.Output.SectorOutput;
+import com.dev.sisgestionMercados.Output.UserOutput;
 import com.dev.sisgestionMercados.entity.Role;
 import com.dev.sisgestionMercados.entity.Sector;
 import com.dev.sisgestionMercados.entity.UserRole;
@@ -36,6 +40,7 @@ public class UserService {
 		newUser.setName(user.getName());
 		newUser.setEmail(user.getEmail());
 		newUser.setPassword(user.getPassword());
+		newUser.setTelephone(user.getTelephone());
 		newUser.setRegistrationDate(LocalDate.now());
 	    userRepository.save(newUser);
 	    putUserRole(user.getIdRole(),user.getIdSector(),newUser);
@@ -50,5 +55,24 @@ public class UserService {
 		userRole.setSector(sector);
 		userRole.setUser(user);
 		userRoleService.save(userRole);	
+	}
+	
+	public Iterable<UserOutput>  getAllUser(){
+		List <UserS> allUsers = userRepository.findAll();
+		List <UserOutput> allUsersByOrder = new ArrayList<UserOutput>();
+		
+		for (UserS found : allUsers ) {
+		
+			UserOutput newUser = new UserOutput();
+			newUser.setIdUser(found.getIdUser());;
+			newUser.setName(found.getName());
+			newUser.setEmail(found.getEmail());
+			newUser.setTelephonne(found.getTelephone());
+			newUser.setPassword(found.getPassword());
+			allUsersByOrder.add(newUser);
+
+		}
+
+		return allUsersByOrder;	
 	}
 }

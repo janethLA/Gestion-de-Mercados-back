@@ -27,7 +27,7 @@ public class Sector {
 	private String sectorName;
 	@OneToMany(mappedBy = "sector", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,CascadeType.REFRESH })
 	@JsonManagedReference
-	private List<Market> market;
+	private List<Warehouse> market;
 	
 	@OneToMany(mappedBy = "sector",cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
 	private List<UserRole> userRole;
@@ -44,10 +44,10 @@ public class Sector {
 	public void setSectorName(String sectorName) {
 		this.sectorName = sectorName;
 	}
-	public List<Market> getMarket() {
+	public List<Warehouse> getMarket() {
 		return market;
 	}
-	public void setMarket(List<Market> market) {
+	public void setMarket(List<Warehouse> market) {
 		this.market = market;
 	}
 	public List<UserRole> getUserRole() {

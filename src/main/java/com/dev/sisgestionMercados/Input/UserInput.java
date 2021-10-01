@@ -8,6 +8,7 @@ public class UserInput {
 	private String password;
 	private int idRole;
 	private int idSector;
+	private int telephone;
 	
 	public String getName() {
 		return name;
@@ -40,6 +41,15 @@ public class UserInput {
 	public void setIdSector(int idSector) {
 		this.idSector = idSector;
 	}
+	
+	public int getTelephone() {
+		return telephone;
+	}
+	
+	public void setTelephone(int telephone) {
+		this.telephone = telephone;
+	}
+	
 	/*public String getUsername() {
 		return username;
 	}

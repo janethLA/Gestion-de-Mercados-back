@@ -30,6 +30,8 @@ public class UserS {
 	private String password;
 	@Column
 	private LocalDate registrationDate;
+	@Column
+	private int telephone;
 	
 	@OneToMany(mappedBy = "user",cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH},fetch = FetchType.EAGER)
 	private List<UserRole> userRole;
@@ -86,6 +88,12 @@ public class UserS {
 		this.userRole = userRole;
 	}
 
+	public int getTelephone() {
+		return telephone;
+	}
 
+	public void setTelephone(int telephone) {
+		this.telephone = telephone;
+	}
 	
 }

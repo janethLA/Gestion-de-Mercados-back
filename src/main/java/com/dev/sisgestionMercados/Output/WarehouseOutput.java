@@ -1,31 +1,30 @@
-package com.dev.sisgestionMercados.Input;
+package com.dev.sisgestionMercados.Output;
 
-
-public class MarketInput {
-
-	private String marketName;
+public class WarehouseOutput {
+	
+	private int idMarket;
+	private String warehouseName;
 	private String address;
-	private int idSector;
 	private double latitude;
 	private double longitude;
 	
-	public String getMarketName() {
-		return marketName;
+	public int getIdMarket() {
+		return idMarket;
 	}
-	public void setMarketName(String marketName) {
-		this.marketName = marketName;
+	public void setIdMarket(int idMarket) {
+		this.idMarket = idMarket;
+	}
+	public String getWarehouseName() {
+		return warehouseName;
+	}
+	public void setWarehouseName(String warehouseName) {
+		this.warehouseName = warehouseName;
 	}
 	public String getAddress() {
 		return address;
 	}
 	public void setAddress(String address) {
 		this.address = address;
-	}
-	public int getIdSector() {
-		return idSector;
-	}
-	public void setIdSector(int idSector) {
-		this.idSector = idSector;
 	}
 	public double getLatitude() {
 		return latitude;

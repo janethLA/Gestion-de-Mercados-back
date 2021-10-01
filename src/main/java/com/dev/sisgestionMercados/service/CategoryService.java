@@ -1,5 +1,8 @@
 package com.dev.sisgestionMercados.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +36,15 @@ public class CategoryService {
 	    return category;
 	}
 	
-	public Iterable<Category> getAllCategories(){
-		return categoryRepository.findAll();
+	public Iterable<Category> getAllCategories(int id){
+		List <Category> allCategories= categoryRepository.findAll();
+		List <Category> allCategoriesByWarehouse= new ArrayList<Category>();
+		for(Category newCategory: allCategories) {
+			if(newCategory.getWarehouse().getIdMarket() == id) {
+				allCategoriesByWarehouse.add(newCategory);
+			}
+		}
+		
+		return allCategoriesByWarehouse;
 	}
 }

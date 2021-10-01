@@ -33,9 +33,9 @@ public class CategoryController {
 		return ResponseEntity.ok(categoryService.save(category,id));
 	}
 	
-	@GetMapping("/allCategories")
-	public Iterable<Category> getAllCategories(){
+	@GetMapping("/allCategories/{id}")
+	public Iterable<Category> getAllCategories(@PathVariable Integer id){
 		
-		return categoryService.getAllCategories();
+		return categoryService.getAllCategories(id);
 	}
 }

@@ -78,9 +78,9 @@ public class ProductService {
 			String pathAbolute=path.toFile().getAbsolutePath();
 			try {
 				byte[] bytes=image.getBytes();
-				Path pathComplete=Paths.get(pathAbolute+"//"+image.getOriginalFilename());
-				Files.write(pathComplete, bytes);
-				newProduct.setImage(image.getOriginalFilename());
+				//Path pathComplete=Paths.get(pathAbolute+"//"+image.getOriginalFilename());
+				//Files.write(pathComplete, bytes);
+				newProduct.setImage(bytes);//aquiii
 				
 			} catch (Exception e) {
 				// TODO: handle exception

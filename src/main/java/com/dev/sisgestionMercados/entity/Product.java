@@ -27,8 +27,8 @@ public class Product {
 	private String productName;
 	@Column
 	private String description;
-	@Column
-	private String image;
+	@Column(columnDefinition = "longblob")
+	private byte[] image;
 	@Column
 	private String measurement;
 	
@@ -60,10 +60,11 @@ public class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getImage() {
+	
+	public byte[] getImage() {
 		return image;
 	}
-	public void setImage(String image) {
+	public void setImage(byte[] image) {
 		this.image = image;
 	}
 	public Category getCategory() {

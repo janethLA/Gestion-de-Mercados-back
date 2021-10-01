@@ -27,7 +27,7 @@ public class Product {
 	private String productName;
 	@Column
 	private String description;
-	@Column
+	@Column(length = 10000)
 	private String image;
 	
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })

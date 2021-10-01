@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dev.sisgestionMercados.Input.MarketInput;
+import com.dev.sisgestionMercados.Output.WarehouseOutput;
 import com.dev.sisgestionMercados.entity.Category;
 import com.dev.sisgestionMercados.entity.Warehouse;
 import com.dev.sisgestionMercados.repository.CategoryRepository;
@@ -30,5 +31,9 @@ public class CategoryService {
 	public Category getById(Integer categoryId) {
 		Category category = categoryRepository.findById(categoryId).orElse(null);
 	    return category;
+	}
+	
+	public Iterable<Category> getAllCategories(){
+		return categoryRepository.findAll();
 	}
 }

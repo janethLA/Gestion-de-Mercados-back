@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.sisgestionMercados.Input.MarketInput;
+import com.dev.sisgestionMercados.Output.WarehouseOutput;
 import com.dev.sisgestionMercados.entity.Category;
 import com.dev.sisgestionMercados.service.CategoryService;
 
@@ -32,5 +33,9 @@ public class CategoryController {
 		return ResponseEntity.ok(categoryService.save(category,id));
 	}
 	
-	//@GetMapping("/")
+	@GetMapping("/allCategories")
+	public Iterable<Category> getAllCategories(){
+		
+		return categoryService.getAllCategories();
+	}
 }

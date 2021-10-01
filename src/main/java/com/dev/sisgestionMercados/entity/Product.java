@@ -27,8 +27,11 @@ public class Product {
 	private String productName;
 	@Column
 	private String description;
-	@Column(length = 10000)
+	@Column
 	private String image;
+	@Column
+	private String measurement;
+	
 	
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
 	@JoinColumn(name = "idCategory")
@@ -75,5 +78,10 @@ public class Product {
 	public void setPrice(List<Price> price) {
 		this.price = price;
 	}
-	
+	public String getMeasurement() {
+		return measurement;
+	}
+	public void setMeasurement(String measurement) {
+		this.measurement = measurement;
+	}
 }

@@ -67,6 +67,7 @@ public class ProductService {
 		newProduct.setProductName(product.getProductName());
 		newProduct.setDescription(product.getDescription());
 		newProduct.setCategory(category);
+		newProduct.setMeasurement(product.getMeasurement());
 		List<Price> prices=new ArrayList<Price>();
 		Price price=new Price();
 		price.setPrice(product.getPrice());

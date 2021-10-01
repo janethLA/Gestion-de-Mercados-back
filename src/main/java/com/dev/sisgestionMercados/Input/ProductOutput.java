@@ -6,6 +6,7 @@ public class ProductOutput {
 	private String description;
 	private String image;
 	private double price;
+	private String measurement;
 	
 	public String getProductName() {
 		return productName;
@@ -31,6 +32,10 @@ public class ProductOutput {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	
-	
+	public String getMeasurement() {
+		return measurement;
+	}
+	public void setMeasurement(String measurement) {
+		this.measurement = measurement;
+	}
 }

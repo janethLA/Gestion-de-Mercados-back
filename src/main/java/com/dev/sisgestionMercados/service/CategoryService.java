@@ -25,10 +25,11 @@ public class CategoryService {
 	
 	public Category save(Category category,int idWarehouse) {
 		Warehouse warehouse=marketService.getById(idWarehouse);
-		Category newCategory =new Category();
-		newCategory.setWarehouse(warehouse);
+		System.out.println("alllllllllllllllmacen es: "+warehouse.getIdMarket());
+		//Category newCategory =new Category();
+		category.setWarehouse(warehouse);
 		categoryRepository.save(category);
-	    return newCategory;
+	    return category;
 	}
 	
 	public Category getById(Integer categoryId) {

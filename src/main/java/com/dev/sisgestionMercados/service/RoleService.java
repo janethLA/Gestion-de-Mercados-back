@@ -39,7 +39,10 @@ public class RoleService {
 			RoleOutput newRole = new RoleOutput();
 			newRole.setIdRole(found.getIdRole());
 			newRole.setRoleName(found.getRoleName());
+			newRole.setDescription(found.getDescription());
+			newRole.setPrivilege(found.getPrivileges());
 			allRolesByOrder.add(newRole);
+			
 
 		}
 

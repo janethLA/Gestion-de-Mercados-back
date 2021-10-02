@@ -67,7 +67,7 @@ public class UserService {
 			newUser.setIdUser(found.getIdUser());;
 			newUser.setName(found.getName());
 			newUser.setEmail(found.getEmail());
-			newUser.setTelephonne(found.getTelephone());
+			newUser.setTelephone(found.getTelephone());
 			newUser.setPassword(found.getPassword());
 			allUsersByOrder.add(newUser);
 

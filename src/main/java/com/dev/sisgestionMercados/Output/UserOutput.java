@@ -7,7 +7,7 @@ public class UserOutput {
 	private int idUser;
 	private String name;
 	private String email;
-	private int telephonne;
+	private int telephone;
 	private String password;
 	
 	public int getIdUser() {
@@ -28,11 +28,12 @@ public class UserOutput {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getTelephonne() {
-		return telephonne;
+	
+	public int getTelephone() {
+		return telephone;
 	}
-	public void setTelephonne(int telephonne) {
-		this.telephonne = telephonne;
+	public void setTelephone(int telephone) {
+		this.telephone = telephone;
 	}
 	public String getPassword() {
 		return password;

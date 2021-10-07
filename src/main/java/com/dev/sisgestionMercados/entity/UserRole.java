@@ -18,13 +18,13 @@ public class UserRole {
 	@Id
 	@GeneratedValue(strategy  = GenerationType.IDENTITY)
 	private int idUserRole;	
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
+	@ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
 	@JoinColumn(name="idUser")
 	private UserS user;
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH},fetch = FetchType.EAGER)
 	@JoinColumn(name="idRole")
 	private Role role;
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH},fetch = FetchType.EAGER)
 	@JoinColumn(name="idSector")
 	private Sector sector;
 	

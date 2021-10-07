@@ -23,4 +23,12 @@ public class UserRoleService {
 	     return persistedUserRole;
 	}
 	
+	public  UserRole findById(int id) {
+		return userRoleRepository.findById(id).get();
+	}
+	
+	public void delete(UserRole userRole) {
+		userRoleRepository.delete(userRole);
+	}
+	
 }

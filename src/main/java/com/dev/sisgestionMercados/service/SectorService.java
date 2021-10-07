@@ -14,6 +14,7 @@ import com.dev.sisgestionMercados.entity.Role;
 import com.dev.sisgestionMercados.entity.Sector;
 import com.dev.sisgestionMercados.repository.SectorRepository;
 
+
 @Service
 public class SectorService {
 
@@ -44,5 +45,18 @@ public class SectorService {
 		}
 
 		return allSectorsByOrder;	
+	}
+	
+    public boolean noExistsSectorName(String userName) {
+		
+		boolean result=true;
+		List <Sector> allSector = sectorRepository.findAll();
+		for(Sector a:allSector) {
+			if(a.getSectorName()!=null){
+			if(a.getSectorName().equalsIgnoreCase(userName)) {
+				result=false;
+			}}
+		}
+		return result;
 	}
 }

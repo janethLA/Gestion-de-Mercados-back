@@ -27,19 +27,27 @@ public class PrivilegeService {
 		for (Privilege p : allPrivileges) {
 
 			PrivilegeOutput found = new PrivilegeOutput();
-			String privilege = p.getPrivilege();
-			found.setPrivilege(privilege);
+			found.setPrivilege(p.getPrivilege().substring(5));
+			String newNameP="";
+			for (int i=0;i<found.getPrivilege().length();i++) {
+				char c=found.getPrivilege().toLowerCase().charAt(i);
+						if(c=='_') {
+							c=' ';
+						}
+				newNameP=newNameP+c;
+			}
+			
 			int size = allPrivilegeOutput.size();
 			int j = 0;
 
 			for (int i = 0; i < size; i++) {
-				if (p.getPrivilege().equalsIgnoreCase(allPrivilegeOutput.get(i).getPrivilege())) {
+				if (newNameP.equalsIgnoreCase(allPrivilegeOutput.get(i).getPrivilege())) {
 					j = 1;
 				}
 			}
 
 			if (allPrivilegeOutput.size() == 0 || j == 0) {
-				found.setPrivilege(p.getPrivilege());
+				found.setPrivilege(newNameP);
 				allPrivilegeOutput.add(found);
 			}
 			

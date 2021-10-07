@@ -3,6 +3,7 @@ package com.dev.sisgestionMercados.controller;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,12 +30,14 @@ public class MarketController {
 	@Autowired
 	private ModelMapper modelMapper;
 	
+	@PreAuthorize("hasRole('ADMINISTRAR_ALMACENES')")	
 	@PostMapping("/createMarket")
 	public ResponseEntity<?> save(@RequestBody MarketInput market){
 		
 		return ResponseEntity.ok(marketService.save(market));
 	}
 	
+	@PreAuthorize("hasRole('ADMINISTRAR_ALMACENES')")	
 	@GetMapping("/allWarehouse")
 	public Iterable<WarehouseOutput> getAllWarehouse(){
 		

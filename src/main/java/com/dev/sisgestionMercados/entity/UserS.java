@@ -22,8 +22,8 @@ public class UserS {
 	private int idUser;
 	@Column
 	private String name;
-	//@Column(unique = true)
-	//private String userName;
+	@Column(unique = true)
+	private String userName;
 	@Column
 	private String email;
 	@Column
@@ -33,7 +33,7 @@ public class UserS {
 	@Column
 	private int telephone;
 	
-	@OneToMany(mappedBy = "user",cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH},fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "user",cascade = {CascadeType.ALL, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH},fetch = FetchType.EAGER)
 	private List<UserRole> userRole;
 
 	public String getName() {
@@ -94,6 +94,14 @@ public class UserS {
 
 	public void setTelephone(int telephone) {
 		this.telephone = telephone;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 }

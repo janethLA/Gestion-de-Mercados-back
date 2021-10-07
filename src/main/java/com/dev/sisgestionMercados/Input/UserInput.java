@@ -3,7 +3,7 @@ package com.dev.sisgestionMercados.Input;
 public class UserInput {
 
 	private String name;
-	//private String username;
+	private String username;
 	private String email;
 	private String password;
 	private int idRole;
@@ -50,11 +50,11 @@ public class UserInput {
 		this.telephone = telephone;
 	}
 	
-	/*public String getUsername() {
+	public String getUsername() {
 		return username;
 	}
 	public void setUsername(String username) {
 		this.username = username;
-	}*/
+	}
 	
 }

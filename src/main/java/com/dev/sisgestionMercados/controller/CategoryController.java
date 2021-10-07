@@ -3,6 +3,7 @@ package com.dev.sisgestionMercados.controller;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,12 +28,14 @@ public class CategoryController {
 	@Autowired
 	private CategoryService categoryService;
 	
+	@PreAuthorize("hasRole('ADMINISTRAR_ALMACENES')")	
 	@PostMapping("/createCategory/{id}")
 	public ResponseEntity<?> save(@RequestBody Category category, @PathVariable Integer id){
 		
 		return ResponseEntity.ok(categoryService.save(category,id));
 	}
 	
+	@PreAuthorize("hasRole('ADMINISTRAR_ALMACENES')")	
 	@GetMapping("/allCategories/{id}")
 	public Iterable<Category> getAllCategories(@PathVariable Integer id){
 		

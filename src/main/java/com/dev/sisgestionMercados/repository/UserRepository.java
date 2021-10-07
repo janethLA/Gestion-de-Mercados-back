@@ -7,5 +7,6 @@ import com.dev.sisgestionMercados.entity.UserS;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserS, Integer> {
-	//UserS findByUserName(String name);
+	UserS findByUserName(String userName);
 }
+ 

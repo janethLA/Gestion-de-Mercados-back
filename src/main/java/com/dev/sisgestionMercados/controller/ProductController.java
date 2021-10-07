@@ -3,6 +3,7 @@ package com.dev.sisgestionMercados.controller;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,7 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 	
+	@PreAuthorize("hasRole('ADMINISTRAR_ALMACENES')")	
 	@PostMapping("/createProduct/{id}")
 	public ResponseEntity<?> save(@ModelAttribute ProductOutput product, @PathVariable Integer id, @RequestParam("file") MultipartFile image){
 		//productService.save(product);

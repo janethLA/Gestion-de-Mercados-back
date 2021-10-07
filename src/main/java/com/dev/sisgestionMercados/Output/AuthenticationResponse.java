@@ -12,9 +12,7 @@ public class AuthenticationResponse {
 	Collection<? extends GrantedAuthority> roles;
 	private int id;
 	String userName;
-	private int identifier;
-	private String spendingUnit;
-	private String faculty;
+	String name;
 
 	public AuthenticationResponse() {
 		
@@ -25,31 +23,13 @@ public class AuthenticationResponse {
 		this.roles = roles;
 		this.id = id;
 	}
-	public AuthenticationResponse(String jwt, Collection<? extends GrantedAuthority> roles, int id, String userName) {
+	public AuthenticationResponse(String jwt, Collection<? extends GrantedAuthority> roles, int id, String userName,String name) {
 		super();
 		this.jwt = jwt;
 		this.roles = roles;
 		this.id = id;
 		this.userName = userName;
-	}
-
-	public AuthenticationResponse(String jwt, Collection<? extends GrantedAuthority> roles, int id, String userName, int identifier) {
-		super();
-		this.jwt = jwt;
-		this.roles = roles;
-		this.id = id;
-		this.userName = userName;
-		this.identifier=identifier;
-	}
-	public AuthenticationResponse(String jwt, Collection<? extends GrantedAuthority> roles, int id, String userName, int identifier, String spendingUnit , String faculty) {
-		super();
-		this.jwt = jwt;
-		this.roles = roles;
-		this.id = id;
-		this.userName = userName;
-		this.identifier=identifier;
-		this.faculty=faculty;
-		this.spendingUnit=spendingUnit;
+		this.name=name;
 	}
 
 	public AuthenticationResponse(String jwt) {
@@ -93,29 +73,11 @@ public class AuthenticationResponse {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
-	public int getIdentifier() {
-		return identifier;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public void setIdentifier(int identifier) {
-		this.identifier = identifier;
-	}
-
-	public String getSpendingUnit() {
-		return spendingUnit;
-	}
-
-	public void setSpendingUnit(String spendingUnit) {
-		this.spendingUnit = spendingUnit;
-	}
-
-	public String getFaculty() {
-		return faculty;
-	}
-
-	public void setFaculty(String faculty) {
-		this.faculty = faculty;
-	}
-	
 }

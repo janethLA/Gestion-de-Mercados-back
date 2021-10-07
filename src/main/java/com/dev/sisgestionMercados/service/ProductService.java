@@ -11,7 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.dev.sisgestionMercados.Input.ProductOutput;
+import com.dev.sisgestionMercados.Input.ProductInput;
+import com.dev.sisgestionMercados.Output.ProductOutput;
 import com.dev.sisgestionMercados.Output.WarehouseOutput;
 import com.dev.sisgestionMercados.entity.Category;
 import com.dev.sisgestionMercados.entity.Price;
@@ -59,23 +60,30 @@ public class ProductService {
 	    return p;
 	}*/
 	
-	public ProductOutput save(ProductOutput product,int idCategory,MultipartFile image) {
+	public ProductInput save(ProductInput product,int idCategory,MultipartFile image) {
 		
 		Category category=categoryService.getById(idCategory);
 		Product newProduct=new Product();
-		ProductOutput p=new ProductOutput();
+		ProductInput p=new ProductInput();
 		newProduct.setProductName(product.getProductName());
 		newProduct.setDescription(product.getDescription());
 		newProduct.setCategory(category);
 		newProduct.setMeasurement(product.getMeasurement());
+		
+		try {
+			newProduct.setExpirationDate(product.getExpirationDate());
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 		List<Price> prices=new ArrayList<Price>();
 		Price price=new Price();
 		price.setPrice(product.getPrice());
 		//newProduct.setPrice(prices);
 		
 		if(!image.isEmpty()) {
-			Path path=Paths.get("src//main//resources//static//images");
-			String pathAbolute=path.toFile().getAbsolutePath();
+			//Path path=Paths.get("src//main//resources//static//images");
+			//String pathAbolute=path.toFile().getAbsolutePath();
 			try {
 				byte[] bytes=image.getBytes();
 				//Path pathComplete=Paths.get(pathAbolute+"//"+image.getOriginalFilename());
@@ -91,5 +99,31 @@ public class ProductService {
 		priceService.save(price);
 		
 	    return p;
+	}
+	
+	public Iterable<ProductOutput> getAllProducts(){
+		List <Product> products= productRepository.findAll();
+		List <ProductOutput> allProducts= new ArrayList<ProductOutput>();
+		for(Product newProduct: products) {
+			ProductOutput product=new ProductOutput();
+			product.setIdProduct(newProduct.getIdProduct());
+			product.setProductName(newProduct.getProductName());
+			product.setDescription(newProduct.getDescription());
+			product.setMeasurement(newProduct.getMeasurement());
+			product.setExpirationDate(newProduct.getExpirationDate());	
+			try {
+				product.setPrice(newProduct.getPrice().get(newProduct.getPrice().size()-1).getPrice());
+				product.setCategoryName(newProduct.getCategory().getCategoryName());
+				product.setWarehouseName(newProduct.getCategory().getWarehouse().getWarehouseName());
+			}catch (Exception e) {
+				// TODO: handle exception
+			}
+			
+			product.setImage(newProduct.getImage());
+			
+		    allProducts.add(product);
+		}
+		
+		return allProducts;
 	}
 }

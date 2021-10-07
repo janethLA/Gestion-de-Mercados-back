@@ -1,5 +1,6 @@
 package com.dev.sisgestionMercados.entity;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -31,7 +32,8 @@ public class Product {
 	private byte[] image;
 	@Column
 	private String measurement;
-	
+	@Column
+	private LocalDate expirationDate;
 	
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
 	@JoinColumn(name = "idCategory")
@@ -84,5 +86,11 @@ public class Product {
 	}
 	public void setMeasurement(String measurement) {
 		this.measurement = measurement;
+	}
+	public LocalDate getExpirationDate() {
+		return expirationDate;
+	}
+	public void setExpirationDate(LocalDate expirationDate) {
+		this.expirationDate = expirationDate;
 	}
 }

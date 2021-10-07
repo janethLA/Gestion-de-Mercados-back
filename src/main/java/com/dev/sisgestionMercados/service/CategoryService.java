@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.dev.sisgestionMercados.Input.MarketInput;
 import com.dev.sisgestionMercados.Output.WarehouseOutput;
 import com.dev.sisgestionMercados.entity.Category;
+import com.dev.sisgestionMercados.entity.Sector;
 import com.dev.sisgestionMercados.entity.Warehouse;
 import com.dev.sisgestionMercados.repository.CategoryRepository;
 
@@ -48,4 +49,21 @@ public class CategoryService {
 		
 		return allCategoriesByWarehouse;
 	}
+	
+	 public boolean noExistsCategoryName(String categoryName, int idWarehouse) {
+			
+			boolean result=true;
+			List <Category> allCategory = categoryRepository.findAll();
+			Warehouse w=marketService.getById(idWarehouse);
+			for(Category a:allCategory) {
+				if(a.getWarehouse().equals(w)) {
+					if(a.getCategoryName()!=null){
+						if(a.getCategoryName().equalsIgnoreCase(categoryName)) {
+							result=false;
+						}}
+				}
+				
+			}
+			return result;
+		}
 }

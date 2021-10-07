@@ -40,30 +40,18 @@ public class AuthUserService implements UserDetailsService {
 		return userDetails;
 	}
 	
+	
 	public String getNameUser(String name) {
-		return userRepository.findByUserName(name).getName();
+		return userRepository.findByUserName(name).getUserName();
 	}
 	
 	public int getIdUser(String name) {
 		return userRepository.findByUserName(name).getIdUser();
 	}
-	
-	/*public int getIdentifier(String name) {
-		return userRepository.findByUserName(name).getUserRole().get(0).getRole().getPrivileges().get(0).getIdentifier();
+	public String getName(String name) {
+		return userRepository.findByUserName(name).getName();
 	}
 	
-	public String getSpendingUnit(String name) {
-		SpendingUnit unit=userRepository.findByUserName(name).getUserRole().get(0).getSpendingUnit();
-		
-		if(unit !=null) {
-			return unit.getNameUnit();
-		}
-		else {
-			return null;
-		}
 	
-	}
-	public String getFaculty(String name) {
-		return userRepository.findByUserName(name).getUserRole().get(0).getSpendingUnit().getFaculty();
-	}*/
+	
 }

@@ -1,12 +1,15 @@
 package com.dev.sisgestionMercados.Input;
 
-public class ProductOutput {
+import java.time.LocalDate;
+
+public class ProductInput {
 
 	private String productName;
 	private String description;
 	private String image;
 	private double price;
 	private String measurement;
+	private LocalDate expirationDate;
 	
 	public String getProductName() {
 		return productName;
@@ -38,4 +41,11 @@ public class ProductOutput {
 	public void setMeasurement(String measurement) {
 		this.measurement = measurement;
 	}
+	public LocalDate getExpirationDate() {
+		return expirationDate;
+	}
+	public void setExpirationDate(LocalDate expirationDate) {
+		this.expirationDate = expirationDate;
+	}
+	
 }

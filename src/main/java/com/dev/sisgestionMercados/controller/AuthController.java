@@ -50,15 +50,9 @@ public class AuthController {
             UserDetails userDetails = authUserService.loadUserByUsername(request.getUsername());
             String jwt = jwtUtil.generateToken(userDetails);
         	Collection<? extends GrantedAuthority> roles=userDetails.getAuthorities();
-        	/*if(pruebaUserService.getSpendingUnit(request.getUsername())==null) {
-        		return new ResponseEntity<>(new AuthenticationResponse(jwt,roles,pruebaUserService.getIdUser(request.getUsername()),
-    					pruebaUserService.getNameUser(request.getUsername()), pruebaUserService.getIdentifier(request.getUsername())), HttpStatus.OK);
-        	}
-        	else {*/
         		return new ResponseEntity<>(new AuthenticationResponse(jwt,roles,authUserService.getIdUser(request.getUsername()),
-						authUserService.getNameUser(request.getUsername())) , HttpStatus.OK);
-        	//}
-            
+						authUserService.getNameUser(request.getUsername()) , authUserService.getName(request.getUsername())), HttpStatus.OK);
+                
         } catch (BadCredentialsException e) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }

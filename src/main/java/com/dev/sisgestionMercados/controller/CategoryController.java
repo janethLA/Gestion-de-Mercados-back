@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.sisgestionMercados.Input.MarketInput;
@@ -40,5 +41,12 @@ public class CategoryController {
 	public Iterable<Category> getAllCategories(@PathVariable Integer id){
 		
 		return categoryService.getAllCategories(id);
+	}
+	
+	@PreAuthorize("hasRole('ADMINISTRAR_USUARIOS')")	
+	@GetMapping("/uniqueCategoryName/{categoryName}")
+	public ResponseEntity<?> uniqueCategoryName(@PathVariable String categoryName, @RequestParam("idWarehouse") int idWarehouse){
+		
+		return ResponseEntity.ok(categoryService.noExistsCategoryName(categoryName,idWarehouse));//Devuelve true en caso de que el nombre es unico, devuelva false si ya existe ese nombre
 	}
 }

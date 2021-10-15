@@ -3,6 +3,7 @@ package com.dev.sisgestionMercados.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -78,7 +79,7 @@ public class MarketService {
 		
 		List <Warehouse> allWarehouse = marketRepository.findAll();
 		List <WarehouseSearch> allWarehouseSearch = new ArrayList<WarehouseSearch>();
-		double distMax = 1000; //en metros = 5KM 
+		double distMax = 1000; //en metros = 1KM 
 		Location userLocation=new Location(latitude,longitude);
 		
 		for (Warehouse found : allWarehouse ) {
@@ -115,7 +116,7 @@ public class MarketService {
 						product.setPrice(foundProduct.getPrice().get(foundProduct.getPrice().size()-1).getPrice());
 						product.setImage(foundProduct.getImage());
 						
-						if(foundProduct.getProductName().equalsIgnoreCase(productName)) {
+						if(foundProduct.getProductName().equalsIgnoreCase(productName)|| StringUtils.stripAccents(foundProduct.getProductName()).equalsIgnoreCase(productName) || foundProduct.getProductName().equalsIgnoreCase(StringUtils.stripAccents(productName))) {
 							allProductSearch.add(product);
 						}
 					}

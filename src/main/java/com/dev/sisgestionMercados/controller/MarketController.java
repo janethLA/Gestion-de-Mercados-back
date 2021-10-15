@@ -1,5 +1,7 @@
 package com.dev.sisgestionMercados.controller;
 
+import javax.annotation.security.PermitAll;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +50,7 @@ public class MarketController {
 		return marketService.getAllWarehouse();
 	}
 	
-	@PreAuthorize("hasRole('ADMINISTRAR_ALMACENES')")	
+	@PermitAll
 	@GetMapping("/productSearch")
 	public Iterable<WarehouseSearch> getAllProductSaerch(@RequestParam("longitude") double longitude, @RequestParam("latitude") double latitude, @RequestParam("productName") String productName){
 		

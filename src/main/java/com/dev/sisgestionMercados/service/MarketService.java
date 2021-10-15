@@ -7,11 +7,16 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dev.sisgestionMercados.Complement.Location;
 import com.dev.sisgestionMercados.Input.MarketInput;
+import com.dev.sisgestionMercados.Output.ProductSearch;
 import com.dev.sisgestionMercados.Output.UserOutput;
 import com.dev.sisgestionMercados.Output.WarehouseOutput;
+import com.dev.sisgestionMercados.Output.WarehouseSearch;
 import com.dev.sisgestionMercados.entity.Warehouse;
+import com.dev.sisgestionMercados.entity.Category;
 import com.dev.sisgestionMercados.entity.Privilege;
+import com.dev.sisgestionMercados.entity.Product;
 import com.dev.sisgestionMercados.entity.Sector;
 import com.dev.sisgestionMercados.entity.UserS;
 import com.dev.sisgestionMercados.repository.MarketRepository;
@@ -67,6 +72,61 @@ public class MarketService {
 	public Warehouse getById(Integer warehouseId) {
 		Warehouse warehouse = marketRepository.findById(warehouseId).orElse(null);
 	    return warehouse;
+	}
+	
+	public Iterable<WarehouseSearch> getAllProductSearch(double longitude,double latitude,String productName) {
+		
+		List <Warehouse> allWarehouse = marketRepository.findAll();
+		List <WarehouseSearch> allWarehouseSearch = new ArrayList<WarehouseSearch>();
+		double distMax = 1000; //en metros = 5KM 
+		Location userLocation=new Location(latitude,longitude);
+		
+		for (Warehouse found : allWarehouse ) {
+			
+			Location newLocation=new Location(found.getLatitude(),found.getLongitude());
+			
+			if( userLocation.distanceTo( newLocation ) <= distMax ){
+				
+				System.out.println("Nombre del Almacen: "+found.getWarehouseName());
+				List <ProductSearch> allProductSearch = new ArrayList<ProductSearch>();
+				WarehouseSearch warehouse=new WarehouseSearch();
+				warehouse.setIdMarket(found.getIdMarket());
+				warehouse.setLatitude(found.getLatitude());
+				warehouse.setLongitude(found.getLongitude());
+				List <Category>  categories=found.getCategory();
+				
+				for (Category category : categories) {
+					
+					System.out.println("Nombre de categoria: "+category.getCategoryName());
+					List <Product> products=category.getProduct(); 
+					
+					for (Product foundProduct: products) {
+						
+						System.out.println("Nombre del producto : "+foundProduct.getProductName());
+						ProductSearch product=new ProductSearch();
+						product.setIdProduct(foundProduct.getIdProduct());
+						product.setProductName(foundProduct.getProductName());
+						product.setDescription(foundProduct.getDescription());
+						product.setExpirationDate(foundProduct.getExpirationDate());
+						product.setMeasurement(foundProduct.getMeasurement());
+						product.setQuantity(foundProduct.getQuantity());
+						product.setCategoryName(foundProduct.getCategory().getCategoryName());
+						product.setWarehouseName(foundProduct.getCategory().getWarehouse().getWarehouseName());
+						product.setPrice(foundProduct.getPrice().get(foundProduct.getPrice().size()-1).getPrice());
+						product.setImage(foundProduct.getImage());
+						
+						if(foundProduct.getProductName().equalsIgnoreCase(productName)) {
+							allProductSearch.add(product);
+						}
+					}
+				}
+				if(!allProductSearch.isEmpty()) {
+					warehouse.setProducts(allProductSearch);
+					allWarehouseSearch.add(warehouse);
+				}
+			}	
+		}
+		return allWarehouseSearch;	
 	}
 
 }

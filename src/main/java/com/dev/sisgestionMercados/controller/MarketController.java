@@ -10,11 +10,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.dev.sisgestionMercados.Input.MarketInput;
+import com.dev.sisgestionMercados.Output.ProductSearch;
 import com.dev.sisgestionMercados.Output.UserOutput;
 import com.dev.sisgestionMercados.Output.WarehouseOutput;
+import com.dev.sisgestionMercados.Output.WarehouseSearch;
 import com.dev.sisgestionMercados.entity.Warehouse;
 import com.dev.sisgestionMercados.entity.Role;
 import com.dev.sisgestionMercados.service.MarketService;
@@ -42,6 +46,13 @@ public class MarketController {
 	public Iterable<WarehouseOutput> getAllWarehouse(){
 		
 		return marketService.getAllWarehouse();
+	}
+	
+	@PreAuthorize("hasRole('ADMINISTRAR_ALMACENES')")	
+	@GetMapping("/productSearch")
+	public Iterable<WarehouseSearch> getAllProductSaerch(@RequestParam("longitude") double longitude, @RequestParam("latitude") double latitude, @RequestParam("productName") String productName){
+		
+		return marketService.getAllProductSearch(longitude, latitude,productName);
 	}
 
 }

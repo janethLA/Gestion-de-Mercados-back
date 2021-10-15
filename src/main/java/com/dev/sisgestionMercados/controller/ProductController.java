@@ -36,8 +36,7 @@ public class ProductController {
 	@PreAuthorize("hasRole('ADMINISTRAR_ALMACENES')")	
 	@PostMapping("/createProduct/{id}")
 	public ResponseEntity<?> save(@ModelAttribute ProductInput product, @PathVariable Integer id, @RequestParam("file") MultipartFile image){
-		//productService.save(product);
-		//productService.saveImage( image)
+		
 		return ResponseEntity.ok(productService.save(product,id, image));
 	}
 	
@@ -46,5 +45,12 @@ public class ProductController {
 	public Iterable<ProductOutput> getAllProduct(){
 		
 		return productService.getAllProducts();
+	}
+	
+	@PreAuthorize("hasRole('ADMINISTRAR_ALMACENES')")	
+	@GetMapping("/allMeasurement")
+	public Iterable<String> getAllMeasurement(){
+		
+		return productService.getAllMeasurement();
 	}
 }

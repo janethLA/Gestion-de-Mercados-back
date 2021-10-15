@@ -34,6 +34,8 @@ public class Product {
 	private String measurement;
 	@Column
 	private LocalDate expirationDate;
+	@Column
+	private int quantity;
 	
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
 	@JoinColumn(name = "idCategory")
@@ -93,4 +95,11 @@ public class Product {
 	public void setExpirationDate(LocalDate expirationDate) {
 		this.expirationDate = expirationDate;
 	}
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	
 }

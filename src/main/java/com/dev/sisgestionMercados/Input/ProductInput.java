@@ -9,6 +9,7 @@ public class ProductInput {
 	private String image;
 	private double price;
 	private String measurement;
+	private int quantity;
 	private LocalDate expirationDate;
 	
 	public String getProductName() {
@@ -47,5 +48,12 @@ public class ProductInput {
 	public void setExpirationDate(LocalDate expirationDate) {
 		this.expirationDate = expirationDate;
 	}
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	
 	
 }

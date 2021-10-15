@@ -69,6 +69,7 @@ public class ProductService {
 		newProduct.setDescription(product.getDescription());
 		newProduct.setCategory(category);
 		newProduct.setMeasurement(product.getMeasurement());
+		newProduct.setQuantity(product.getQuantity());
 		
 		try {
 			newProduct.setExpirationDate(product.getExpirationDate());
@@ -111,6 +112,7 @@ public class ProductService {
 			product.setDescription(newProduct.getDescription());
 			product.setMeasurement(newProduct.getMeasurement());
 			product.setExpirationDate(newProduct.getExpirationDate());	
+			product.setQuantity(newProduct.getQuantity());
 			try {
 				product.setPrice(newProduct.getPrice().get(newProduct.getPrice().size()-1).getPrice());
 				product.setCategoryName(newProduct.getCategory().getCategoryName());
@@ -125,5 +127,27 @@ public class ProductService {
 		}
 		
 		return allProducts;
+	}
+	
+	public Iterable<String> getAllMeasurement(){
+		List <Product> products= productRepository.findAll();
+		List <String> allMeasurement= new ArrayList<String>();
+		for(Product newProduct: products) {
+			
+			String measurement=newProduct.getMeasurement();
+			int j = 0;
+
+			for (int i = 0; i < allMeasurement.size(); i++) {
+				if (measurement.equalsIgnoreCase(allMeasurement.get(i))) {
+					j = 1;
+				}
+			}
+
+			if (allMeasurement.size() == 0 || j == 0) {
+				allMeasurement.add(measurement);
+			}
+		}
+		
+		return allMeasurement;
 	}
 }

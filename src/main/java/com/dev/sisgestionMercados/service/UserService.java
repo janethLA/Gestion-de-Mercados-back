@@ -73,6 +73,7 @@ public class UserService {
 			UserOutput newUser = new UserOutput();
 			newUser.setIdUser(found.getIdUser());;
 			newUser.setName(found.getName());
+			newUser.setUserName(found.getUserName());
 			newUser.setEmail(found.getEmail());
 			newUser.setTelephone(found.getTelephone());
 			newUser.setPassword(found.getPassword());

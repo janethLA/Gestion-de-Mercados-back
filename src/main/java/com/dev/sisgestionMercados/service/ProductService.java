@@ -17,6 +17,7 @@ import com.dev.sisgestionMercados.Output.WarehouseOutput;
 import com.dev.sisgestionMercados.entity.Category;
 import com.dev.sisgestionMercados.entity.Price;
 import com.dev.sisgestionMercados.entity.Product;
+import com.dev.sisgestionMercados.entity.Role;
 import com.dev.sisgestionMercados.entity.Warehouse;
 import com.dev.sisgestionMercados.repository.ProductRepository;
 
@@ -149,5 +150,9 @@ public class ProductService {
 		}
 		
 		return allMeasurement;
+	}
+	
+	public Product findById(int idProduct) {
+		return productRepository.findById(idProduct).get();
 	}
 }

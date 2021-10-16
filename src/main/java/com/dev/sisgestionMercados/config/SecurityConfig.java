@@ -42,9 +42,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests().antMatchers("/**/authenticate").permitAll()
         		.antMatchers("/product/allProducts").permitAll()
-        		.antMatchers("//market/productSearch").permitAll()
-        		//.antMatchers("/**/createEmpresa").permitAll()
-        		//.antMatchers("/**/registerBusiness").permitAll()
+        		.antMatchers("/market/productSearch").permitAll()
+        		.antMatchers("/finalUser/createFinalUser").permitAll()
+        		.antMatchers("/order/createOrder/*").permitAll()
         		//.antMatchers("/**/updateQuotation/*").permitAll()
         		//.antMatchers("/**/RelatingPriceQuotationToDetails").permitAll()
         		//.antMatchers("/**/uploadDetail").permitAll()

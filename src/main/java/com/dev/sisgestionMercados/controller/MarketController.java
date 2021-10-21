@@ -68,10 +68,10 @@ public class MarketController {
 	}
 	
 	@PermitAll
-	@GetMapping("/warehouseSearch")
-	public Iterable<WarehouseSearchByAtributes> getAllWarehouseSearchByLocation(@RequestBody LocationInput location){
-		
-		return marketService.getAllWarehouseSearchByLocation(location);
+	@PostMapping("/warehouseSearch")
+	public ResponseEntity<?> getAllWarehouseSearchByLocation(@RequestBody LocationInput location){
+		System.out.println("Llega: "+location.getLatitude()+" y "+location.getLongitude());
+		return  ResponseEntity.ok(marketService.getAllWarehouseSearchByLocation(location));
 	}
 
 }

@@ -7,8 +7,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.dev.sisgestionMercados.Complement.Location;
+import com.dev.sisgestionMercados.Input.LocationInput;
 import com.dev.sisgestionMercados.Input.MarketInput;
 import com.dev.sisgestionMercados.Output.ProductSearch;
 import com.dev.sisgestionMercados.Output.UserOutput;
@@ -141,6 +143,7 @@ public class MarketService {
 				System.out.println("Nombre del Almacen: "+found.getWarehouseName());
 				WarehouseSearchByAtributes warehouse=new WarehouseSearchByAtributes();
 				warehouse.setIdMarket(found.getIdMarket());
+				warehouse.setWarehouseName(found.getWarehouseName());
 				warehouse.setLatitude(found.getLatitude());
 				warehouse.setLongitude(found.getLongitude());
 				if(found.getSector().getSectorName().equalsIgnoreCase(sectorName)) {
@@ -150,12 +153,12 @@ public class MarketService {
 		return allWarehouseSearch;
 	}
 	
-	public Iterable<WarehouseSearchByAtributes> getAllWarehouseSearchByLocation(double longitude, double latitude) {
+	public Iterable<WarehouseSearchByAtributes> getAllWarehouseSearchByLocation(LocationInput location) {
 
 		List<Warehouse> allWarehouse = marketRepository.findAll();
 		List<WarehouseSearchByAtributes> allWarehouseSearch = new ArrayList<WarehouseSearchByAtributes>();
 		double distMax = 4000; // en metros = 4KM
-		Location userLocation = new Location(latitude, longitude);
+		Location userLocation = new Location(location.getLatitude(), location.getLongitude());
 
 		for (Warehouse found : allWarehouse) {
 
@@ -167,6 +170,7 @@ public class MarketService {
 
 				WarehouseSearchByAtributes warehouse = new WarehouseSearchByAtributes();
 				warehouse.setIdMarket(found.getIdMarket());
+				warehouse.setWarehouseName(found.getWarehouseName());
 				warehouse.setLatitude(found.getLatitude());
 				warehouse.setLongitude(found.getLongitude());
 				allWarehouseSearch.add(warehouse);

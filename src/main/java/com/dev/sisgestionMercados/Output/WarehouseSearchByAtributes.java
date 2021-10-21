@@ -3,6 +3,7 @@ package com.dev.sisgestionMercados.Output;
 public class WarehouseSearchByAtributes {
 
 	private int idMarket;
+	private String warehouseName;
 	private double latitude;
 	private double longitude;
 	
@@ -24,6 +25,11 @@ public class WarehouseSearchByAtributes {
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
-	
+	public String getWarehouseName() {
+		return warehouseName;
+	}
+	public void setWarehouseName(String warehouseName) {
+		this.warehouseName = warehouseName;
+	}
 	
 }

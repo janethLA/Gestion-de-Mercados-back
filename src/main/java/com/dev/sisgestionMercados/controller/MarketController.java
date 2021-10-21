@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.dev.sisgestionMercados.Input.LocationInput;
 import com.dev.sisgestionMercados.Input.MarketInput;
 import com.dev.sisgestionMercados.Output.ProductSearch;
 import com.dev.sisgestionMercados.Output.UserOutput;
@@ -68,9 +69,9 @@ public class MarketController {
 	
 	@PermitAll
 	@GetMapping("/warehouseSearch")
-	public Iterable<WarehouseSearchByAtributes> getAllWarehouseSearchByLocation(@RequestParam("longitude") double longitude, @RequestParam("latitude") double latitude ){
+	public Iterable<WarehouseSearchByAtributes> getAllWarehouseSearchByLocation(@RequestBody LocationInput location){
 		
-		return marketService.getAllWarehouseSearchByLocation(longitude, latitude);
+		return marketService.getAllWarehouseSearchByLocation(location);
 	}
 
 }

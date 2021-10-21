@@ -6,14 +6,21 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.dev.sisgestionMercados.Complement.Location;
 import com.dev.sisgestionMercados.Input.ProductInput;
+import com.dev.sisgestionMercados.Output.CategorySearchOutput;
 import com.dev.sisgestionMercados.Output.ProductOutput;
+import com.dev.sisgestionMercados.Output.ProductSearch;
+import com.dev.sisgestionMercados.Output.ProductSearchOutput;
 import com.dev.sisgestionMercados.Output.WarehouseOutput;
+import com.dev.sisgestionMercados.Output.WarehouseSearch;
 import com.dev.sisgestionMercados.entity.Category;
 import com.dev.sisgestionMercados.entity.Price;
 import com.dev.sisgestionMercados.entity.Product;
@@ -31,6 +38,8 @@ public class ProductService {
 	private ProductRepository productRepository;
 	@Autowired
 	private PriceService priceService;
+	@Autowired
+	private MarketService marketService;
 
 	/*public ProductOutput save(int idCategory,MultipartFile image) {
 		Category category=categoryService.getById(idCategory);
@@ -154,5 +163,49 @@ public class ProductService {
 	
 	public Product findById(int idProduct) {
 		return productRepository.findById(idProduct).get();
+	}
+	
+	public Iterable<CategorySearchOutput> getAllByproductName(int id, String productName) {
+		System.out.println("productName: "+productName);
+		Warehouse found = marketService.getById(id);
+		List<CategorySearchOutput> allCategorySearch = new ArrayList<CategorySearchOutput>();
+		List<ProductSearchOutput> allProductSearch = new ArrayList<ProductSearchOutput>();
+
+		List<Category> categories = found.getCategory();
+
+		for (Category foundCategory : categories) {
+
+			System.out.println("Nombre de categoria: " + foundCategory.getCategoryName());
+			CategorySearchOutput category = new CategorySearchOutput();
+			category.setIdCategory(foundCategory.getIdCategory());
+			category.setCategoryName(foundCategory.getCategoryName());
+
+			List<Product> products = foundCategory.getProduct();
+
+			for (Product foundProduct : products) {
+
+				System.out.println("Nombre del producto : " + foundProduct.getProductName());
+
+				if (foundProduct.getProductName().equalsIgnoreCase(productName)
+						|| StringUtils.stripAccents(foundProduct.getProductName()).equalsIgnoreCase(productName)
+						|| foundProduct.getProductName().equalsIgnoreCase(StringUtils.stripAccents(productName))) {
+					ProductSearchOutput product = new ProductSearchOutput();
+					product.setIdProduct(foundProduct.getIdProduct());
+					product.setProductName(foundProduct.getProductName());
+					product.setDescription(foundProduct.getDescription());
+					product.setExpirationDate(foundProduct.getExpirationDate());
+					product.setMeasurement(foundProduct.getMeasurement());
+					product.setQuantity(foundProduct.getQuantity());
+					product.setPrice(foundProduct.getPrice().get(foundProduct.getPrice().size() - 1).getPrice());
+					product.setImage(foundProduct.getImage());
+					allProductSearch.add(product);
+				}
+			}
+			if (!allProductSearch.isEmpty()) {
+				category.setProduct(allProductSearch);
+				allCategorySearch.add(category);
+			}
+		}
+		return allCategorySearch;
 	}
 }

@@ -20,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.dev.sisgestionMercados.Input.ProductInput;
 import com.dev.sisgestionMercados.Output.ProductOutput;
+import com.dev.sisgestionMercados.Output.CategorySearchOutput;
+import com.dev.sisgestionMercados.Output.WarehouseSearchByAtributes;
 import com.dev.sisgestionMercados.entity.Category;
 import com.dev.sisgestionMercados.service.ProductService;
 
@@ -53,4 +55,12 @@ public class ProductController {
 		
 		return productService.getAllMeasurement();
 	}
+	
+	@PermitAll
+	@GetMapping("/productSearch/{id}")
+	public Iterable<CategorySearchOutput> getAllByproductName(@PathVariable Integer id, @RequestParam("productName") String productName){
+		
+		return productService.getAllByproductName(id, productName);
+	}
 }
+

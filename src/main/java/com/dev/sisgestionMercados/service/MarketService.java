@@ -14,6 +14,7 @@ import com.dev.sisgestionMercados.Output.ProductSearch;
 import com.dev.sisgestionMercados.Output.UserOutput;
 import com.dev.sisgestionMercados.Output.WarehouseOutput;
 import com.dev.sisgestionMercados.Output.WarehouseSearch;
+import com.dev.sisgestionMercados.Output.WarehouseSearchByAtributes;
 import com.dev.sisgestionMercados.entity.Warehouse;
 import com.dev.sisgestionMercados.entity.Category;
 import com.dev.sisgestionMercados.entity.Privilege;
@@ -128,6 +129,51 @@ public class MarketService {
 			}	
 		}
 		return allWarehouseSearch;	
+	}
+	
+	public Iterable<WarehouseSearchByAtributes> getAllWarehouseSearchBySector(String sectorName){
+		
+		List <Warehouse> allWarehouse = marketRepository.findAll();
+		List <WarehouseSearchByAtributes> allWarehouseSearch = new ArrayList<WarehouseSearchByAtributes>();
+       
+		for (Warehouse found : allWarehouse ) {
+			
+				System.out.println("Nombre del Almacen: "+found.getWarehouseName());
+				WarehouseSearchByAtributes warehouse=new WarehouseSearchByAtributes();
+				warehouse.setIdMarket(found.getIdMarket());
+				warehouse.setLatitude(found.getLatitude());
+				warehouse.setLongitude(found.getLongitude());
+				if(found.getSector().getSectorName().equalsIgnoreCase(sectorName)) {
+					allWarehouseSearch.add(warehouse);
+				}
+	    }
+		return allWarehouseSearch;
+	}
+	
+	public Iterable<WarehouseSearchByAtributes> getAllWarehouseSearchByLocation(double longitude, double latitude) {
+
+		List<Warehouse> allWarehouse = marketRepository.findAll();
+		List<WarehouseSearchByAtributes> allWarehouseSearch = new ArrayList<WarehouseSearchByAtributes>();
+		double distMax = 4000; // en metros = 4KM
+		Location userLocation = new Location(latitude, longitude);
+
+		for (Warehouse found : allWarehouse) {
+
+			Location newLocation = new Location(found.getLatitude(), found.getLongitude());
+
+			if (userLocation.distanceTo(newLocation) <= distMax) {
+
+				System.out.println("Nombre del Almacen: " + found.getWarehouseName());
+
+				WarehouseSearchByAtributes warehouse = new WarehouseSearchByAtributes();
+				warehouse.setIdMarket(found.getIdMarket());
+				warehouse.setLatitude(found.getLatitude());
+				warehouse.setLongitude(found.getLongitude());
+				allWarehouseSearch.add(warehouse);
+
+			}
+		}
+		return allWarehouseSearch;
 	}
 
 }

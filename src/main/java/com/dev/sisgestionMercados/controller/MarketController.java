@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import com.dev.sisgestionMercados.Output.ProductSearch;
 import com.dev.sisgestionMercados.Output.UserOutput;
 import com.dev.sisgestionMercados.Output.WarehouseOutput;
 import com.dev.sisgestionMercados.Output.WarehouseSearch;
+import com.dev.sisgestionMercados.Output.WarehouseSearchByAtributes;
 import com.dev.sisgestionMercados.entity.Warehouse;
 import com.dev.sisgestionMercados.entity.Role;
 import com.dev.sisgestionMercados.service.MarketService;
@@ -55,6 +57,20 @@ public class MarketController {
 	public Iterable<WarehouseSearch> getAllProductSaerch(@RequestParam("longitude") double longitude, @RequestParam("latitude") double latitude, @RequestParam("productName") String productName){
 		
 		return marketService.getAllProductSearch(longitude, latitude,productName);
+	}
+	
+	@PermitAll
+	@GetMapping("/warehouseSearch/{sectorName}")
+	public Iterable<WarehouseSearchByAtributes> getAllWarehouseSearchBySearch(@PathVariable String sectorName ){
+		
+		return marketService.getAllWarehouseSearchBySector(sectorName);
+	}
+	
+	@PermitAll
+	@GetMapping("/warehouseSearch")
+	public Iterable<WarehouseSearchByAtributes> getAllWarehouseSearchByLocation(@RequestParam("longitude") double longitude, @RequestParam("latitude") double latitude ){
+		
+		return marketService.getAllWarehouseSearchByLocation(longitude, latitude);
 	}
 
 }

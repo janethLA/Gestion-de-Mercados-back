@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.dev.sisgestionMercados.Input.OrderDetailInput;
 import com.dev.sisgestionMercados.Input.OrderInput;
+import com.dev.sisgestionMercados.Output.PrivilegeOutput;
 import com.dev.sisgestionMercados.entity.FinalUser;
 import com.dev.sisgestionMercados.entity.OrderDetail;
 import com.dev.sisgestionMercados.entity.OrderP;
@@ -56,6 +57,14 @@ public class OrderService {
 		savedOrder.setOrderDetail(savedOrderDetails);
 		
 		return order;
+	}
+	
+	public Iterable<OrderP> allOrderByUser(long id) {
+		
+		FinalUser finalUser=finalUserService.findById(id);
+		List<OrderP> allOrderByUser=finalUser.getOrder();
+		
+		return allOrderByUser;
 	}
 }
 

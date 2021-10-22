@@ -50,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         		.antMatchers("/**/productSearch/*").permitAll()
         		.antMatchers("/**/allCategories/*").permitAll()
         		.antMatchers("/**/allSector").permitAll()
+        		.antMatchers("/**/codeVerification").permitAll()
         		//.antMatchers("/api/request").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and().sessionManagement()

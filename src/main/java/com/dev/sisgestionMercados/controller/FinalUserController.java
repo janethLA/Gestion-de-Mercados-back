@@ -8,11 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dev.sisgestionMercados.Input.FinalUserInput;
 import com.dev.sisgestionMercados.entity.FinalUser;
 import com.dev.sisgestionMercados.entity.Role;
 import com.dev.sisgestionMercados.service.FinalUserService;
@@ -33,4 +35,12 @@ public class FinalUserController {
 		
 		return ResponseEntity.ok(finalUserService.save(finalUser));
 	}
+	
+	@PermitAll
+	@PutMapping("/codeVerification")
+	public ResponseEntity<?> verify(@RequestBody FinalUserInput finalUser){
+		
+		return ResponseEntity.ok(finalUserService.verify(finalUser));
+	}
+	
 }

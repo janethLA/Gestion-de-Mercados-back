@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.dev.sisgestionMercados.entity.FinalUser;
 @Repository
-public interface FinalUserRepository extends JpaRepository<FinalUser,Integer> {
+public interface FinalUserRepository extends JpaRepository<FinalUser,Long> {
  
 	
 }

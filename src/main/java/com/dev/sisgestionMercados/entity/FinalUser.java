@@ -22,11 +22,17 @@ public class FinalUser {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idFinalUser;
+	private long idFinalUser;
 	@Column
 	private String finalUserName;
 	@Column
+	private String userName;
+	@Column
 	private int telephone;
+	@Column
+	private String code;
+	@Column
+	private boolean active;
 	@OneToMany(mappedBy = "finalUser",cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
 	@JsonManagedReference
 	private List<OrderP> order;
@@ -34,10 +40,10 @@ public class FinalUser {
 	@OneToOne(cascade ={CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH} )
 	private Privilege privilege;
 	
-	public int getIdFinalUser() {
+	public long getIdFinalUser() {
 		return idFinalUser;
 	}
-	public void setIdFinalUser(int idFinalUser) {
+	public void setIdFinalUser(long idFinalUser) {
 		this.idFinalUser = idFinalUser;
 	}
 	public String getFinalUserName() {
@@ -63,6 +69,24 @@ public class FinalUser {
 	}
 	public void setPrivilege(Privilege privilege) {
 		this.privilege = privilege;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public boolean isActive() {
+		return active;
+	}
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
 	}
 	
 }

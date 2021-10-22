@@ -44,5 +44,10 @@ public class OrderController {
 		return orderService.allOrderByUser(id);
 	}
 	
-	
+	@PreAuthorize("hasRole('ROLE_ADMINISTRAR_PEDIDOS')")	
+	@GetMapping("/allOrders")
+	public Iterable<OrderP> allOrders(){
+		
+		return orderService.allOrders();
+	}
 }

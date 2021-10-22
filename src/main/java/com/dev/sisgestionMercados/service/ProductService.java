@@ -112,7 +112,7 @@ public class ProductService {
 	    return p;
 	}
 	
-	public Iterable<ProductOutput> getAllProducts(){
+	/*public Iterable<ProductOutput> getAllProducts(){
 		List <Product> products= productRepository.findAll();
 		List <ProductOutput> allProducts= new ArrayList<ProductOutput>();
 		for(Product newProduct: products) {
@@ -137,6 +137,12 @@ public class ProductService {
 		}
 		
 		return allProducts;
+	}*/
+	
+	public Iterable<Product> getAllProducts(){
+		List <Product> products= productRepository.findAll();
+		
+		return products;
 	}
 	
 	public Iterable<String> getAllMeasurement(){

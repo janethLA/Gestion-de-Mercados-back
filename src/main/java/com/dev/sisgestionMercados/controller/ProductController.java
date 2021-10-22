@@ -23,6 +23,7 @@ import com.dev.sisgestionMercados.Output.ProductOutput;
 import com.dev.sisgestionMercados.Output.CategorySearchOutput;
 import com.dev.sisgestionMercados.Output.WarehouseSearchByAtributes;
 import com.dev.sisgestionMercados.entity.Category;
+import com.dev.sisgestionMercados.entity.Product;
 import com.dev.sisgestionMercados.service.ProductService;
 
 @RestController
@@ -44,7 +45,7 @@ public class ProductController {
 	
 	@PermitAll
 	@GetMapping("/allProducts")
-	public Iterable<ProductOutput> getAllProduct(){
+	public Iterable<Product> getAllProduct(){
 		
 		return productService.getAllProducts();
 	}

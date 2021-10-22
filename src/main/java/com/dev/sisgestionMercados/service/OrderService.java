@@ -67,5 +67,10 @@ public class OrderService {
 		
 		return allOrderByUser;
 	}
+	
+    public Iterable<OrderP> allOrders(){
+		
+		return orderRepository.findAll();
+	}
 }
 

@@ -1,5 +1,7 @@
 package com.dev.sisgestionMercados.controller;
 
+import javax.annotation.security.PermitAll;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +38,7 @@ public class CategoryController {
 		return ResponseEntity.ok(categoryService.save(category,id));
 	}
 	
-	@PreAuthorize("hasRole('ADMINISTRAR_ALMACENES')")	
+	@PermitAll	
 	@GetMapping("/allCategories/{id}")
 	public Iterable<Category> getAllCategories(@PathVariable Integer id){
 		

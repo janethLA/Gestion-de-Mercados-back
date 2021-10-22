@@ -1,5 +1,7 @@
 package com.dev.sisgestionMercados.controller;
 
+import javax.annotation.security.PermitAll;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +36,7 @@ public class SectorController {
 		return ResponseEntity.ok(sectorService.save(sector));
 	}
 	
-	@PreAuthorize("hasRole('ADMINISTRAR_USUARIOS')")	
+	@PermitAll	
 	@GetMapping("/allSector")
 	public Iterable<SectorOutput> getAllSectors(){
 		

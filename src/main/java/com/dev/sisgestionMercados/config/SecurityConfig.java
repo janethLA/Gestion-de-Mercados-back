@@ -48,6 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         		.antMatchers("/**/warehouseSearch").permitAll()
         		.antMatchers("/**/warehouseSearch/*").permitAll()
         		.antMatchers("/**/productSearch/*").permitAll()
+        		.antMatchers("/**/allCategories/*").permitAll()
+        		.antMatchers("/**/allSector").permitAll()
         		//.antMatchers("/api/request").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and().sessionManagement()

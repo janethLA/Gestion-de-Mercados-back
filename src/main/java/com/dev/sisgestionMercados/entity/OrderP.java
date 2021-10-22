@@ -29,6 +29,8 @@ public class OrderP{
 	@Column
 	private double totalPrice;
 	@Column
+	private String status;
+	@Column
 	private LocalDate orderDate;
 	
 	@OneToMany(mappedBy = "order",cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
@@ -76,5 +78,10 @@ public class OrderP{
 	public void setFinalUser(FinalUser finalUser) {
 		this.finalUser = finalUser;
 	}
-    
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }

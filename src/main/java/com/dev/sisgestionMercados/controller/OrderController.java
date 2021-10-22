@@ -43,4 +43,11 @@ public class OrderController {
 		
 		return orderService.allOrderByUser(id);
 	}
+	
+	@PermitAll
+	@GetMapping("/allOrder")
+	public Iterable<OrderP> allOrder(){
+		
+		return orderService.allOrder();
+	}
 }

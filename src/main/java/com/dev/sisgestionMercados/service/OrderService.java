@@ -38,6 +38,7 @@ public class OrderService {
 		newOrder.setQuantityProducts(order.getQuantityProducts());
 		newOrder.setTotalPrice(order.getTotalPrice());
 		newOrder.setOrderDate(LocalDate.now());
+		newOrder.setStatus("Pendiente");
 		OrderP savedOrder=orderRepository.save(newOrder);
 		FinalUser finalUser=finalUserService.findById(id);
 		savedOrder.setFinalUser(finalUser);

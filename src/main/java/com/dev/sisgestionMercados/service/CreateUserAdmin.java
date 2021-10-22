@@ -64,7 +64,7 @@ public class CreateUserAdmin implements CommandLineRunner{
 			privilege3.setPrivilege("ROLE_ADMINISTRAR_CLIENTES");
 			//privilege3.setIdentifier(2);
 			Privilege privilege4=new Privilege();
-			privilege4.setPrivilege("ROLE_ADMINISTRAR_VENTAS");
+			privilege4.setPrivilege("ROLE_ADMINISTRAR_PEDIDOS");
 			//privilege4.setIdentifier(2);
 			Privilege privilege5=new Privilege();
 			privilege5.setPrivilege("ROLE_ADMINISTRAR_ENVIOS");

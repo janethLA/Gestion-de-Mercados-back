@@ -61,28 +61,28 @@ public class FinalUserController {
 		
 	}
 	
-	@PermitAll
+	@PreAuthorize("hasRole('FINAL_USER')")
 	@GetMapping("/userFinalData/{id}")
 	public ResponseEntity<?> getFinalUser(@PathVariable Integer id){
 		
 		return ResponseEntity.ok(finalUserService.getFinalUser(id));
 	}
 	
-	@PermitAll
+	@PreAuthorize("hasRole('FINAL_USER')")
 	@PutMapping("/updateDataUser/{id}")
 	public ResponseEntity<?> updateDataUser(@RequestBody AuthUserFinal finalUser,@PathVariable long id){
 		
 		return ResponseEntity.ok(finalUserService.updateDataUser(finalUser,id));
 	}
 	
-	@PermitAll
+	@PreAuthorize("hasRole('FINAL_USER')")
 	@GetMapping("/uniqueUserName/{userName}")
 	public ResponseEntity<?> uniqueUserName(@PathVariable String userName){
 		
 		return ResponseEntity.ok(finalUserService.noExistsUserName(userName));
 	}
 	
-	@PermitAll
+	@PreAuthorize("hasRole('FINAL_USER')")
 	@PutMapping("/updateTelephone")
 	public ResponseEntity<?> verifyTelephone(@RequestBody FinalUserAtributesOutput finalUser){
 		

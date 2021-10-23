@@ -37,7 +37,7 @@ public class OrderController {
 		return ResponseEntity.ok(orderService.save(order,id));
 	}
 	
-	@PermitAll
+	@PreAuthorize("hasRole('FINAL_USER')")
 	@GetMapping("/allOrder/{id}")
 	public Iterable<OrderP> allOrderByUser(@PathVariable long id){
 		

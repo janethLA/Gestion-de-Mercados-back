@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.sisgestionMercados.Input.AuthenticationRequest;
 import com.dev.sisgestionMercados.Output.AuthenticationResponse;
+import com.dev.sisgestionMercados.Output.FinalUserOutput;
 import com.dev.sisgestionMercados.config.JWTUtil;
 import com.dev.sisgestionMercados.service.AuthUserService;
 
@@ -44,17 +45,27 @@ public class AuthController {
 
     
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> createToken(@RequestBody AuthenticationRequest request) {
-        try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-            UserDetails userDetails = authUserService.loadUserByUsername(request.getUsername());
-            String jwt = jwtUtil.generateToken(userDetails);
-        	Collection<? extends GrantedAuthority> roles=userDetails.getAuthorities();
-        		return new ResponseEntity<>(new AuthenticationResponse(jwt,roles,authUserService.getIdUser(request.getUsername()),
-						authUserService.getNameUser(request.getUsername()) , authUserService.getName(request.getUsername())), HttpStatus.OK);
-                
-        } catch (BadCredentialsException e) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
+    public ResponseEntity<?> createToken(@RequestBody AuthenticationRequest request) {
+    	int userType=authUserService.getUserType(request.getUsername());
+    	if(userType==1) {
+                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+                UserDetails userDetails = authUserService.loadUserByUsername(request.getUsername());
+                String jwt = jwtUtil.generateToken(userDetails);
+            	Collection<? extends GrantedAuthority> roles=userDetails.getAuthorities();
+            		return new ResponseEntity<>(new AuthenticationResponse(jwt,roles,authUserService.getIdUser(request.getUsername()),
+    						authUserService.getNameUser(request.getUsername()) , authUserService.getName(request.getUsername())), HttpStatus.OK);
+    	}else {
+    		if(userType==2 && authUserService.getTelephone(request.getUsername()).equals(request.getPassword())) {
+                   // authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+                    UserDetails userDetails = authUserService.loadUserByUsername(request.getUsername());
+                    String jwt = jwtUtil.generateToken(userDetails);
+                	Collection<? extends GrantedAuthority> roles=userDetails.getAuthorities();
+                	return new ResponseEntity<>(new FinalUserOutput(jwt,roles,authUserService.getIdFinalUser(request.getUsername()),
+    						authUserService.getFinalNameUser(request.getUsername()) , authUserService.getFinalName(request.getUsername())), HttpStatus.OK);
+        	}else {
+        		return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        	}
+    	}
+    	
     }
 }

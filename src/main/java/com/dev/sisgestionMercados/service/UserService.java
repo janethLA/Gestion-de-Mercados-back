@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.dev.sisgestionMercados.Input.UserInput;
 import com.dev.sisgestionMercados.Output.UserOutput;
+import com.dev.sisgestionMercados.entity.FinalUser;
 import com.dev.sisgestionMercados.entity.Role;
 import com.dev.sisgestionMercados.entity.Sector;
 import com.dev.sisgestionMercados.entity.UserRole;
@@ -34,6 +35,8 @@ public class UserService {
 	private ModelMapper modelMapper;
 	@Autowired
 	private BCryptPasswordEncoder encoder;
+	@Autowired
+	private FinalUserService finalUserService;
 	
 	public UserS save(UserS user) {
 	    UserS persistedUser = userRepository.save(user);
@@ -88,6 +91,13 @@ public class UserService {
 		
 		boolean result=true;
 		List <UserS> allUser = userRepository.findAll();
+		List<FinalUser> finalUser=finalUserService.findAll();
+		
+		for(FinalUser u: finalUser) {
+			if(u.getUserName().equalsIgnoreCase(userName)) {
+				result=false;
+			}
+		}
 		for(UserS a:allUser) {
 			if(a.getUserName()!=null){
 			if(a.getUserName().equalsIgnoreCase(userName)) {
@@ -146,5 +156,9 @@ public class UserService {
 			return "No se elimino el usuario";
 		}
     	
+    }
+    
+    public List<UserS> findAll(){
+    	return userRepository.findAll();
     }
 }

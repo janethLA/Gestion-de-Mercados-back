@@ -40,7 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable().authorizeRequests().antMatchers("/**/authenticate").permitAll()
+    	System.out.println("configure(HttpSecurity http) throws Exception");
+    	http.cors().and().csrf().disable().authorizeRequests().antMatchers("/**/authenticate").permitAll()
         		.antMatchers("/**/allProducts").permitAll()
         		.antMatchers("/**/productSearch").permitAll()
         		.antMatchers("/**/createFinalUser").permitAll()
@@ -52,11 +53,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         		.antMatchers("/**/allSector").permitAll()
         		.antMatchers("/**/codeVerification").permitAll()  
         		.antMatchers("/**/loginUserFinal").permitAll() 
-        		.antMatchers("/**/allOrder/*").permitAll() 
-        		.antMatchers("/**/userFinalData/*").permitAll()
-        		.antMatchers("/**/updateDataUser/*").permitAll()
-        		.antMatchers("/**/uniqueUserName/*").permitAll() // /updateTelephone
-        		.antMatchers("/**/updateTelephone").permitAll()
+        		//.antMatchers("/**/allOrder/*").permitAll() 
+        		//.antMatchers("/**/userFinalData/*").permitAll()
+        		//.antMatchers("/**/updateDataUser/*").permitAll()
+        		//.antMatchers("/**/uniqueUserName/*").permitAll() // /updateTelephone
+        		//.antMatchers("/**/updateTelephone").permitAll()
         		//.antMatchers("/api/request").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and().sessionManagement()

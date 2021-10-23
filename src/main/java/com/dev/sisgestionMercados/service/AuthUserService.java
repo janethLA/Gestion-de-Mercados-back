@@ -12,8 +12,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.dev.sisgestionMercados.entity.FinalUser;
 import com.dev.sisgestionMercados.entity.Privilege;
 import com.dev.sisgestionMercados.entity.UserS;
+import com.dev.sisgestionMercados.repository.FinalUserRepository;
 import com.dev.sisgestionMercados.repository.UserRepository;
 
 
@@ -22,21 +24,35 @@ public class AuthUserService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private FinalUserRepository finalUserRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		UserS us= userRepository.findByUserName(username);
-		int i=0;
-		List <GrantedAuthority> roles=new ArrayList<>();
-		List <Privilege> rol=us.getUserRole().get(0).getRole().getPrivileges();
-		for(Privilege r:rol) {
-			roles.add(new SimpleGrantedAuthority(r.getPrivilege()));
-			System.out.println("-------------------> "+us.getUserRole().get(0).getRole().getPrivileges().get(i).getPrivilege());
-			i++;
+		int resultado =getUserType(username);
+		UserDetails userDetails=null;
+		if (resultado==1) {
+			UserS us= userRepository.findByUserName(username);
+			int i=0;
+			List <GrantedAuthority> roles=new ArrayList<>();
+			List <Privilege> rol=us.getUserRole().get(0).getRole().getPrivileges();
+			for(Privilege r:rol) {
+				roles.add(new SimpleGrantedAuthority(r.getPrivilege()));
+				System.out.println("-------------------> "+us.getUserRole().get(0).getRole().getPrivileges().get(i).getPrivilege());
+				i++;
+			}
+			
+		    userDetails=new User(us.getUserName(),us.getPassword(),roles);
 		}
-		//roles.add(new SimpleGrantedAuthority(us.getUserRole().get(0).getRole().getPrivileges());
+		if (resultado==2) {
+			FinalUser us=finalUserRepository.findByUserName(username);
+			int i=0;
+			List <GrantedAuthority> roles=new ArrayList<>();
+			 roles.add(new SimpleGrantedAuthority(us.getPrivilege().getPrivilege()));
+			 System.out.println("-------------------> "+us.getPrivilege().getPrivilege());
+		    userDetails=new User(us.getUserName(),Integer.toString(us.getTelephone()),roles);
+		}
 		
-		UserDetails userDetails=new User(us.getUserName(),us.getPassword(),roles);
 		return userDetails;
 	}
 	
@@ -52,6 +68,36 @@ public class AuthUserService implements UserDetailsService {
 		return userRepository.findByUserName(name).getName();
 	}
 	
+	public int getUserType(String username) {
+		int resultado=0;
+		List<UserS> allUsers=userRepository.findAll();
+		List<FinalUser> finalUser=finalUserRepository.findAll();
+		for(UserS u: allUsers) {
+			if(u.getUserName().equals(username)) {
+				resultado =1;
+			}
+		}
+		for(FinalUser u: finalUser) {
+			if(u.getUserName().equals(username)) {
+				resultado =2;
+			}
+		}
+		
+		return resultado;
+	}
 	
+	public String getFinalNameUser(String name) {
+		return finalUserRepository.findByUserName(name).getUserName();
+	}
+	
+	public long getIdFinalUser(String name) {
+		return finalUserRepository.findByUserName(name).getIdFinalUser();
+	}
+	public String getFinalName(String name) {
+		return finalUserRepository.findByUserName(name).getFinalUserName();
+	}
+	public String getTelephone(String name) {
+		return Long.toString(finalUserRepository.findByUserName(name).getTelephone());
+	}
 	
 }

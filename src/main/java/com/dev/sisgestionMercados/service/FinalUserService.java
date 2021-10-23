@@ -34,6 +34,8 @@ public class FinalUserService {
 	private FinalUserRepository finalUserRepository ;
 	@Autowired
 	private PrivilegeService privilegeService ;
+	@Autowired
+	private UserService userService ;
 
 	@Transactional
 	public FinalUserInput save(FinalUser finalUser) {
@@ -142,10 +144,17 @@ public class FinalUserService {
 	}
 	
     public boolean noExistsUserName(String userName) {
-		
-		boolean result=true;
-		List <FinalUser> allUser = finalUserRepository.findAll();
-		for(FinalUser a: allUser) {
+		    	
+    	boolean result=true;
+    	List <UserS> allUser = userService.findAll();
+		List <FinalUser> allUsers = finalUserRepository.findAll();
+		for(FinalUser a: allUsers) {
+			if(a.getUserName()!=null){
+			if(a.getUserName().equalsIgnoreCase(userName)) {
+				result=false;
+			}}
+		}
+		for(UserS a:allUser) {
 			if(a.getUserName()!=null){
 			if(a.getUserName().equalsIgnoreCase(userName)) {
 				result=false;
@@ -153,4 +162,8 @@ public class FinalUserService {
 		}
 		return result;
 	}
+    
+    public List<FinalUser> findAll(){
+    	return finalUserRepository.findAll();
+    }
 }

@@ -10,12 +10,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.dev.sisgestionMercados.Input.UserInput;
+import com.dev.sisgestionMercados.Output.FinalUserAtributesOutput;
 import com.dev.sisgestionMercados.Output.UserOutput;
 import com.dev.sisgestionMercados.entity.FinalUser;
 import com.dev.sisgestionMercados.entity.Role;
 import com.dev.sisgestionMercados.entity.Sector;
 import com.dev.sisgestionMercados.entity.UserRole;
 import com.dev.sisgestionMercados.entity.UserS;
+import com.dev.sisgestionMercados.repository.FinalUserRepository;
 import com.dev.sisgestionMercados.repository.UserRepository;
 import com.dev.sisgestionMercados.repository.UserRoleRepository;
 
@@ -37,6 +39,8 @@ public class UserService {
 	private BCryptPasswordEncoder encoder;
 	@Autowired
 	private FinalUserService finalUserService;
+	@Autowired
+	private FinalUserRepository finalUserRepository;
 	
 	public UserS save(UserS user) {
 	    UserS persistedUser = userRepository.save(user);
@@ -160,5 +164,28 @@ public class UserService {
     
     public List<UserS> findAll(){
     	return userRepository.findAll();
+    }
+    
+    public FinalUserAtributesOutput getloginAccount(String userName) {
+    	FinalUserAtributesOutput user=new FinalUserAtributesOutput();
+    	try {
+    		UserS us= userRepository.findByUserName(userName);
+    		user.setIdFinalUser(us.getIdUser());
+    		user.setTelephone(us.getTelephone());
+    	}catch (Exception e) {
+			try {
+				FinalUser us=finalUserRepository.findByUserName(userName);
+				user.setIdFinalUser(us.getIdFinalUser());
+				user.setCode(us.getCode());
+	    		user.setTelephone(us.getTelephone());
+			} catch (Exception e2) {
+				user=null;
+			}
+		}
+    	return user;
+    }
+    
+    public UserS findById(int id) {
+    	return userRepository.findById(id).get();
     }
 }

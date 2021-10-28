@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity(name = "User")
 @Table(name = "USER")
 public class UserS {
@@ -36,6 +38,10 @@ public class UserS {
 	@OneToMany(mappedBy = "user",cascade = {CascadeType.ALL, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH},fetch = FetchType.EAGER)
 	private List<UserRole> userRole;
 
+	@OneToMany(mappedBy = "userS",cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
+   	@JsonManagedReference
+	private List<OrderAssigned> orderAssigned;
+	
 	public String getName() {
 
 		return name;
@@ -102,6 +108,14 @@ public class UserS {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public List<OrderAssigned> getOrderAssigned() {
+		return orderAssigned;
+	}
+
+	public void setOrderAssigned(List<OrderAssigned> orderAssigned) {
+		this.orderAssigned = orderAssigned;
 	}
 	
 }

@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.annotation.security.PermitAll;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,9 +28,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.sisgestionMercados.Input.AuthenticationRequest;
 import com.dev.sisgestionMercados.Output.AuthenticationResponse;
+import com.dev.sisgestionMercados.Output.FinalUserAtributesOutput;
 import com.dev.sisgestionMercados.Output.FinalUserOutput;
 import com.dev.sisgestionMercados.config.JWTUtil;
 import com.dev.sisgestionMercados.service.AuthUserService;
+import com.dev.sisgestionMercados.service.UserService;
 
 
 @RestController
@@ -39,6 +45,9 @@ public class AuthController {
 
     @Autowired
     private AuthUserService authUserService;
+    
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private JWTUtil jwtUtil;
@@ -68,4 +77,16 @@ public class AuthController {
     	}
     	
     }
+    
+    @PermitAll
+	@GetMapping("/loginAccount/{userName}")
+	public ResponseEntity<?> getloginAccount(@PathVariable String userName){
+    	FinalUserAtributesOutput u=userService.getloginAccount(userName);
+		if(u!=null) {
+			return ResponseEntity.ok(userService.getloginAccount(userName));
+		}else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+	}
 }

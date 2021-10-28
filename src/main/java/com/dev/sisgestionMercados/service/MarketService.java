@@ -179,5 +179,24 @@ public class MarketService {
 		}
 		return allWarehouseSearch;
 	}
+	
+	public Iterable<WarehouseSearchByAtributes> getSearchOfAllWarehouses() {
+
+		List<Warehouse> allWarehouse = marketRepository.findAll();
+		List<WarehouseSearchByAtributes> allWarehouseSearch = new ArrayList<WarehouseSearchByAtributes>();
+
+		for (Warehouse found : allWarehouse) {
+
+				WarehouseSearchByAtributes warehouse = new WarehouseSearchByAtributes();
+				warehouse.setIdMarket(found.getIdMarket());
+				warehouse.setWarehouseName(found.getWarehouseName());
+				warehouse.setLatitude(found.getLatitude());
+				warehouse.setLongitude(found.getLongitude());
+				allWarehouseSearch.add(warehouse);
+		}
+		return allWarehouseSearch;
+	}
+	
+	
 
 }

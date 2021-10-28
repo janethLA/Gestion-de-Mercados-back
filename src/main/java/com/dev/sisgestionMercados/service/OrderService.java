@@ -1,6 +1,7 @@
 package com.dev.sisgestionMercados.service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,11 +11,14 @@ import org.springframework.stereotype.Service;
 
 import com.dev.sisgestionMercados.Input.OrderDetailInput;
 import com.dev.sisgestionMercados.Input.OrderInput;
+import com.dev.sisgestionMercados.Output.DeliveryUserOutput;
+import com.dev.sisgestionMercados.Output.OrderOutput;
 import com.dev.sisgestionMercados.Output.PrivilegeOutput;
 import com.dev.sisgestionMercados.entity.FinalUser;
 import com.dev.sisgestionMercados.entity.OrderDetail;
 import com.dev.sisgestionMercados.entity.OrderP;
 import com.dev.sisgestionMercados.entity.Product;
+import com.dev.sisgestionMercados.entity.UserS;
 import com.dev.sisgestionMercados.repository.OrderRepository;
 
 @Service
@@ -30,6 +34,8 @@ public class OrderService {
 	private OrderDetailService orderDetailService;
 	@Autowired
 	private ProductService productService;
+	@Autowired
+	private UserService userService;
 	
 	
 	public OrderInput save(OrderInput order, int id) {
@@ -38,6 +44,7 @@ public class OrderService {
 		newOrder.setQuantityProducts(order.getQuantityProducts());
 		newOrder.setTotalPrice(order.getTotalPrice());
 		newOrder.setOrderDate(LocalDate.now());
+		newOrder.setOrderTime(LocalTime.now());
 		newOrder.setStatus("Pendiente");
 		OrderP savedOrder=orderRepository.save(newOrder);
 		FinalUser finalUser=finalUserService.findById(id);
@@ -72,5 +79,47 @@ public class OrderService {
 		
 		return orderRepository.findAll();
 	}
+    public Iterable<OrderOutput> allOrders2(){
+    	List<OrderP> orders=orderRepository.findAll();
+		List<OrderOutput> allOrders=new ArrayList<OrderOutput>();
+		
+		for(OrderP o: orders) {
+			OrderOutput order=new OrderOutput();
+			order.setIdOrder(o.getIdOrder());
+			order.setOrderDate(o.getOrderDate());
+			order.setOrderTime(o.getOrderTime());
+			order.setTotalPrice(o.getTotalPrice());
+			order.setQuantityProducts(o.getQuantityProducts());
+			order.setStatus(o.getStatus());
+			order.setOrderDetail(o.getOrderDetail());
+			order.setUserName(o.getFinalUser().getFinalUserName());
+			order.setTelephone(o.getFinalUser().getTelephone());
+			allOrders.add(order);
+		}
+		
+		return allOrders;
+	}
+    
+    public List<DeliveryUserOutput> getAllDeliveries(){
+    	
+    	List<UserS> allUsers=userService.findAll();
+    	List<DeliveryUserOutput> allDeliveries=new ArrayList<DeliveryUserOutput>();
+    	for(UserS s: allUsers) {
+    		if(s.getUserRole().get(0).getRole().getPrivileges().get(0).getPrivilege().equalsIgnoreCase("ROLE_VER_PEDIDOS")) {
+    			DeliveryUserOutput delivery=new DeliveryUserOutput();
+    			delivery.setIdUser(s.getIdUser());
+    			delivery.setName(s.getName());
+    			delivery.setTelephone(s.getTelephone());
+    			delivery.setEmail(s.getEmail());
+    			delivery.setSector(s.getUserRole().get(0).getSector().getSectorName());
+    			allDeliveries.add(delivery);
+    		}
+    	}
+    	return allDeliveries;
+    }
+    
+    public OrderP findById(int id) {
+    	return orderRepository.findById(id).get();
+    }
 }
 

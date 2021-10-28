@@ -1,5 +1,7 @@
 package com.dev.sisgestionMercados.controller;
 
+import javax.annotation.security.PermitAll;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -70,5 +72,7 @@ public class UserController {
 	    
 		return ResponseEntity.ok(userService.deleteUser(id));
 	}
+	
+	
 }
 

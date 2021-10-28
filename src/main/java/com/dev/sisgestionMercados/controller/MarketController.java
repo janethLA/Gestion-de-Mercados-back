@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.dev.sisgestionMercados.Complement.Sms;
 import com.dev.sisgestionMercados.Input.LocationInput;
 import com.dev.sisgestionMercados.Input.MarketInput;
 import com.dev.sisgestionMercados.Output.ProductSearch;
@@ -46,7 +47,8 @@ public class MarketController {
 		return ResponseEntity.ok(marketService.save(market));
 	}
 	
-	@PreAuthorize("hasRole('ADMINISTRAR_ALMACENES')")	
+	//@PreAuthorize("hasRole('ADMINISTRAR_ALMACENES')")	
+	@PermitAll
 	@GetMapping("/allWarehouse")
 	public Iterable<WarehouseOutput> getAllWarehouse(){
 		
@@ -73,5 +75,11 @@ public class MarketController {
 		System.out.println("Llega: "+location.getLatitude()+" y "+location.getLongitude());
 		return  ResponseEntity.ok(marketService.getAllWarehouseSearchByLocation(location));
 	}
-
+    
+	@PermitAll
+	@GetMapping("/searchOfAllWarehouses")
+	public Iterable<WarehouseSearchByAtributes> getSearchOfAllWarehouses(){
+		
+		return marketService.getSearchOfAllWarehouses();
+	}
 }

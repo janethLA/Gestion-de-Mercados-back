@@ -1,6 +1,7 @@
 package com.dev.sisgestionMercados.entity;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -32,6 +33,8 @@ public class OrderP{
 	private String status;
 	@Column
 	private LocalDate orderDate;
+	@Column
+	private LocalTime orderTime;
 	
 	@OneToMany(mappedBy = "order",cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
 	@JsonManagedReference
@@ -41,6 +44,10 @@ public class OrderP{
 	@JoinColumn(name="idFinalUser")
 	@JsonBackReference
 	private FinalUser finalUser;
+	
+	@OneToMany(mappedBy = "orderP",cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
+	@JsonManagedReference
+	private List<OrderAssigned> orderAssigned;
 	
 	public int getIdOrder() {
 		return idOrder;
@@ -84,4 +91,17 @@ public class OrderP{
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	public LocalTime getOrderTime() {
+		return orderTime;
+	}
+	public void setOrderTime(LocalTime orderTime) {
+		this.orderTime = orderTime;
+	}
+	public List<OrderAssigned> getOrderAssigned() {
+		return orderAssigned;
+	}
+	public void setOrderAssigned(List<OrderAssigned> orderAssigned) {
+		this.orderAssigned = orderAssigned;
+	}
+	
 }

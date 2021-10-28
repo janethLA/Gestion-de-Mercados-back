@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dev.sisgestionMercados.Complement.Sms;
 import com.dev.sisgestionMercados.Input.AuthUserFinal;
 import com.dev.sisgestionMercados.Input.FinalUserInput;
 import com.dev.sisgestionMercados.Output.FinalUserAtributesOutput;
@@ -36,6 +37,8 @@ public class FinalUserService {
 	private PrivilegeService privilegeService ;
 	@Autowired
 	private UserService userService ;
+	@Autowired
+	private EmailService emailService ;
 
 	@Transactional
 	public FinalUserInput save(FinalUser finalUser) {
@@ -60,6 +63,15 @@ public class FinalUserService {
 		}
 		saved.setIdFinalUser(persistedFinalUser.getIdFinalUser());
 		saved.setCode(code);
+		//Para enviar mensaje de texto
+		//String phone=  Integer.toString(persistedFinalUser.getTelephone());
+		//Sms message=new Sms();
+		//message.sendSms(code, phone);
+		
+		String message="Su código de verificación es: "+code;
+		String subject="Verifica tu Email!";
+		emailService.sendEmail("luna_jl99@hotmail.com", subject, message);
+		
 	    return saved;
 	}
 	

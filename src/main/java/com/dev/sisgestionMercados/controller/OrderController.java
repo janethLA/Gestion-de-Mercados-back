@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.sisgestionMercados.Input.OrderInput;
+import com.dev.sisgestionMercados.Output.DeliveryUserOutput;
+import com.dev.sisgestionMercados.Output.OrderOutput;
 import com.dev.sisgestionMercados.entity.FinalUser;
 import com.dev.sisgestionMercados.entity.OrderP;
 import com.dev.sisgestionMercados.service.OrderService;
@@ -46,8 +48,15 @@ public class OrderController {
 	
 	@PreAuthorize("hasRole('ROLE_ADMINISTRAR_PEDIDOS')")	
 	@GetMapping("/allOrders")
-	public Iterable<OrderP> allOrders(){
+	public Iterable<OrderOutput> allOrders(){
 		
-		return orderService.allOrders();
+		return orderService.allOrders2();
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMINISTRAR_PEDIDOS')")	
+	@GetMapping("/allDeliveries")
+	public Iterable<DeliveryUserOutput> getAllDeliveries(){
+		
+		return orderService.getAllDeliveries();
 	}
 }

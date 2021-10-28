@@ -53,8 +53,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         		.antMatchers("/**/allSector").permitAll()
         		.antMatchers("/**/codeVerification").permitAll()  
         		.antMatchers("/**/loginUserFinal").permitAll() 
-        		//.antMatchers("/**/allOrder/*").permitAll() 
-        		//.antMatchers("/**/userFinalData/*").permitAll()
+        		.antMatchers("/**/searchOfAllWarehouses").permitAll() //
+        		.antMatchers("/**/allWarehouse").permitAll()
+        		.antMatchers("/**/loginAccount/*").permitAll()
         		//.antMatchers("/**/updateDataUser/*").permitAll()
         		//.antMatchers("/**/uniqueUserName/*").permitAll() // /updateTelephone
         		//.antMatchers("/**/updateTelephone").permitAll()

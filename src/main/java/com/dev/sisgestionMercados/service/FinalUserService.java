@@ -184,7 +184,7 @@ public class FinalUserService {
     	boolean result=true;
 		List <FinalUser> allUsers = finalUserRepository.findAll();
 		for(FinalUser a: allUsers) {
-			if(a.getUserName()!=null){
+			if(a.getEmail()!=null){
 			if(a.getEmail().equalsIgnoreCase(email)) {
 				result=false;
 			}}

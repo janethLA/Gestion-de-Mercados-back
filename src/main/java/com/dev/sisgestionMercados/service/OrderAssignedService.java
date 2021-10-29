@@ -70,4 +70,38 @@ public class OrderAssignedService {
 		}
 		return allAsignedOrdersFound;
 	}
+	
+	public String assignedOrderAccepted(int id) {
+		OrderAssigned orderA=orderAssignedRepository.findById(id).get();
+		orderA.setStatus("Aceptado");
+		OrderP o=orderA.getOrderP();
+		o.setStatus("Enviado");
+		orderAssignedRepository.save(orderA);
+		orderService.save2(o);
+		return "Se ha aceptado el pedido asignado";
+	}
+	
+	public String assignedOrderRejected(int id) {
+		OrderAssigned orderA=orderAssignedRepository.findById(id).get();
+		orderA.setStatus("Rechazado");
+		orderAssignedRepository.save(orderA);
+
+		return "Se ha rechazado el pedido asignado";
+	}
+	
+	public String orderCompleted(int id) {
+		OrderAssigned orderA=orderAssignedRepository.findById(id).get();
+		//orderA.setStatus("Rechazado");
+		OrderP o=orderA.getOrderP();
+		o.setStatus("Finalizado");
+		//orderAssignedRepository.save(orderA);
+		orderService.save2(o);
+		return "Se ha finalizado el pedido asignado";
+	}
+	
+	public  List<OrderAssigned> getAllAssignedOrders(){
+		
+		return orderAssignedRepository.findAll();
+	}
 }
+

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,5 +46,33 @@ public class OrderAssignedController {
 	public Iterable<OrderAssignedOutput> allAssignedOrders(@PathVariable Integer id){
 		
 		return orderAssignedService.allAssignedOrders(id);
+	}
+	
+	@PreAuthorize("hasRole('VER_PEDIDOS')")
+	@PutMapping("/assignedOrderAccepted/{id}")
+	public ResponseEntity<?> assignedOrderAccepted(@PathVariable Integer id){
+		
+		return ResponseEntity.ok(orderAssignedService.assignedOrderAccepted(id));
+	}
+	
+	@PreAuthorize("hasRole('VER_PEDIDOS')")
+	@PutMapping("/assignedOrderRejected/{id}")
+	public ResponseEntity<?> assignedOrderRejected(@PathVariable Integer id){
+		
+		return ResponseEntity.ok(orderAssignedService.assignedOrderRejected(id));
+	}
+	
+	@PreAuthorize("hasRole('VER_PEDIDOS')")
+	@PutMapping("/orderCompleted/{id}")
+	public ResponseEntity<?> orderCompleted(@PathVariable Integer id){
+		
+		return ResponseEntity.ok(orderAssignedService.orderCompleted(id));
+	}
+	
+	@PreAuthorize("hasRole('ADMINISTRAR_PEDIDOS')")
+	@GetMapping("/allAssignedOrders")
+	public Iterable<OrderAssigned> getAllAssignedOrders(){
+		
+		return orderAssignedService.getAllAssignedOrders();
 	}
 }

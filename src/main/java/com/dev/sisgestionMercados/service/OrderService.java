@@ -38,6 +38,10 @@ public class OrderService {
 	private UserService userService;
 	
 	
+	
+	public void save2(OrderP order) {
+		orderRepository.save(order);
+	}
 	public OrderInput save(OrderInput order, int id) {
 		
 		OrderP newOrder=new OrderP();

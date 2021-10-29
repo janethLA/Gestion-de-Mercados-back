@@ -1,11 +1,10 @@
 package com.dev.sisgestionMercados.Output;
 
-public class FinalUserAtributesOutput {
+public class UserPasswordOutput {
 
 	private long idFinalUser;
 	private String code;
-	private int telephone;
-	private String email;
+	private int identifier;
 	
 	public long getIdFinalUser() {
 		return idFinalUser;
@@ -19,17 +18,11 @@ public class FinalUserAtributesOutput {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public int getTelephone() {
-		return telephone;
+	public int getIdentifier() {
+		return identifier;
 	}
-	public void setTelephone(int telephone) {
-		this.telephone = telephone;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setIdentifier(int identifier) {
+		this.identifier = identifier;
 	}
 	
 }

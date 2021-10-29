@@ -3,15 +3,19 @@ package com.dev.sisgestionMercados.service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.dev.sisgestionMercados.Input.FinalUserInput;
 import com.dev.sisgestionMercados.Input.UserInput;
+import com.dev.sisgestionMercados.Input.UserPasswordInput;
 import com.dev.sisgestionMercados.Output.FinalUserAtributesOutput;
 import com.dev.sisgestionMercados.Output.UserOutput;
+import com.dev.sisgestionMercados.Output.UserPasswordOutput;
 import com.dev.sisgestionMercados.entity.FinalUser;
 import com.dev.sisgestionMercados.entity.Role;
 import com.dev.sisgestionMercados.entity.Sector;
@@ -41,6 +45,8 @@ public class UserService {
 	private FinalUserService finalUserService;
 	@Autowired
 	private FinalUserRepository finalUserRepository;
+	@Autowired
+	private EmailService emailService ;
 	
 	public UserS save(UserS user) {
 	    UserS persistedUser = userRepository.save(user);
@@ -187,5 +193,65 @@ public class UserService {
     
     public UserS findById(int id) {
     	return userRepository.findById(id).get();
+    }
+    
+    public UserPasswordOutput sendEmail(String email) {
+    	String sms="";
+    	UserPasswordOutput user=new UserPasswordOutput();
+    	try {
+    		FinalUser u=finalUserRepository.findByEmail(email);
+    		System.out.println("--email: "+u.getEmail());
+    		String code=UUID.randomUUID().toString().toUpperCase().substring(0, 6);
+    		u.setCode(code);
+    		String message="Su código de verificación es: "+code;
+    		String subject="Verifica tu Email!";
+    		emailService.sendEmail(email, subject, message);
+    		sms="Mensaje enviado";
+    		user.setCode(code);
+    		user.setIdFinalUser(u.getIdFinalUser());
+    		user.setIdentifier(1);
+    		finalUserRepository.save(u);
+		} catch (Exception e) {
+			try {
+				UserS u= userRepository.findByEmail(email);
+				System.out.println("email: "+u.getEmail());
+	    		String code=UUID.randomUUID().toString().toUpperCase().substring(0, 6);
+	    		//u.setCode(code);
+	    		String message="Su código de verificación es: "+code;
+	    		String subject="Verifica tu Email!";
+	    		emailService.sendEmail(email, subject, message);
+	    		user.setCode(code);
+	    		user.setIdFinalUser(u.getIdUser());
+	    		user.setIdentifier(0);
+	    		sms="Mensaje enviado";
+			} catch (Exception e2) {
+				sms="No se pudo enviar el mensaje";
+			}
+		}
+    	return user ;
+    }
+    
+    
+    public String changePassword (UserPasswordInput user) {
+    	String sms="";
+    	
+    	if(user.getIdentifier()==0) {
+    		int id=(int) user.getIdFinalUser();
+    		UserS u=userRepository.findById(id).get();
+    		u.setPassword(encoder.encode(user.getPassword()));
+    		userRepository.save(u);
+    		sms="Se actualizo la contraseña";
+    	}else {
+    		if(user.getIdentifier()==1) {
+    			int telephone=Integer.parseInt(user.getPassword());
+    			FinalUser u=finalUserRepository.findById(user.getIdFinalUser()).get();
+    			u.setTelephone(telephone);
+    			finalUserRepository.save(u);
+    			sms ="Se actualizo el telefono";
+    		}else {
+    			sms="No se cambio la contraseña";
+    		}
+    	}
+    	return sms;
     }
 }

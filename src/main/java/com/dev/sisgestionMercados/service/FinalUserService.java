@@ -42,6 +42,7 @@ public class FinalUserService {
 
 	@Transactional
 	public FinalUserInput save(FinalUser finalUser) {
+		
 		FinalUser persistedFinalUser;
 		FinalUserInput saved=new FinalUserInput();
 		String code=UUID.randomUUID().toString().toUpperCase().substring(0, 6);
@@ -116,6 +117,7 @@ public class FinalUserService {
 		FinalUserDataOutput user=new FinalUserDataOutput();
 		user.setIdFinalUser(finalUser.getIdFinalUser());
 		user.setUserName(finalUser.getUserName());
+		user.setEmail(finalUser.getEmail());
 		user.setFinalUserName(finalUser.getFinalUserName());
 		user.setTelephone(finalUser.getTelephone());
 		return user;
@@ -131,13 +133,20 @@ public class FinalUserService {
 			newFinalUser.setUserName(finalUser.getUserName());
 		}
 		if(finalUser.getTelephone()!=0) {
+			newFinalUser.setTelephone(finalUser.getTelephone());
+		}
+		if(!finalUser.getEmail().isEmpty()) {
 			code=UUID.randomUUID().toString().toUpperCase().substring(0, 6);
 			newFinalUser.setCode(code);
+			String message="Su código de verificación es: "+code;
+			String subject="Verifica tu Email!";
+			emailService.sendEmail(finalUser.getEmail(), subject, message);
 		}
 		finalUserRepository.save(newFinalUser);
 		finalUserInput.setIdFinalUser(newFinalUser.getIdFinalUser());
-		finalUserInput.setTelephone(finalUser.getTelephone());
+		finalUserInput.setTelephone(newFinalUser.getTelephone());
 		finalUserInput.setCode(code);
+		finalUserInput.setEmail(finalUser.getEmail());
 		
 		return finalUserInput;
 	}
@@ -155,8 +164,61 @@ public class FinalUserService {
 		return result;
 	}
 	
-    public boolean noExistsUserName(String userName) {
+	public String verifyEmail(FinalUserAtributesOutput user) {
+		String result;
+		FinalUser userF=findById(user.getIdFinalUser());
+		if(userF.getCode().equals(user.getCode())) {
+			userF.setEmail(user.getEmail());
+			finalUserRepository.save(userF);
+			result = "verificado, su email ha sido actualizado";
+		}else {
+			result="no ha sido verificado";
+		}
+		return result;
+	}
+	
+    public boolean noExistsEmailAll(String email) {
 		    	
+    	boolean result=true;
+    	List <UserS> allUser = userService.findAll();
+		List <FinalUser> allUsers = finalUserRepository.findAll();
+		for(FinalUser a: allUsers) {
+			if(a.getEmail()!=null){
+			if(a.getEmail().equalsIgnoreCase(email)) {
+				result=false;
+			}}
+		}
+		for(UserS a:allUser) {
+			if(a.getEmail()!=null){
+			if(a.getEmail().equalsIgnoreCase(email)) {
+				result=false;
+			}}
+		}
+		return result;
+	}
+    
+    public boolean noExistsTelephone(int telephone) {
+    	
+    	boolean result=true;
+    	List <UserS> allUser = userService.findAll();
+		List <FinalUser> allUsers = finalUserRepository.findAll();
+		for(FinalUser a: allUsers) {
+			if(a.getTelephone()!=0){
+			if(a.getTelephone()==telephone) {
+				result=false;
+			}}
+		}
+		for(UserS a:allUser) {
+			if(a.getTelephone()!=0){
+			if(a.getTelephone()==telephone) {
+				result=false;
+			}}
+		}
+		return result;
+	}
+    
+    public boolean noExistsUserName(String userName) {
+    	
     	boolean result=true;
     	List <UserS> allUser = userService.findAll();
 		List <FinalUser> allUsers = finalUserRepository.findAll();
@@ -192,4 +254,5 @@ public class FinalUserService {
 		
 		return result;
 	}
+    
 }

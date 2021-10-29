@@ -8,5 +8,5 @@ import com.dev.sisgestionMercados.entity.UserS;
 @Repository
 public interface FinalUserRepository extends JpaRepository<FinalUser,Long> {
 	FinalUser findByUserName(String userName);
-	
+	FinalUser findByEmail(String email);
 }

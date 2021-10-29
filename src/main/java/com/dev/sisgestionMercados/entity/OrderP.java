@@ -42,11 +42,11 @@ public class OrderP{
 	
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
 	@JoinColumn(name="idFinalUser")
-	@JsonBackReference
+	@JsonBackReference(value="user-order")
 	private FinalUser finalUser;
 	
 	@OneToMany(mappedBy = "orderP",cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
-	@JsonManagedReference
+	@JsonManagedReference(value="order-assigned")
 	private List<OrderAssigned> orderAssigned;
 	
 	public int getIdOrder() {

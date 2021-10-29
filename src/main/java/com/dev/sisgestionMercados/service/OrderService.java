@@ -70,7 +70,7 @@ public class OrderService {
 	public Iterable<OrderP> allOrderByUser(long id) {
 		
 		FinalUser finalUser=finalUserService.findById(id);
-		List<OrderP> allOrderByUser=finalUser.getOrder();
+		List<OrderP> allOrderByUser=finalUser.getOrders();
 		
 		return allOrderByUser;
 	}
@@ -94,6 +94,9 @@ public class OrderService {
 			order.setOrderDetail(o.getOrderDetail());
 			order.setUserName(o.getFinalUser().getFinalUserName());
 			order.setTelephone(o.getFinalUser().getTelephone());
+			order.setEmail(o.getFinalUser().getEmail());
+			order.setWarehouseName(o.getOrderDetail().get(0).getProduct().getCategory().getWarehouse().getWarehouseName());
+			order.setSectorName(o.getOrderDetail().get(0).getProduct().getCategory().getWarehouse().getSector().getSectorName());
 			allOrders.add(order);
 		}
 		

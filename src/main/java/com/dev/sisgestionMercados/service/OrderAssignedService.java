@@ -12,6 +12,7 @@ import com.dev.sisgestionMercados.entity.OrderAssigned;
 import com.dev.sisgestionMercados.entity.OrderP;
 import com.dev.sisgestionMercados.entity.UserS;
 import com.dev.sisgestionMercados.repository.OrderAssignedRepository;
+import com.dev.sisgestionMercados.repository.OrderRepository;
 
 @Service
 public class OrderAssignedService {
@@ -24,6 +25,8 @@ public class OrderAssignedService {
 	private OrderService orderService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private OrderRepository orderRepository;
 
 	public String save(OrderAssignedInput orderAssigned) {
 		OrderP o=orderService.findById(orderAssigned.getIdOrder());
@@ -34,7 +37,9 @@ public class OrderAssignedService {
 		newOrderAssigned.setHour(LocalTime.now());
 		newOrderAssigned.setOrderP(o);
 		newOrderAssigned.setUserS(u);
+		o.setStatus("En curso");
 		orderAssignedRepository.save(newOrderAssigned);
+		orderRepository.save(o);
 		return "Delivery asignado correctamente";
 	}
 }

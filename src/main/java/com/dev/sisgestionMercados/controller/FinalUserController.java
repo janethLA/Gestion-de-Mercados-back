@@ -38,7 +38,7 @@ public class FinalUserController {
 	@PermitAll
 	@PostMapping("/createFinalUser")
 	public ResponseEntity<?> createUser(@RequestBody FinalUser finalUser){
-		
+		System.out.println("llega");
 		return ResponseEntity.ok(finalUserService.save(finalUser));
 	}
 	
@@ -87,6 +87,13 @@ public class FinalUserController {
 	public ResponseEntity<?> verifyTelephone(@RequestBody FinalUserAtributesOutput finalUser){
 		
 		return ResponseEntity.ok(finalUserService.verifyTelephone(finalUser));
+	}
+	
+	@PreAuthorize("hasRole('FINAL_USER')")
+	@PutMapping("/updateEmail")
+	public ResponseEntity<?> verifyEmail(@RequestBody FinalUserAtributesOutput finalUser){
+		
+		return ResponseEntity.ok(finalUserService.verifyEmail(finalUser));
 	}
 	
 	@PermitAll

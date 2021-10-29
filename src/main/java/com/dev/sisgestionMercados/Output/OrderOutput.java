@@ -17,6 +17,9 @@ public class OrderOutput {
 	private LocalTime orderTime;
 	private String userName;
 	private int telephone;
+	private String email;
+	private String warehouseName;
+	private String sectorName;
     private List<OrderDetail> orderDetail;
     
 	public int getIdOrder() {
@@ -72,6 +75,24 @@ public class OrderOutput {
 	}
 	public void setTelephone(int telephone) {
 		this.telephone = telephone;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getWarehouseName() {
+		return warehouseName;
+	}
+	public void setWarehouseName(String warehouseName) {
+		this.warehouseName = warehouseName;
+	}
+	public String getSectorName() {
+		return sectorName;
+	}
+	public void setSectorName(String sectorName) {
+		this.sectorName = sectorName;
 	}
     
 }

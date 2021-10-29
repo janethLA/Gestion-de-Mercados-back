@@ -57,9 +57,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         		.antMatchers("/**/allWarehouse").permitAll()
         		.antMatchers("/**/loginAccount/*").permitAll()
         		.antMatchers("/**/uniqueEmail/*").permitAll()
-        		//.antMatchers("/**/uniqueUserName/*").permitAll() // /updateTelephone
-        		//.antMatchers("/**/updateTelephone").permitAll()
-        		//.antMatchers("/api/request").hasRole("ADMIN")
+        		.antMatchers("/**/uniqueTelephoneAll/*").permitAll() // /updateTelephone
+        		.antMatchers("/**/uniqueEmailAll/*").permitAll()
+        		.antMatchers("/**/sendEmail/*").permitAll()
+        		.antMatchers("/**/changePassword").permitAll()
+        		//.antMatchers("/**/sendEmail/*").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

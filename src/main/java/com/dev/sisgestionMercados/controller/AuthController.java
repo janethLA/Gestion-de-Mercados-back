@@ -21,17 +21,21 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.sisgestionMercados.Input.AuthenticationRequest;
+import com.dev.sisgestionMercados.Input.UserPasswordInput;
 import com.dev.sisgestionMercados.Output.AuthenticationResponse;
 import com.dev.sisgestionMercados.Output.FinalUserAtributesOutput;
 import com.dev.sisgestionMercados.Output.FinalUserOutput;
+import com.dev.sisgestionMercados.Output.UserPasswordOutput;
 import com.dev.sisgestionMercados.config.JWTUtil;
 import com.dev.sisgestionMercados.service.AuthUserService;
+import com.dev.sisgestionMercados.service.FinalUserService;
 import com.dev.sisgestionMercados.service.UserService;
 
 
@@ -51,7 +55,8 @@ public class AuthController {
 
     @Autowired
     private JWTUtil jwtUtil;
-
+    @Autowired
+    private FinalUserService finalUserService;
     
     @PostMapping("/authenticate")
     public ResponseEntity<?> createToken(@RequestBody AuthenticationRequest request) {
@@ -89,4 +94,32 @@ public class AuthController {
 		}
 		
 	}
+    
+    @PermitAll
+	@GetMapping("/uniqueEmailAll/{email}")
+	public ResponseEntity<?> uniqueEmail(@PathVariable String email){
+		
+		return ResponseEntity.ok(finalUserService.noExistsEmailAll(email));
+	}
+    
+    @PermitAll
+	@GetMapping("/uniqueTelephoneAll/{telephone}")
+	public ResponseEntity<?> uniqueTelephone(@PathVariable Integer telephone){
+		
+		return ResponseEntity.ok(finalUserService.noExistsTelephone(telephone));
+	}
+    
+    @PermitAll
+   	@GetMapping("/sendEmail/{email}")
+   	public ResponseEntity<?> sendEmail(@PathVariable String email){
+   		
+   		return ResponseEntity.ok(userService.sendEmail(email));
+   	}
+    
+    @PermitAll
+   	@PutMapping("/changePassword")
+   	public ResponseEntity<?> changePassword(@RequestBody UserPasswordInput user){
+   		
+   		return ResponseEntity.ok(userService.changePassword(user));
+   	}
 }

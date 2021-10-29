@@ -35,12 +35,16 @@ public class FinalUser {
 	private String email;
 	@Column
 	private boolean active;
+
 	@OneToMany(mappedBy = "finalUser",cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
-	@JsonManagedReference
-	private List<OrderP> order;
+	@JsonManagedReference(value="user-order")
+	private List<OrderP> orders;
+	
 	@JoinColumn(name = "idPrivilege" )
 	@OneToOne(cascade ={CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH} )
 	private Privilege privilege;
+	
+	
 	
 	public long getIdFinalUser() {
 		return idFinalUser;
@@ -54,35 +58,17 @@ public class FinalUser {
 	public void setFinalUserName(String finalUserName) {
 		this.finalUserName = finalUserName;
 	}
-	public int getTelephone() {
-		return telephone;
-	}
-	public void setTelephone(int telephone) {
-		this.telephone = telephone;
-	}
-	public List<OrderP> getOrder() {
-		return order;
-	}
-	public void setOrder(List<OrderP> order) {
-		this.order = order;
-	}
-	public Privilege getPrivilege() {
-		return privilege;
-	}
-	public void setPrivilege(Privilege privilege) {
-		this.privilege = privilege;
-	}
 	public String getUserName() {
 		return userName;
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public boolean isActive() {
-		return active;
+	public int getTelephone() {
+		return telephone;
 	}
-	public void setActive(boolean active) {
-		this.active = active;
+	public void setTelephone(int telephone) {
+		this.telephone = telephone;
 	}
 	public String getCode() {
 		return code;
@@ -96,6 +82,26 @@ public class FinalUser {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public boolean isActive() {
+		return active;
+	}
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+	public List<OrderP> getOrders() {
+		return orders;
+	}
+	public void setOrders(List<OrderP> orders) {
+		this.orders = orders;
+	}
+	public Privilege getPrivilege() {
+		return privilege;
+	}
+	public void setPrivilege(Privilege privilege) {
+		this.privilege = privilege;
+	}
+	
+	
 	
 }
 

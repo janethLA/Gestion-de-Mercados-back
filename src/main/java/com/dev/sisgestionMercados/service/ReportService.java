@@ -45,7 +45,7 @@ public class ReportService {
     	List<FinalUser> allUsers=finalUserService.findAll();
     	
     	for(FinalUser u:allUsers) {
-    		if(!u.getOrder().isEmpty()) {
+    		if(!u.getOrders().isEmpty()) {
     			allTelephones.add(u.getTelephone());
     		}
     	}
@@ -57,7 +57,7 @@ public class ReportService {
     	List<FinalUser> allUsers=finalUserService.findAll();
     	
     	for(FinalUser u: allUsers) {
-    		if(!u.getOrder().isEmpty()) {
+    		if(!u.getOrders().isEmpty()) {
     			allUser.add(u.getFinalUserName());
     		}
     	}

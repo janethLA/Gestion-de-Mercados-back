@@ -6,6 +6,7 @@ public class FinalUserDataOutput {
 	private String finalUserName;
 	private String userName;
 	private int telephone;
+	private String email;
 	
 	public long getIdFinalUser() {
 		return idFinalUser;
@@ -30,6 +31,12 @@ public class FinalUserDataOutput {
 	}
 	public void setTelephone(int telephone) {
 		this.telephone = telephone;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 }

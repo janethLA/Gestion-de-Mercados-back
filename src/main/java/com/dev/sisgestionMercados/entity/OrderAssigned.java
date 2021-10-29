@@ -36,7 +36,7 @@ public class OrderAssigned {
 	
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
 	@JoinColumn(name="idOrder")
-    @JsonBackReference
+    @JsonBackReference(value="order-assigned")
 	private OrderP orderP;
 
 	public int getIdOrderAssigned() {

@@ -8,9 +8,12 @@ public class ReportOrderInput {
 	private int idOrder;
 	private LocalDate dateOfOrder;
 	private LocalTime hourOfOrder; 
+    private int quantityProducts;
+	private double totalPrice;
 	private String userName;
 	private int telephone;
 	private String status;
+   
 	
 	public int getIdOrder() {
 		return idOrder;
@@ -47,6 +50,18 @@ public class ReportOrderInput {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public int getQuantityProducts() {
+		return quantityProducts;
+	}
+	public void setQuantityProducts(int quantityProducts) {
+		this.quantityProducts = quantityProducts;
+	}
+	public double getTotalPrice() {
+		return totalPrice;
+	}
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 	
 }

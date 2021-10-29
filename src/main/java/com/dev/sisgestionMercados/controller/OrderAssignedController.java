@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.sisgestionMercados.Input.OrderAssignedInput;
 import com.dev.sisgestionMercados.Input.OrderInput;
+import com.dev.sisgestionMercados.Output.OrderAssignedOutput;
+import com.dev.sisgestionMercados.entity.OrderAssigned;
+import com.dev.sisgestionMercados.entity.OrderP;
 import com.dev.sisgestionMercados.service.OrderAssignedService;
 import com.dev.sisgestionMercados.service.OrderService;
 
@@ -34,5 +38,12 @@ public class OrderAssignedController {
 	public ResponseEntity<?> createorder(@RequestBody OrderAssignedInput orderAssigned){
 		
 		return ResponseEntity.ok(orderAssignedService.save(orderAssigned));
+	}
+	
+	@PreAuthorize("hasRole('VER_PEDIDOS')")
+	@GetMapping("/allAssignedOrders/{id}")
+	public Iterable<OrderAssignedOutput> allAssignedOrders(@PathVariable Integer id){
+		
+		return orderAssignedService.allAssignedOrders(id);
 	}
 }

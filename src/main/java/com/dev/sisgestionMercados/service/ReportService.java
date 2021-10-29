@@ -32,6 +32,8 @@ public class ReportService {
 			newOrder.setDateOfOrder(p.getOrderDate());
 			newOrder.setHourOfOrder(p.getOrderTime());
 			newOrder.setStatus(p.getStatus());
+			newOrder.setQuantityProducts(p.getQuantityProducts());
+			newOrder.setTotalPrice(p.getTotalPrice());
 			newOrder.setTelephone(p.getFinalUser().getTelephone());
 			newOrder.setUserName(p.getFinalUser().getFinalUserName());
 			allOrdersByAtributes.add(newOrder);

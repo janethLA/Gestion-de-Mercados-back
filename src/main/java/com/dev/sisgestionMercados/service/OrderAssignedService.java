@@ -2,12 +2,16 @@ package com.dev.sisgestionMercados.service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dev.sisgestionMercados.Input.OrderAssignedInput;
+import com.dev.sisgestionMercados.Output.OrderAssignedOutput;
+import com.dev.sisgestionMercados.Output.OrderOutput;
 import com.dev.sisgestionMercados.entity.OrderAssigned;
 import com.dev.sisgestionMercados.entity.OrderP;
 import com.dev.sisgestionMercados.entity.UserS;
@@ -41,5 +45,29 @@ public class OrderAssignedService {
 		orderAssignedRepository.save(newOrderAssigned);
 		orderRepository.save(o);
 		return "Delivery asignado correctamente";
+	}
+	
+	public  List<OrderAssignedOutput> allAssignedOrders(int id){
+		UserS u=userService.findById(id);
+		List<OrderAssigned> allAsignedOrders=u.getOrderAssigned();
+		List<OrderAssignedOutput> allAsignedOrdersFound=new ArrayList<OrderAssignedOutput>();
+		for (OrderAssigned orderA:allAsignedOrders) {
+			OrderAssignedOutput o=new OrderAssignedOutput();
+			o.setIdOrderAssigned(orderA.getIdOrderAssigned());
+			o.setStatus(orderA.getStatus());
+			o.setDate(orderA.getDate());
+			o.setHour(orderA.getHour());
+			o.setOrder(orderA.getOrderP());
+			
+			o.setUserName(orderA.getOrderP().getFinalUser().getFinalUserName());
+			o.setUserEmail(orderA.getOrderP().getFinalUser().getEmail());
+			o.setUserTelephone(orderA.getOrderP().getFinalUser().getTelephone());
+			
+			o.setWarehouseNameOfOrder(orderA.getOrderP().getOrderDetail().get(0).getProduct().getCategory().getWarehouse().getWarehouseName());
+			o.setWarehouseAddressOfOrder(orderA.getOrderP().getOrderDetail().get(0).getProduct().getCategory().getWarehouse().getAddress());
+			o.setWarehouseSectorOfOrder(orderA.getOrderP().getOrderDetail().get(0).getProduct().getCategory().getWarehouse().getSector().getSectorName());
+			allAsignedOrdersFound.add(o);
+		}
+		return allAsignedOrdersFound;
 	}
 }

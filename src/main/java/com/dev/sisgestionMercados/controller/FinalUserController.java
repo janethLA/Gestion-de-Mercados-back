@@ -88,4 +88,11 @@ public class FinalUserController {
 		
 		return ResponseEntity.ok(finalUserService.verifyTelephone(finalUser));
 	}
+	
+	@PermitAll
+	@GetMapping("/uniqueEmail/{email}")
+	public ResponseEntity<?> uniqueEmail(@PathVariable String email){
+		
+		return ResponseEntity.ok(finalUserService.noExistsEmail(email));
+	}
 }

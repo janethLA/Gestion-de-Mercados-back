@@ -70,7 +70,7 @@ public class FinalUserService {
 		
 		String message="Su código de verificación es: "+code;
 		String subject="Verifica tu Email!";
-		emailService.sendEmail("luna_jl99@hotmail.com", subject, message);
+		emailService.sendEmail(finalUser.getEmail(), subject, message);
 		
 	    return saved;
 	}
@@ -178,4 +178,18 @@ public class FinalUserService {
     public List<FinalUser> findAll(){
     	return finalUserRepository.findAll();
     }
+    
+    public boolean noExistsEmail(String email) {
+    	
+    	boolean result=true;
+		List <FinalUser> allUsers = finalUserRepository.findAll();
+		for(FinalUser a: allUsers) {
+			if(a.getUserName()!=null){
+			if(a.getEmail().equalsIgnoreCase(email)) {
+				result=false;
+			}}
+		}
+		
+		return result;
+	}
 }

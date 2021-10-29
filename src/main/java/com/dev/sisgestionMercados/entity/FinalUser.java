@@ -32,6 +32,8 @@ public class FinalUser {
 	@Column
 	private String code;
 	@Column
+	private String email;
+	@Column
 	private boolean active;
 	@OneToMany(mappedBy = "finalUser",cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
 	@JsonManagedReference
@@ -87,6 +89,12 @@ public class FinalUser {
 	}
 	public void setCode(String code) {
 		this.code = code;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 }

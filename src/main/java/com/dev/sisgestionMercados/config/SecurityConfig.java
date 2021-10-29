@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         		.antMatchers("/**/searchOfAllWarehouses").permitAll() //
         		.antMatchers("/**/allWarehouse").permitAll()
         		.antMatchers("/**/loginAccount/*").permitAll()
-        		//.antMatchers("/**/updateDataUser/*").permitAll()
+        		.antMatchers("/**/uniqueEmail/*").permitAll()
         		//.antMatchers("/**/uniqueUserName/*").permitAll() // /updateTelephone
         		//.antMatchers("/**/updateTelephone").permitAll()
         		//.antMatchers("/api/request").hasRole("ADMIN")

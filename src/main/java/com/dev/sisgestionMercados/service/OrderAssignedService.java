@@ -91,10 +91,10 @@ public class OrderAssignedService {
 	
 	public String orderCompleted(int id) {
 		OrderAssigned orderA=orderAssignedRepository.findById(id).get();
-		//orderA.setStatus("Rechazado");
+		orderA.setStatus("Finalizado");
 		OrderP o=orderA.getOrderP();
 		o.setStatus("Finalizado");
-		//orderAssignedRepository.save(orderA);
+		orderAssignedRepository.save(orderA);
 		orderService.save2(o);
 		return "Se ha finalizado el pedido asignado";
 	}

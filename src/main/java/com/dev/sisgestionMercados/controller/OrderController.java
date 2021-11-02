@@ -46,14 +46,14 @@ public class OrderController {
 		return orderService.allOrderByUser(id);
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMINISTRAR_PEDIDOS')")	
+	@PreAuthorize("hasRole('ADMINISTRAR_PEDIDOS')")	
 	@GetMapping("/allOrders")
 	public Iterable<OrderOutput> allOrders(){
 		
 		return orderService.allOrders2();
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMINISTRAR_PEDIDOS')")	
+	@PreAuthorize("hasRole('ADMINISTRAR_PEDIDOS')")	
 	@GetMapping("/allDeliveries")
 	public Iterable<DeliveryUserOutput> getAllDeliveries(){
 		

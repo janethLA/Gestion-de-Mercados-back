@@ -175,7 +175,7 @@ public class ProductService {
 		System.out.println("productName: "+productName);
 		Warehouse found = marketService.getById(id);
 		List<CategorySearchOutput> allCategorySearch = new ArrayList<CategorySearchOutput>();
-		List<ProductSearchOutput> allProductSearch = new ArrayList<ProductSearchOutput>();
+	
 
 		List<Category> categories = found.getCategory();
 
@@ -187,7 +187,7 @@ public class ProductService {
 			category.setCategoryName(foundCategory.getCategoryName());
 
 			List<Product> products = foundCategory.getProduct();
-
+			List<ProductSearchOutput> allProductSearch = new ArrayList<ProductSearchOutput>();
 			for (Product foundProduct : products) {
 
 				System.out.println("Nombre del producto : " + foundProduct.getProductName());

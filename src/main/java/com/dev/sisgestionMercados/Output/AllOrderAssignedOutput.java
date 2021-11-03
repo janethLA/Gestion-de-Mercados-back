@@ -10,6 +10,7 @@ public class AllOrderAssignedOutput {
 	private LocalDate date;
 	private LocalTime hour;
 	private int idOrder;
+	private String commentary;
 	
 	public int getIdOrderAssigned() {
 		return idOrderAssigned;
@@ -41,6 +42,11 @@ public class AllOrderAssignedOutput {
 	public void setIdOrder(int idOrder) {
 		this.idOrder = idOrder;
 	}
-	
+	public String getCommentary() {
+		return commentary;
+	}
+	public void setCommentary(String commentary) {
+		this.commentary = commentary;
+	}
 	
 }

@@ -111,6 +111,7 @@ public class OrderAssignedService {
 			newOrderA.setHour(o.getHour());
 			newOrderA.setStatus(o.getStatus());
 			newOrderA.setIdOrder(o.getOrderP().getIdOrder());
+			newOrderA.setCommentary(o.getCommentary());
 			 AllOrderAssigned.add(newOrderA);
 		}
 		return AllOrderAssigned;

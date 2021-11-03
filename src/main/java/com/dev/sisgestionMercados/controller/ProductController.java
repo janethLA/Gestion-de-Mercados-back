@@ -58,7 +58,7 @@ public class ProductController {
 	}
 	
 	@PermitAll
-	@GetMapping("/productSearch/{id}")
+	@PostMapping("/productSearch/{id}")
 	public Iterable<CategorySearchOutput> getAllByproductName(@PathVariable Integer id, @RequestParam("productName") String productName){
 		
 		return productService.getAllByproductName(id, productName);

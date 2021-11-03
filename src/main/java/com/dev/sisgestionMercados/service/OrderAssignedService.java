@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dev.sisgestionMercados.Input.OrderAssignedInput;
+import com.dev.sisgestionMercados.Output.AllOrderAssignedOutput;
 import com.dev.sisgestionMercados.Output.OrderAssignedOutput;
 import com.dev.sisgestionMercados.Output.OrderOutput;
 import com.dev.sisgestionMercados.entity.OrderAssigned;
@@ -99,9 +100,20 @@ public class OrderAssignedService {
 		return "Se ha finalizado el pedido asignado";
 	}
 	
-	public  List<OrderAssigned> getAllAssignedOrders(){
+	public  List<AllOrderAssignedOutput> getAllAssignedOrders(){
 		
-		return orderAssignedRepository.findAll();
+		List<AllOrderAssignedOutput> AllOrderAssigned=new ArrayList<AllOrderAssignedOutput>();
+		List<OrderAssigned> orders= orderAssignedRepository.findAll();
+		for(OrderAssigned o: orders) {
+			AllOrderAssignedOutput newOrderA=new AllOrderAssignedOutput();
+			newOrderA.setIdOrderAssigned(o.getIdOrderAssigned());
+			newOrderA.setDate(o.getDate());
+			newOrderA.setHour(o.getHour());
+			newOrderA.setStatus(o.getStatus());
+			newOrderA.setIdOrder(o.getOrderP().getIdOrder());
+			 AllOrderAssigned.add(newOrderA);
+		}
+		return  AllOrderAssigned;
 	}
 }
 

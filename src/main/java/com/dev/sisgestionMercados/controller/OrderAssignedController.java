@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.sisgestionMercados.Input.OrderAssignedInput;
 import com.dev.sisgestionMercados.Input.OrderInput;
+import com.dev.sisgestionMercados.Output.AllOrderAssignedOutput;
 import com.dev.sisgestionMercados.Output.OrderAssignedOutput;
 import com.dev.sisgestionMercados.entity.OrderAssigned;
 import com.dev.sisgestionMercados.entity.OrderP;
@@ -71,7 +72,7 @@ public class OrderAssignedController {
 	
 	@PreAuthorize("hasRole('ADMINISTRAR_PEDIDOS')")
 	@GetMapping("/allAssignedOrders")
-	public Iterable<OrderAssigned> getAllAssignedOrders(){
+	public Iterable<AllOrderAssignedOutput> getAllAssignedOrders(){
 		
 		return orderAssignedService.getAllAssignedOrders();
 	}

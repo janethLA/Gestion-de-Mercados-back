@@ -202,7 +202,7 @@ public class ProductService {
 					product.setExpirationDate(foundProduct.getExpirationDate());
 					product.setMeasurement(foundProduct.getMeasurement());
 					product.setQuantity(foundProduct.getQuantity());
-					product.setPrice(foundProduct.getPrice().get(foundProduct.getPrice().size() - 1).getPrice());
+					product.setPrice(foundProduct.getPrice());
 					product.setImage(foundProduct.getImage());
 					allProductSearch.add(product);
 				}

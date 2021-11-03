@@ -1,6 +1,9 @@
 package com.dev.sisgestionMercados.Output;
 
 import java.time.LocalDate;
+import java.util.List;
+
+import com.dev.sisgestionMercados.entity.Price;
 
 public class ProductSearchOutput {
 
@@ -10,7 +13,7 @@ public class ProductSearchOutput {
 	private byte[] image;
 	private String measurement;
 	private int quantity;
-	private double price;
+	private List<Price> price;
 	private LocalDate expirationDate;
 	public int getIdProduct() {
 		return idProduct;
@@ -48,10 +51,11 @@ public class ProductSearchOutput {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	public double getPrice() {
+	
+	public List<Price> getPrice() {
 		return price;
 	}
-	public void setPrice(double price) {
+	public void setPrice(List<Price> price) {
 		this.price = price;
 	}
 	public LocalDate getExpirationDate() {

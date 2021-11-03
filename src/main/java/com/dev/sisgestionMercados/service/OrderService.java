@@ -128,5 +128,12 @@ public class OrderService {
     public OrderP findById(int id) {
     	return orderRepository.findById(id).get();
     }
+    
+    public String reassignOrder(int id) {
+		OrderP order=orderRepository.findById(id).get();
+		order.setStatus("Pendiente");
+		orderRepository.save(order);
+		return "Vuelve a reasignar el pedido";
+	}
 }
 

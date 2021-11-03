@@ -126,6 +126,7 @@ public class OrderAssignedService {
 		//orderService.save2(o);
 		return "Se ha registrado su percance";
 	}
+
 }
 
 

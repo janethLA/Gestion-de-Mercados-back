@@ -83,4 +83,6 @@ public class OrderAssignedController {
 		
 		return ResponseEntity.ok(orderAssignedService.reportEmergency(id, commentary));
 	}
+	
+	
 }

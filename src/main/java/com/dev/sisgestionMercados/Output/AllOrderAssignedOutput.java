@@ -11,6 +11,7 @@ public class AllOrderAssignedOutput {
 	private LocalTime hour;
 	private int idOrder;
 	private String commentary;
+	private boolean reassigned;
 	
 	public int getIdOrderAssigned() {
 		return idOrderAssigned;
@@ -47,6 +48,12 @@ public class AllOrderAssignedOutput {
 	}
 	public void setCommentary(String commentary) {
 		this.commentary = commentary;
+	}
+	public boolean isReassigned() {
+		return reassigned;
+	}
+	public void setReassigned(boolean reassigned) {
+		this.reassigned = reassigned;
 	}
 	
 }

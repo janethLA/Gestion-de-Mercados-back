@@ -42,6 +42,7 @@ public class OrderAssignedService {
 		newOrderAssigned.setHour(LocalTime.now());
 		newOrderAssigned.setOrderP(o);
 		newOrderAssigned.setUserS(u);
+		newOrderAssigned.setReassigned(false);
 		o.setStatus("En curso");
 		orderAssignedRepository.save(newOrderAssigned);
 		orderRepository.save(o);
@@ -112,6 +113,7 @@ public class OrderAssignedService {
 			newOrderA.setStatus(o.getStatus());
 			newOrderA.setIdOrder(o.getOrderP().getIdOrder());
 			newOrderA.setCommentary(o.getCommentary());
+			newOrderA.setReassigned(o.isReassigned());
 			 AllOrderAssigned.add(newOrderA);
 		}
 		return AllOrderAssigned;
@@ -127,6 +129,10 @@ public class OrderAssignedService {
 		//orderService.save2(o);
 		return "Se ha registrado su percance";
 	}
+	
+   public void save2(OrderAssigned order) {
+    	orderAssignedRepository.save(order);
+    }
 
 }
 

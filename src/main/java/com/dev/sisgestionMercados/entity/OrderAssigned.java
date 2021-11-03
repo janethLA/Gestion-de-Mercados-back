@@ -30,6 +30,8 @@ public class OrderAssigned {
 	private LocalTime hour;
 	@Column(length = 1000)
 	private String commentary;
+	@Column
+	private boolean reassigned;
 	
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
 	@JoinColumn(name="idUser")
@@ -96,5 +98,14 @@ public class OrderAssigned {
 	public void setCommentary(String commentary) {
 		this.commentary = commentary;
 	}
+
+	public boolean isReassigned() {
+		return reassigned;
+	}
+
+	public void setReassigned(boolean reassigned) {
+		this.reassigned = reassigned;
+	}
+	
 	
 }

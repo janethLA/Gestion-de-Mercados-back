@@ -15,6 +15,7 @@ import com.dev.sisgestionMercados.Output.DeliveryUserOutput;
 import com.dev.sisgestionMercados.Output.OrderOutput;
 import com.dev.sisgestionMercados.Output.PrivilegeOutput;
 import com.dev.sisgestionMercados.entity.FinalUser;
+import com.dev.sisgestionMercados.entity.OrderAssigned;
 import com.dev.sisgestionMercados.entity.OrderDetail;
 import com.dev.sisgestionMercados.entity.OrderP;
 import com.dev.sisgestionMercados.entity.Product;
@@ -36,7 +37,8 @@ public class OrderService {
 	private ProductService productService;
 	@Autowired
 	private UserService userService;
-	
+	@Autowired
+	private OrderAssignedService orderAssignedService;
 	
 	
 	public void save2(OrderP order) {
@@ -131,9 +133,14 @@ public class OrderService {
     
     public String reassignOrder(int id) {
 		OrderP order=orderRepository.findById(id).get();
+		OrderAssigned orderA=order.getOrderAssigned().get(order.getOrderAssigned().size()-1);
+		orderA.setReassigned(true);
 		order.setStatus("Pendiente");
 		orderRepository.save(order);
+		orderAssignedService.save2(orderA);
 		return "Vuelve a reasignar el pedido";
 	}
+    
+    
 }
 

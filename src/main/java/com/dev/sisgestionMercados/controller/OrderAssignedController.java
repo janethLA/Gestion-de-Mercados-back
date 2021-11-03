@@ -76,4 +76,11 @@ public class OrderAssignedController {
 		
 		return orderAssignedService.getAllAssignedOrders();
 	}
+	
+	@PreAuthorize("hasRole('VER_PEDIDOS')")
+	@PutMapping("/reportEmergency/{id}")
+	public ResponseEntity<?> reportEmergency(@PathVariable Integer id, @RequestBody String commentary){
+		
+		return ResponseEntity.ok(orderAssignedService.reportEmergency(id, commentary));
+	}
 }

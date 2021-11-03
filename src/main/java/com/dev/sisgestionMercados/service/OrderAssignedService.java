@@ -113,7 +113,20 @@ public class OrderAssignedService {
 			newOrderA.setIdOrder(o.getOrderP().getIdOrder());
 			 AllOrderAssigned.add(newOrderA);
 		}
-		return  AllOrderAssigned;
+		return AllOrderAssigned;
+	}
+	
+	public String reportEmergency(int id, String commentary) {
+		OrderAssigned orderA=orderAssignedRepository.findById(id).get();
+		orderA.setStatus("Rechazado");
+		orderA.setCommentary(commentary);
+		////OrderP o=orderA.getOrderP();
+		//o.setStatus("Pendiente");
+		orderAssignedRepository.save(orderA);
+		//orderService.save2(o);
+		return "Se ha registrado su percance";
 	}
 }
+
+
 

@@ -28,6 +28,8 @@ public class OrderAssigned {
 	private LocalDate date;
 	@Column
 	private LocalTime hour;
+	@Column(length = 1000)
+	private String commentary;
 	
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
 	@JoinColumn(name="idUser")
@@ -86,6 +88,13 @@ public class OrderAssigned {
 	public void setOrderP(OrderP orderP) {
 		this.orderP = orderP;
 	}
-	
+
+	public String getCommentary() {
+		return commentary;
+	}
+
+	public void setCommentary(String commentary) {
+		this.commentary = commentary;
+	}
 	
 }

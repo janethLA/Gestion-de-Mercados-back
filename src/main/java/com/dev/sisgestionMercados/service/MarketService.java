@@ -7,24 +7,20 @@ import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.dev.sisgestionMercados.Complement.Location;
 import com.dev.sisgestionMercados.Input.LocationInput;
 import com.dev.sisgestionMercados.Input.MarketInput;
 import com.dev.sisgestionMercados.Output.ProductSearch;
-import com.dev.sisgestionMercados.Output.UserOutput;
 import com.dev.sisgestionMercados.Output.WarehouseOutput;
 import com.dev.sisgestionMercados.Output.WarehouseSearch;
 import com.dev.sisgestionMercados.Output.WarehouseSearchByAtributes;
 import com.dev.sisgestionMercados.entity.Warehouse;
 import com.dev.sisgestionMercados.entity.Category;
-import com.dev.sisgestionMercados.entity.Privilege;
 import com.dev.sisgestionMercados.entity.Product;
 import com.dev.sisgestionMercados.entity.Sector;
-import com.dev.sisgestionMercados.entity.UserS;
 import com.dev.sisgestionMercados.repository.MarketRepository;
-import com.dev.sisgestionMercados.repository.SectorRepository;
 
 @Service
 public class MarketService {
@@ -36,13 +32,21 @@ public class MarketService {
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	public MarketInput save(MarketInput market) {
+	public MarketInput save(MarketInput market, MultipartFile image) {
 		Warehouse newMarket=new Warehouse();
 		newMarket.setWarehouseName(market.getMarketName());;
 		newMarket.setAddress(market.getAddress());
 		newMarket.setLatitude(market.getLatitude());
 		newMarket.setLongitude(market.getLongitude());
-		newMarket.setWarehouseImage(market.getWarehouseImage());
+		if(!image.isEmpty()) {
+			try {
+				byte[] bytes=image.getBytes();
+				newMarket.setWarehouseImage(bytes);
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
 	    marketRepository.save(newMarket);
 	    putSector(market.getIdSector(),newMarket);
 	    return market;
@@ -67,7 +71,7 @@ public class MarketService {
 			newWarehouse.setAddress(found.getAddress());
 			newWarehouse.setLatitude(found.getLatitude());
 			newWarehouse.setLongitude(found.getLongitude());
-			newWarehouse.setImage(found.getWarehouseImage());
+			newWarehouse.setWarehouseImage(found.getWarehouseImage());
 			allWarehousesByOrder.add(newWarehouse);
 
 		}
@@ -148,6 +152,7 @@ public class MarketService {
 				warehouse.setWarehouseName(found.getWarehouseName());
 				warehouse.setLatitude(found.getLatitude());
 				warehouse.setLongitude(found.getLongitude());
+				warehouse.setAddress(found.getAddress());
 				warehouse.setWarehouseImage(found.getWarehouseImage());
 				if(found.getSector().getSectorName().equalsIgnoreCase(sectorName)) {
 					allWarehouseSearch.add(warehouse);
@@ -176,6 +181,7 @@ public class MarketService {
 				warehouse.setWarehouseName(found.getWarehouseName());
 				warehouse.setLatitude(found.getLatitude());
 				warehouse.setLongitude(found.getLongitude());
+				warehouse.setAddress(found.getAddress());
 				warehouse.setWarehouseImage(found.getWarehouseImage());
 				allWarehouseSearch.add(warehouse);
 
@@ -196,6 +202,7 @@ public class MarketService {
 				warehouse.setWarehouseName(found.getWarehouseName());
 				warehouse.setLatitude(found.getLatitude());
 				warehouse.setLongitude(found.getLongitude());
+				warehouse.setAddress(found.getAddress());
 				warehouse.setWarehouseImage(found.getWarehouseImage());
 				allWarehouseSearch.add(warehouse);
 		}

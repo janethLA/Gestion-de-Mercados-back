@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,9 +43,9 @@ public class MarketController {
 	
 	@PreAuthorize("hasRole('ADMINISTRAR_ALMACENES')")	
 	@PostMapping("/createMarket")
-	public ResponseEntity<?> save(@RequestBody MarketInput market){
+	public ResponseEntity<?> save(@ModelAttribute  MarketInput market, @RequestParam("image") MultipartFile image){
 		
-		return ResponseEntity.ok(marketService.save(market));
+		return ResponseEntity.ok(marketService.save(market,image));
 	}
 	
 	//@PreAuthorize("hasRole('ADMINISTRAR_ALMACENES')")	

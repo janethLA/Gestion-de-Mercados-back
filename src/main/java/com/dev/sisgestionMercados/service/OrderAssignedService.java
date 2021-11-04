@@ -35,6 +35,7 @@ public class OrderAssignedService {
 
 	public String save(OrderAssignedInput orderAssigned) {
 		OrderP o=orderService.findById(orderAssigned.getIdOrder());
+		o.setShippingCost(orderAssigned.getShippingCost());
 		UserS u=userService.findById(orderAssigned.getIdUser());
 		OrderAssigned newOrderAssigned=new OrderAssigned();
 		newOrderAssigned.setStatus("Pendiente");

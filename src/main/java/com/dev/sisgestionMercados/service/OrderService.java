@@ -86,10 +86,13 @@ public class OrderService {
 		return orderRepository.findAll();
 	}
     public Iterable<OrderOutput> allOrders2(){
+    	System.out.println("LLEGA");
     	List<OrderP> orders=orderRepository.findAll();
+    	System.out.println("LLEGA0");
 		List<OrderOutput> allOrders=new ArrayList<OrderOutput>();
-		
+		System.out.println("LLEGA1");
 		for(OrderP o: orders) {
+			System.out.println("LLEGA2");
 			OrderOutput order=new OrderOutput();
 			order.setIdOrder(o.getIdOrder());
 			order.setOrderDate(o.getOrderDate());
@@ -101,6 +104,11 @@ public class OrderService {
 			order.setUserName(o.getFinalUser().getFinalUserName());
 			order.setTelephone(o.getFinalUser().getTelephone());
 			order.setEmail(o.getFinalUser().getEmail());
+			try {
+				order.setShippingCost(o.getShippingCost());
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 			order.setWarehouseName(o.getOrderDetail().get(0).getProduct().getCategory().getWarehouse().getWarehouseName());
 			order.setSectorName(o.getOrderDetail().get(0).getProduct().getCategory().getWarehouse().getSector().getSectorName());
 			allOrders.add(order);
@@ -141,6 +149,41 @@ public class OrderService {
 		return "Vuelve a reasignar el pedido";
 	}
     
+    public String orderCanceled(int id) {
+		OrderP o=orderRepository.findById(id).get();
+		o.setStatus("Cancelado");
+		orderRepository.save(o);
+		return "Se ha cancelado el pedido";
+	}
     
+    public String orderSent(int id) {
+    	OrderP order=orderRepository.findById(id).get();
+		OrderAssigned orderA=order.getOrderAssigned().get(order.getOrderAssigned().size()-1);
+		order.setStatus("Enviado");
+		orderA.setStatus("Aceptado");
+		orderRepository.save(order);
+		orderAssignedService.save2(orderA);
+		return "Se cambio el estado a Enviado";
+    }
+    
+    public String cancelOrderInProgressAndSent(int id) {
+  		OrderP o=orderRepository.findById(id).get();
+  		o.setStatus("Cancelado");
+  		OrderAssigned orderA=o.getOrderAssigned().get(o.getOrderAssigned().size()-1);
+  		orderA.setStatus("Cancelado");
+  		orderRepository.save(o);
+  		orderAssignedService.save2(orderA);
+  		return "Se ha cancelado el pedido que estaba en curso";
+  	}
+    
+    public String finalizeOrder(int id) {
+    	OrderP order=orderRepository.findById(id).get();
+		OrderAssigned orderA=order.getOrderAssigned().get(order.getOrderAssigned().size()-1);
+		order.setStatus("Finalizado");
+		orderA.setStatus("Finalizado");
+		orderRepository.save(order);
+		orderAssignedService.save2(orderA);
+		return "Se cambio el estado a Finalizado";
+    }
 }
 

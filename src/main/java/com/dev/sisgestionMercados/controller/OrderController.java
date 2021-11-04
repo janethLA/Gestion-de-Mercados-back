@@ -67,4 +67,32 @@ public class OrderController {
 		
 		return ResponseEntity.ok(orderService.reassignOrder(id));
 	}
+	
+	@PreAuthorize("hasRole('ADMINISTRAR_PEDIDOS')")
+	@PutMapping("/orderCanceled/{id}")
+	public ResponseEntity<?> orderCanceled(@PathVariable Integer id){
+		
+		return ResponseEntity.ok(orderService.orderCanceled(id));
+	}
+	
+	@PreAuthorize("hasRole('ADMINISTRAR_PEDIDOS')")
+	@PutMapping("/orderSent/{id}")
+	public ResponseEntity<?> orderSent(@PathVariable Integer id){
+		
+		return ResponseEntity.ok(orderService.orderSent(id));
+	}
+	
+	@PreAuthorize("hasRole('ADMINISTRAR_PEDIDOS')")
+	@PutMapping("/cancelOrderInProgressAndSent/{id}")
+	public ResponseEntity<?> cancelOrderInProgressAndSent(@PathVariable Integer id){
+		
+		return ResponseEntity.ok(orderService.cancelOrderInProgressAndSent(id));
+	}
+	
+	@PreAuthorize("hasRole('ADMINISTRAR_PEDIDOS')")
+	@PutMapping("/finalizeOrder/{id}")
+	public ResponseEntity<?> finalizeOrder(@PathVariable Integer id){
+		
+		return ResponseEntity.ok(orderService.finalizeOrder(id));
+	}
 }

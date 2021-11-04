@@ -7,6 +7,7 @@ public class WarehouseOutput {
 	private String address;
 	private double latitude;
 	private double longitude;
+	private byte[] image;
 	
 	public int getIdMarket() {
 		return idMarket;
@@ -37,6 +38,12 @@ public class WarehouseOutput {
 	}
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
+	}
+	public byte[] getImage() {
+		return image;
+	}
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 	
 }

@@ -31,6 +31,8 @@ public class Warehouse {
 	private double latitude;
 	@Column
 	private double longitude;
+	@Column(columnDefinition = "longblob")
+	private byte[] warehouseImage;
 	
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
 	@JoinColumn(name = "idSector")
@@ -82,6 +84,12 @@ public class Warehouse {
 	}
 	public void setCategory(List<Category> category) {
 		this.category = category;
+	}
+	public byte[] getWarehouseImage() {
+		return warehouseImage;
+	}
+	public void setWarehouseImage(byte[] warehouseImage) {
+		this.warehouseImage = warehouseImage;
 	}
 	
 }

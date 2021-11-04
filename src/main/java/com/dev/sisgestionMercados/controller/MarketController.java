@@ -55,12 +55,12 @@ public class MarketController {
 		return marketService.getAllWarehouse();
 	}
 	
-	@PermitAll
+	/*@PermitAll
 	@GetMapping("/productSearch")
 	public Iterable<WarehouseSearch> getAllProductSaerch(@RequestParam("longitude") double longitude, @RequestParam("latitude") double latitude, @RequestParam("productName") String productName){
 		
 		return marketService.getAllProductSearch(longitude, latitude,productName);
-	}
+	}*/
 	
 	@PermitAll
 	@GetMapping("/warehouseSearch/{sectorName}")

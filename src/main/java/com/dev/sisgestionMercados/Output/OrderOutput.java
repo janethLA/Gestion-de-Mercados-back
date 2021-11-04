@@ -20,6 +20,7 @@ public class OrderOutput {
 	private String email;
 	private String warehouseName;
 	private String sectorName;
+	private double shippingCost;
     private List<OrderDetail> orderDetail;
     
 	public int getIdOrder() {
@@ -93,6 +94,12 @@ public class OrderOutput {
 	}
 	public void setSectorName(String sectorName) {
 		this.sectorName = sectorName;
+	}
+	public double getShippingCost() {
+		return shippingCost;
+	}
+	public void setShippingCost(double shippingCost) {
+		this.shippingCost = shippingCost;
 	}
     
 }

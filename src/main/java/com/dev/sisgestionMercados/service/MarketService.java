@@ -42,6 +42,7 @@ public class MarketService {
 		newMarket.setAddress(market.getAddress());
 		newMarket.setLatitude(market.getLatitude());
 		newMarket.setLongitude(market.getLongitude());
+		newMarket.setWarehouseImage(market.getWarehouseImage());
 	    marketRepository.save(newMarket);
 	    putSector(market.getIdSector(),newMarket);
 	    return market;
@@ -66,6 +67,7 @@ public class MarketService {
 			newWarehouse.setAddress(found.getAddress());
 			newWarehouse.setLatitude(found.getLatitude());
 			newWarehouse.setLongitude(found.getLongitude());
+			newWarehouse.setImage(found.getWarehouseImage());
 			allWarehousesByOrder.add(newWarehouse);
 
 		}
@@ -146,6 +148,7 @@ public class MarketService {
 				warehouse.setWarehouseName(found.getWarehouseName());
 				warehouse.setLatitude(found.getLatitude());
 				warehouse.setLongitude(found.getLongitude());
+				warehouse.setWarehouseImage(found.getWarehouseImage());
 				if(found.getSector().getSectorName().equalsIgnoreCase(sectorName)) {
 					allWarehouseSearch.add(warehouse);
 				}
@@ -173,6 +176,7 @@ public class MarketService {
 				warehouse.setWarehouseName(found.getWarehouseName());
 				warehouse.setLatitude(found.getLatitude());
 				warehouse.setLongitude(found.getLongitude());
+				warehouse.setWarehouseImage(found.getWarehouseImage());
 				allWarehouseSearch.add(warehouse);
 
 			}
@@ -192,6 +196,7 @@ public class MarketService {
 				warehouse.setWarehouseName(found.getWarehouseName());
 				warehouse.setLatitude(found.getLatitude());
 				warehouse.setLongitude(found.getLongitude());
+				warehouse.setWarehouseImage(found.getWarehouseImage());
 				allWarehouseSearch.add(warehouse);
 		}
 		return allWarehouseSearch;

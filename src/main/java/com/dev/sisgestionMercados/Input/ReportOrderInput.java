@@ -13,6 +13,8 @@ public class ReportOrderInput {
 	private String userName;
 	private int telephone;
 	private String status;
+	private double shippingCost;
+	private String delivery;
    
 	
 	public int getIdOrder() {
@@ -63,5 +65,18 @@ public class ReportOrderInput {
 	public void setTotalPrice(double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
+	public double getShippingCost() {
+		return shippingCost;
+	}
+	public void setShippingCost(double shippingCost) {
+		this.shippingCost = shippingCost;
+	}
+	public String getDelivery() {
+		return delivery;
+	}
+	public void setDelivery(String delivery) {
+		this.delivery = delivery;
+	}
+	
 	
 }

@@ -6,6 +6,7 @@ public class WarehouseSearchByAtributes {
 	private String warehouseName;
 	private double latitude;
 	private double longitude;
+	private byte[] warehouseImage;
 	
 	public int getIdMarket() {
 		return idMarket;
@@ -30,6 +31,12 @@ public class WarehouseSearchByAtributes {
 	}
 	public void setWarehouseName(String warehouseName) {
 		this.warehouseName = warehouseName;
+	}
+	public byte[] getWarehouseImage() {
+		return warehouseImage;
+	}
+	public void setWarehouseImage(byte[] warehouseImage) {
+		this.warehouseImage = warehouseImage;
 	}
 	
 }

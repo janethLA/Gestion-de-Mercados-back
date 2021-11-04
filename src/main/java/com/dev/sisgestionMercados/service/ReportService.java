@@ -32,6 +32,11 @@ public class ReportService {
 			newOrder.setDateOfOrder(p.getOrderDate());
 			newOrder.setHourOfOrder(p.getOrderTime());
 			newOrder.setStatus(p.getStatus());
+			newOrder.setShippingCost(p.getShippingCost());
+			
+			if(!p.getOrderAssigned().isEmpty()){
+				newOrder.setDelivery(p.getOrderAssigned().get(p.getOrderAssigned().size()-1).getUserS().getName());
+			}
 			newOrder.setQuantityProducts(p.getQuantityProducts());
 			newOrder.setTotalPrice(p.getTotalPrice());
 			newOrder.setTelephone(p.getFinalUser().getTelephone());

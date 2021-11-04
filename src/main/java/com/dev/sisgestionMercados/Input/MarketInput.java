@@ -8,6 +8,7 @@ public class MarketInput {
 	private int idSector;
 	private double latitude;
 	private double longitude;
+	private byte[] warehouseImage;
 	
 	public String getMarketName() {
 		return marketName;
@@ -38,6 +39,12 @@ public class MarketInput {
 	}
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
+	}
+	public byte[] getWarehouseImage() {
+		return warehouseImage;
+	}
+	public void setWarehouseImage(byte[] warehouseImage) {
+		this.warehouseImage = warehouseImage;
 	}
 	
 }

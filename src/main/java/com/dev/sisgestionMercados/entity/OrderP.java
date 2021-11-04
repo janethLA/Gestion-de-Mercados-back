@@ -35,6 +35,8 @@ public class OrderP{
 	private LocalDate orderDate;
 	@Column
 	private LocalTime orderTime;
+	@Column
+	private double shippingCost;
 	
 	@OneToMany(mappedBy = "order",cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
 	@JsonManagedReference
@@ -102,6 +104,12 @@ public class OrderP{
 	}
 	public void setOrderAssigned(List<OrderAssigned> orderAssigned) {
 		this.orderAssigned = orderAssigned;
+	}
+	public double getShippingCost() {
+		return shippingCost;
+	}
+	public void setShippingCost(double shippingCost) {
+		this.shippingCost = shippingCost;
 	}
 	
 }

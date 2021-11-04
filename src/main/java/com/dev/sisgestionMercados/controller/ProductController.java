@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,6 +24,7 @@ import com.dev.sisgestionMercados.Output.ProductOutput;
 import com.dev.sisgestionMercados.Output.CategorySearchOutput;
 import com.dev.sisgestionMercados.Output.WarehouseSearchByAtributes;
 import com.dev.sisgestionMercados.entity.Category;
+import com.dev.sisgestionMercados.entity.Price;
 import com.dev.sisgestionMercados.entity.Product;
 import com.dev.sisgestionMercados.service.ProductService;
 
@@ -62,6 +64,20 @@ public class ProductController {
 	public Iterable<CategorySearchOutput> getAllByproductName(@PathVariable Integer id, @RequestParam("productName") String productName){
 		
 		return productService.getAllByproductName(id, productName);
+	}
+	
+	@PreAuthorize("hasRole('ACTUALIZAR_PRECIOS')")	
+	@PutMapping("/updatePrice/{id}")
+	public ResponseEntity<?> updatePrice( @PathVariable Integer id, @RequestBody Price price){
+		
+		return ResponseEntity.ok(productService.updatePrice(id,price));
+	}
+	
+	@PreAuthorize("hasRole('ACTUALIZAR_PRECIOS')")	
+	@PutMapping("/updateImage/{id}")
+	public ResponseEntity<?> updateImage( @PathVariable Integer id, @RequestParam("image") MultipartFile image){
+		
+		return ResponseEntity.ok(productService.updateImage(id,image));
 	}
 }
 

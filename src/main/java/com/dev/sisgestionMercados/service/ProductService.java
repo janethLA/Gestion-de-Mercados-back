@@ -1,5 +1,6 @@
 package com.dev.sisgestionMercados.service;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -214,4 +215,30 @@ public class ProductService {
 		}
 		return allCategorySearch;
 	}
+	
+	public String updatePrice(int id, Price newPrice) {
+		Product product=productRepository.findById(id).get();
+		List<Price> price=product.getPrice();
+		newPrice.setProduct(product);
+		price.add(newPrice);
+		productRepository.save(product);
+		for(Price p:price) {
+			System.out.println("Precio : "+p.getPrice());
+		}
+		
+		return "Se actualizo el precio del producto "+product.getProductName();
+	}  
+	
+	public String updateImage(int id, MultipartFile image)  {
+		Product product=productRepository.findById(id).get();
+		try {
+			product.setImage(image.getBytes());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		productRepository.save(product);
+		
+		return "Se actualizo la imagen del producto "+product.getProductName();
+	} 
 }

@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -32,6 +33,8 @@ public class OrderAssigned {
 	private String commentary;
 	@Column
 	private boolean reassigned;
+	@Column
+	private int idUserCallCenter;
 	
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
 	@JoinColumn(name="idUser")
@@ -43,6 +46,10 @@ public class OrderAssigned {
     @JsonBackReference(value="order-assigned")
 	private OrderP orderP;
 
+	@JoinColumn(name = "idPayment" )
+	@OneToOne(cascade ={CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH} )
+	private Payment payment; 
+	
 	public int getIdOrderAssigned() {
 		return idOrderAssigned;
 	}
@@ -105,6 +112,22 @@ public class OrderAssigned {
 
 	public void setReassigned(boolean reassigned) {
 		this.reassigned = reassigned;
+	}
+
+	public int getIdUserCallCenter() {
+		return idUserCallCenter;
+	}
+
+	public void setIdUserCallCenter(int idUserCallCenter) {
+		this.idUserCallCenter = idUserCallCenter;
+	}
+
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
 	}
 	
 	

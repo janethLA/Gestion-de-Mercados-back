@@ -18,6 +18,7 @@ import com.dev.sisgestionMercados.entity.FinalUser;
 import com.dev.sisgestionMercados.entity.OrderAssigned;
 import com.dev.sisgestionMercados.entity.OrderDetail;
 import com.dev.sisgestionMercados.entity.OrderP;
+import com.dev.sisgestionMercados.entity.Privilege;
 import com.dev.sisgestionMercados.entity.Product;
 import com.dev.sisgestionMercados.entity.UserS;
 import com.dev.sisgestionMercados.repository.OrderRepository;
@@ -86,13 +87,10 @@ public class OrderService {
 		return orderRepository.findAll();
 	}
     public Iterable<OrderOutput> allOrders2(){
-    	System.out.println("LLEGA");
+    
     	List<OrderP> orders=orderRepository.findAll();
-    	System.out.println("LLEGA0");
 		List<OrderOutput> allOrders=new ArrayList<OrderOutput>();
-		System.out.println("LLEGA1");
 		for(OrderP o: orders) {
-			System.out.println("LLEGA2");
 			OrderOutput order=new OrderOutput();
 			order.setIdOrder(o.getIdOrder());
 			order.setOrderDate(o.getOrderDate());
@@ -122,15 +120,19 @@ public class OrderService {
     	List<UserS> allUsers=userService.findAll();
     	List<DeliveryUserOutput> allDeliveries=new ArrayList<DeliveryUserOutput>();
     	for(UserS s: allUsers) {
-    		if(s.getUserRole().get(0).getRole().getPrivileges().get(0).getPrivilege().equalsIgnoreCase("ROLE_VER_PEDIDOS")) {
-    			DeliveryUserOutput delivery=new DeliveryUserOutput();
-    			delivery.setIdUser(s.getIdUser());
-    			delivery.setName(s.getName());
-    			delivery.setTelephone(s.getTelephone());
-    			delivery.setEmail(s.getEmail());
-    			delivery.setSector(s.getUserRole().get(0).getSector().getSectorName());
-    			allDeliveries.add(delivery);
-    		}
+    		List<Privilege> privilege=s.getUserRole().get(0).getRole().getPrivileges();
+    		for(Privilege p :privilege) {
+    			if(p.getPrivilege().equalsIgnoreCase("ROLE_VER_PEDIDOS")) {
+        			DeliveryUserOutput delivery=new DeliveryUserOutput();
+        			delivery.setIdUser(s.getIdUser());
+        			delivery.setName(s.getName());
+        			delivery.setTelephone(s.getTelephone());
+        			delivery.setEmail(s.getEmail());
+        			delivery.setSector(s.getUserRole().get(0).getSector().getSectorName());
+        			System.out.println("Nombre delivery: "+s.getName());
+        			allDeliveries.add(delivery);
+        		}
+    		}	
     	}
     	return allDeliveries;
     }
@@ -152,6 +154,7 @@ public class OrderService {
     public String orderCanceled(int id) {
 		OrderP o=orderRepository.findById(id).get();
 		o.setStatus("Cancelado");
+		o.setTotalPrice(0);
 		orderRepository.save(o);
 		return "Se ha cancelado el pedido";
 	}
@@ -169,6 +172,7 @@ public class OrderService {
     public String cancelOrderInProgressAndSent(int id) {
   		OrderP o=orderRepository.findById(id).get();
   		o.setStatus("Cancelado");
+  		o.setTotalPrice(0);
   		OrderAssigned orderA=o.getOrderAssigned().get(o.getOrderAssigned().size()-1);
   		orderA.setStatus("Cancelado");
   		orderRepository.save(o);

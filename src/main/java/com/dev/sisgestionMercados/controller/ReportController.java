@@ -4,6 +4,7 @@ import javax.annotation.security.PermitAll;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,7 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.dev.sisgestionMercados.Input.ProductInput;
 import com.dev.sisgestionMercados.Input.ReportOrderInput;
 import com.dev.sisgestionMercados.Output.CategorySearchOutput;
+import com.dev.sisgestionMercados.Output.FinalUserAtributesOutput;
 import com.dev.sisgestionMercados.entity.Product;
+import com.dev.sisgestionMercados.entity.Report;
 import com.dev.sisgestionMercados.service.ProductService;
 import com.dev.sisgestionMercados.service.ReportService;
 
@@ -40,6 +43,17 @@ public class ReportController {
 		
 		return ResponseEntity.ok(productService.save(product,id, image));
 	}*/
+	
+	@PreAuthorize("hasRole('ADMINISTRAR_PEDIDOS')")	
+	@PostMapping("/saveReport")
+	public ResponseEntity<?> saveReport(@RequestParam("report")MultipartFile file) {
+		Report report=reportService.saveReport(file);
+		if(report!=null) {
+			return ResponseEntity.ok( report);
+		}else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}		
+	}
 	
 	@PreAuthorize("hasRole('ADMINISTRAR_PEDIDOS')")	
 	@GetMapping("/reportOfOrders")

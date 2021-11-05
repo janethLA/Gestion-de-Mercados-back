@@ -51,6 +51,7 @@ public class FinalUserService {
 			System.out.println("-----------:"+privilege.getPrivilege()+" y "+privilege.getIdPrivilege());
 			finalUser.setActive(false);
 			finalUser.setCode(code);
+			finalUser.setWhatsappLink("https://wa.me/591"+finalUser.getTelephone());
 		    persistedFinalUser = finalUserRepository.save(finalUser);
 			persistedFinalUser.setPrivilege(privilege);
 		} catch (Exception e) {
@@ -59,6 +60,7 @@ public class FinalUserService {
 			Privilege newPrivilege=privilegeService.save(privilege);
 			finalUser.setActive(false);
 			finalUser.setCode(code);
+			finalUser.setWhatsappLink("https://wa.me/591"+finalUser.getTelephone());
 		    persistedFinalUser = finalUserRepository.save(finalUser);
 			persistedFinalUser.setPrivilege(newPrivilege);
 		}

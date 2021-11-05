@@ -35,6 +35,8 @@ public class FinalUser {
 	private String email;
 	@Column
 	private boolean active;
+	@Column
+	private String whatsappLink;
 
 	@OneToMany(mappedBy = "finalUser",cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
 	@JsonManagedReference(value="user-order")
@@ -100,8 +102,12 @@ public class FinalUser {
 	public void setPrivilege(Privilege privilege) {
 		this.privilege = privilege;
 	}
-	
-	
+	public String getWhatsappLink() {
+		return whatsappLink;
+	}
+	public void setWhatsappLink(String whatsappLink) {
+		this.whatsappLink = whatsappLink;
+	}
 	
 }
 

@@ -78,7 +78,7 @@ public class OrderAssignedService {
 		OrderAssigned orderA=orderAssignedRepository.findById(id).get();
 		orderA.setStatus("Aceptado");
 		OrderP o=orderA.getOrderP();
-		o.setStatus("Enviado");
+		o.setStatus("Enviando");
 		orderAssignedRepository.save(orderA);
 		orderService.save2(o);
 		return "Se ha aceptado el pedido asignado";

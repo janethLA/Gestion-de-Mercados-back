@@ -1,15 +1,19 @@
 package com.dev.sisgestionMercados.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.dev.sisgestionMercados.Input.ReportOrderInput;
 import com.dev.sisgestionMercados.entity.FinalUser;
 import com.dev.sisgestionMercados.entity.OrderP;
+import com.dev.sisgestionMercados.entity.Report;
+import com.dev.sisgestionMercados.repository.ReportRepository;
 
 @Service
 public class ReportService {
@@ -20,6 +24,8 @@ public class ReportService {
 	private OrderService orderService;
 	@Autowired
 	private FinalUserService finalUserService;
+	@Autowired
+	private ReportRepository reportRepository;
 	
     public Iterable<ReportOrderInput> reportOfOrders(){
     	
@@ -70,4 +76,18 @@ public class ReportService {
     	}
     	return allUser;
     }
+    
+    public Report saveReport(MultipartFile file) {
+    	Report report=new Report();
+    	try {
+			report.setReport(file.getBytes());
+			report.setReportName(file.getOriginalFilename());
+			reportRepository.save(report);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	
+    	return report;	
+    }
+    
 }

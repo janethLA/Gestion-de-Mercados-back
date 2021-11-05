@@ -34,6 +34,8 @@ public class UserS {
 	private LocalDate registrationDate;
 	@Column
 	private int telephone;
+	@Column
+	private String whatsappLink;
 	
 	@OneToMany(mappedBy = "user",cascade = {CascadeType.ALL, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH},fetch = FetchType.EAGER)
 	private List<UserRole> userRole;
@@ -116,6 +118,14 @@ public class UserS {
 
 	public void setOrderAssigned(List<OrderAssigned> orderAssigned) {
 		this.orderAssigned = orderAssigned;
+	}
+
+	public String getWhatsappLink() {
+		return whatsappLink;
+	}
+
+	public void setWhatsappLink(String whatsappLink) {
+		this.whatsappLink = whatsappLink;
 	}
 	
 }

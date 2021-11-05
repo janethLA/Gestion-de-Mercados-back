@@ -62,6 +62,7 @@ public class UserService {
 		newUser.setPassword(encoder.encode(user.getPassword()));
 		newUser.setTelephone(user.getTelephone());
 		newUser.setRegistrationDate(LocalDate.now());
+		newUser.setWhatsappLink("https://wa.me/591"+user.getTelephone());
 	    userRepository.save(newUser);
 	    putUserRole(user.getIdRole(),user.getIdSector(),newUser);
 	    return user;

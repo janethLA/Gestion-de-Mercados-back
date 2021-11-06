@@ -66,14 +66,15 @@ public class FinalUserService {
 		}
 		saved.setIdFinalUser(persistedFinalUser.getIdFinalUser());
 		saved.setCode(code);
-		//Para enviar mensaje de texto
-		//String phone=  Integer.toString(persistedFinalUser.getTelephone());
-		//Sms message=new Sms();
-		//message.sendSms(code, phone);
+		/*Para enviar mensaje de texto
+		String phone=  Integer.toString(persistedFinalUser.getTelephone());
+		Sms message=new Sms();
+		message.sendSms(code, phone);
 		
+		Para enviar email
 		String message="Su código de verificación es: "+code;
 		String subject="Verifica tu Email!";
-		emailService.sendEmail(finalUser.getEmail(), subject, message);
+		emailService.sendEmail(finalUser.getEmail(), subject, message);*/
 		
 	    return saved;
 	}
@@ -135,20 +136,19 @@ public class FinalUserService {
 			newFinalUser.setUserName(finalUser.getUserName());
 		}
 		if(finalUser.getTelephone()!=0) {
-			newFinalUser.setTelephone(finalUser.getTelephone());
-		}
-		if(!finalUser.getEmail().isEmpty()) {
 			code=UUID.randomUUID().toString().toUpperCase().substring(0, 6);
 			newFinalUser.setCode(code);
-			String message="Su código de verificación es: "+code;
-			String subject="Verifica tu Email!";
-			emailService.sendEmail(finalUser.getEmail(), subject, message);
+			//newFinalUser.setTelephone(finalUser.getTelephone());
+		}
+		if(!finalUser.getEmail().isEmpty()) {
+			
+			newFinalUser.setEmail(finalUser.getEmail()); 
 		}
 		finalUserRepository.save(newFinalUser);
 		finalUserInput.setIdFinalUser(newFinalUser.getIdFinalUser());
-		finalUserInput.setTelephone(newFinalUser.getTelephone());
+		finalUserInput.setTelephone(finalUser.getTelephone());
 		finalUserInput.setCode(code);
-		finalUserInput.setEmail(finalUser.getEmail());
+		finalUserInput.setEmail(newFinalUser.getEmail());
 		
 		return finalUserInput;
 	}

@@ -15,13 +15,13 @@ public class Payment {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idPayment;
 	@Column
-	private String nroCuenta;
+	private String nroAccount;
 	@Column
 	private String bankName;
 	@Column
-	private String name;
+	private String nameAccount;
 	@Column(columnDefinition = "longblob")
-	private byte[] qr;
+	private byte[] image;
 	
 	public int getIdPayment() {
 		return idPayment;
@@ -29,11 +29,11 @@ public class Payment {
 	public void setIdPayment(int idPayment) {
 		this.idPayment = idPayment;
 	}
-	public String getNroCuenta() {
-		return nroCuenta;
+	public String getNroAccount() {
+		return nroAccount;
 	}
-	public void setNroCuenta(String nroCuenta) {
-		this.nroCuenta = nroCuenta;
+	public void setNroAccount(String nroAccount) {
+		this.nroAccount = nroAccount;
 	}
 	public String getBankName() {
 		return bankName;
@@ -41,17 +41,20 @@ public class Payment {
 	public void setBankName(String bankName) {
 		this.bankName = bankName;
 	}
-	public String getName() {
-		return name;
+	
+	public String getNameAccount() {
+		return nameAccount;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setNameAccount(String nameAccount) {
+		this.nameAccount = nameAccount;
 	}
-	public byte[] getQr() {
-		return qr;
+	public byte[] getImage() {
+		return image;
 	}
-	public void setQr(byte[] qr) {
-		this.qr = qr;
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
+	
+	
 	
 }

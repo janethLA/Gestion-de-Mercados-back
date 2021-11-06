@@ -12,12 +12,14 @@ import org.springframework.stereotype.Service;
 import com.dev.sisgestionMercados.Input.OrderDetailInput;
 import com.dev.sisgestionMercados.Input.OrderInput;
 import com.dev.sisgestionMercados.Output.DeliveryUserOutput;
+import com.dev.sisgestionMercados.Output.OrderByUserOutput;
 import com.dev.sisgestionMercados.Output.OrderOutput;
 import com.dev.sisgestionMercados.Output.PrivilegeOutput;
 import com.dev.sisgestionMercados.entity.FinalUser;
 import com.dev.sisgestionMercados.entity.OrderAssigned;
 import com.dev.sisgestionMercados.entity.OrderDetail;
 import com.dev.sisgestionMercados.entity.OrderP;
+import com.dev.sisgestionMercados.entity.Payment;
 import com.dev.sisgestionMercados.entity.Privilege;
 import com.dev.sisgestionMercados.entity.Product;
 import com.dev.sisgestionMercados.entity.UserS;
@@ -74,42 +76,134 @@ public class OrderService {
 		return order;
 	}
 	
-	public Iterable<OrderP> allOrderByUser(long id) {
+	public Iterable<OrderByUserOutput> allOrderByUser(long id) {
 		
 		FinalUser finalUser=finalUserService.findById(id);
 		List<OrderP> allOrderByUser=finalUser.getOrders();
-		
-		return allOrderByUser;
+        List<OrderByUserOutput> orderByUserOutput=new ArrayList<OrderByUserOutput>();
+		for(OrderP o:allOrderByUser) {
+			
+			if(o.getStatus().equalsIgnoreCase("Pendiente")) {
+				OrderByUserOutput order=new OrderByUserOutput();
+				order.setIdOrder(o.getIdOrder());
+				order.setOrderTime(o.getOrderTime());
+				order.setOrderDate(o.getOrderDate());
+				order.setShippingCost(o.getShippingCost());
+				order.setStatus(o.getStatus());
+				order.setTotalPrice(o.getTotalPrice());
+				order.setQuantityProducts(o.getQuantityProducts());
+				order.setOrderDetail(o.getOrderDetail());
+				
+				/*PARA QUE EL USUARIO SE PONGA EN CONTACTO CON EL ADMIN , TAL VEZ PONER UN CONTACTO POR DEFECTO
+			    order.setAdminName(admin.getName());
+				order.setAdminTelephone(admin.getTelephone());
+				order.setAdminEmail(admin.getEmail());
+				order.setAdminWhatsappLink(admin.getWhatsappLink());
+				 */
+				
+				orderByUserOutput.add(order);
+				
+			}else {
+				OrderByUserOutput order=new OrderByUserOutput();
+				order.setIdOrder(o.getIdOrder());
+				order.setOrderTime(o.getOrderTime());
+				order.setOrderDate(o.getOrderDate());
+				order.setShippingCost(o.getShippingCost());
+				order.setStatus(o.getStatus());
+				order.setTotalPrice(o.getTotalPrice());
+				order.setQuantityProducts(o.getQuantityProducts());
+				order.setOrderDetail(o.getOrderDetail());
+				
+				int idAdmin=o.getOrderAssigned().get(o.getOrderAssigned().size()-1).getIdUserCallCenter();
+				UserS admin=userService.findById(idAdmin);
+				order.setAdminName(admin.getName());
+				order.setAdminTelephone(admin.getTelephone());
+				order.setAdminEmail(admin.getEmail());
+				order.setAdminWhatsappLink(admin.getWhatsappLink());
+				
+				if(o.getOrderAssigned().get(o.getOrderAssigned().size()-1).getPayment()!=null) {
+					Payment payment=o.getOrderAssigned().get(o.getOrderAssigned().size()-1).getPayment();
+					order.setNroAccount(payment.getNroAccount());
+					order.setBankName(payment.getBankName());
+					order.setNameAccount(payment.getNameAccount());
+					order.setQr(payment.getImage());
+				}
+				
+				orderByUserOutput.add(order);
+			}
+			
+			
+		}
+		return orderByUserOutput;
 	}
 	
     public Iterable<OrderP> allOrders(){
 		
 		return orderRepository.findAll();
 	}
-    public Iterable<OrderOutput> allOrders2(){
+    public Iterable<OrderOutput> allOrders2(int id){
     
     	List<OrderP> orders=orderRepository.findAll();
 		List<OrderOutput> allOrders=new ArrayList<OrderOutput>();
 		for(OrderP o: orders) {
-			OrderOutput order=new OrderOutput();
-			order.setIdOrder(o.getIdOrder());
-			order.setOrderDate(o.getOrderDate());
-			order.setOrderTime(o.getOrderTime());
-			order.setTotalPrice(o.getTotalPrice());
-			order.setQuantityProducts(o.getQuantityProducts());
-			order.setStatus(o.getStatus());
-			order.setOrderDetail(o.getOrderDetail());
-			order.setUserName(o.getFinalUser().getFinalUserName());
-			order.setTelephone(o.getFinalUser().getTelephone());
-			order.setEmail(o.getFinalUser().getEmail());
-			try {
-				order.setShippingCost(o.getShippingCost());
-			} catch (Exception e) {
-				// TODO: handle exception
+		
+			if(o.getStatus().equalsIgnoreCase("Pendiente") ) {
+				
+				OrderOutput order=new OrderOutput();
+				order.setIdOrder(o.getIdOrder());
+				order.setOrderDate(o.getOrderDate());
+				order.setOrderTime(o.getOrderTime());
+				order.setTotalPrice(o.getTotalPrice());
+				order.setQuantityProducts(o.getQuantityProducts());
+				order.setStatus(o.getStatus());
+				order.setOrderDetail(o.getOrderDetail());
+			
+				order.setFinalUserName(o.getFinalUser().getFinalUserName());
+				order.setFinalUserTelephone(o.getFinalUser().getTelephone());
+				order.setFinalUserWhatsappLink(o.getFinalUser().getWhatsappLink());
+				order.setFinalUserEmail(o.getFinalUser().getEmail());
+				
+				try {
+					order.setShippingCost(o.getShippingCost());
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				order.setWarehouseName(o.getOrderDetail().get(0).getProduct().getCategory().getWarehouse().getWarehouseName());
+				order.setSectorName(o.getOrderDetail().get(0).getProduct().getCategory().getWarehouse().getSector().getSectorName());
+				allOrders.add(order);
+			}else {
+				if(o.getOrderAssigned().get(o.getOrderAssigned().size()-1).getIdUserCallCenter() == id) {
+					OrderOutput order=new OrderOutput();
+					order.setIdOrder(o.getIdOrder());
+					order.setOrderDate(o.getOrderDate());
+					order.setOrderTime(o.getOrderTime());
+					order.setTotalPrice(o.getTotalPrice());
+					order.setQuantityProducts(o.getQuantityProducts());
+					order.setStatus(o.getStatus());
+					order.setOrderDetail(o.getOrderDetail());
+					
+					order.setFinalUserName(o.getFinalUser().getFinalUserName());
+					order.setFinalUserTelephone(o.getFinalUser().getTelephone());
+					order.setFinalUserWhatsappLink(o.getFinalUser().getWhatsappLink());
+					order.setFinalUserEmail(o.getFinalUser().getEmail());
+					
+					UserS delivery=o.getOrderAssigned().get(o.getOrderAssigned().size()-1).getUserS();
+					order.setDeliveryName(delivery.getName());
+					order.setDeliveryTelephone(delivery.getTelephone());
+					order.setDeliveryWhatsappLink(delivery.getWhatsappLink());
+					order.setDeliveryEmail(delivery.getEmail());
+					
+					try {
+						order.setShippingCost(o.getShippingCost());
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+					order.setWarehouseName(o.getOrderDetail().get(0).getProduct().getCategory().getWarehouse().getWarehouseName());
+					order.setSectorName(o.getOrderDetail().get(0).getProduct().getCategory().getWarehouse().getSector().getSectorName());
+					allOrders.add(order);
+				}
 			}
-			order.setWarehouseName(o.getOrderDetail().get(0).getProduct().getCategory().getWarehouse().getWarehouseName());
-			order.setSectorName(o.getOrderDetail().get(0).getProduct().getCategory().getWarehouse().getSector().getSectorName());
-			allOrders.add(order);
+			
 		}
 		
 		return allOrders;
@@ -189,5 +283,19 @@ public class OrderService {
 		orderAssignedService.save2(orderA);
 		return "Se cambio el estado a Finalizado";
     }
+    
+    public String reassignOrderInProgress(int id) {
+		OrderP order=orderRepository.findById(id).get();
+		OrderAssigned orderA=order.getOrderAssigned().get(order.getOrderAssigned().size()-1);
+		System.out.println("Order size: "+order.getOrderAssigned().size() +" y el id ultimo del pedido asignado: "+orderA.getIdOrderAssigned());
+		//System.out.println("Order ultimo: "+order.getOrderAssigned().get(4).getIdOrderAssigned());
+		orderA.setReassigned(true);
+		order.setStatus("Pendiente");
+		orderA.setStatus("Rechazado");
+		orderRepository.save(order);
+		orderAssignedService.save2(orderA);
+		return "Vuelve a reasignar el pedido";
+	}
+    
 }
 

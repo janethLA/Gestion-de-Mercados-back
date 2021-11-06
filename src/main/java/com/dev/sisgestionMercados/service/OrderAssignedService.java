@@ -15,6 +15,7 @@ import com.dev.sisgestionMercados.Output.OrderAssignedOutput;
 import com.dev.sisgestionMercados.Output.OrderOutput;
 import com.dev.sisgestionMercados.entity.OrderAssigned;
 import com.dev.sisgestionMercados.entity.OrderP;
+import com.dev.sisgestionMercados.entity.Payment;
 import com.dev.sisgestionMercados.entity.UserS;
 import com.dev.sisgestionMercados.repository.OrderAssignedRepository;
 import com.dev.sisgestionMercados.repository.OrderRepository;
@@ -32,11 +33,16 @@ public class OrderAssignedService {
 	private UserService userService;
 	@Autowired
 	private OrderRepository orderRepository;
+	@Autowired
+	private PaymentService paymentService;
 
 	public String save(OrderAssignedInput orderAssigned) {
+		
 		OrderP o=orderService.findById(orderAssigned.getIdOrder());
 		o.setShippingCost(orderAssigned.getShippingCost());
+		Payment payment = paymentService.findById(orderAssigned.getIdPayment());
 		UserS u=userService.findById(orderAssigned.getIdUser());
+		
 		OrderAssigned newOrderAssigned=new OrderAssigned();
 		newOrderAssigned.setStatus("Pendiente");
 		newOrderAssigned.setDate(LocalDate.now());
@@ -44,6 +50,8 @@ public class OrderAssignedService {
 		newOrderAssigned.setOrderP(o);
 		newOrderAssigned.setUserS(u);
 		newOrderAssigned.setReassigned(false);
+		newOrderAssigned.setIdUserCallCenter(orderAssigned.getIdUserCallCenter());
+		newOrderAssigned.setPayment(payment);
 		o.setStatus("En curso");
 		orderAssignedRepository.save(newOrderAssigned);
 		orderRepository.save(o);
@@ -62,9 +70,16 @@ public class OrderAssignedService {
 			o.setHour(orderA.getHour());
 			o.setOrder(orderA.getOrderP());
 			
-			o.setUserName(orderA.getOrderP().getFinalUser().getFinalUserName());
-			o.setUserEmail(orderA.getOrderP().getFinalUser().getEmail());
-			o.setUserTelephone(orderA.getOrderP().getFinalUser().getTelephone());
+			o.setFinalUserName(orderA.getOrderP().getFinalUser().getFinalUserName());
+			o.setFinalUserEmail(orderA.getOrderP().getFinalUser().getEmail());
+			o.setFinalUserTelephone(orderA.getOrderP().getFinalUser().getTelephone());
+			o.setFinalUserWhatsappLink(orderA.getOrderP().getFinalUser().getWhatsappLink());
+			
+			UserS user=userService.findById(orderA.getIdUserCallCenter());
+			o.setAdminName(user.getName());
+			o.setAdminTelephone(user.getTelephone());
+			o.setAdminEmail(user.getEmail());
+			o.setAdminWhatsappLink(user.getWhatsappLink());
 			
 			o.setWarehouseNameOfOrder(orderA.getOrderP().getOrderDetail().get(0).getProduct().getCategory().getWarehouse().getWarehouseName());
 			o.setWarehouseAddressOfOrder(orderA.getOrderP().getOrderDetail().get(0).getProduct().getCategory().getWarehouse().getAddress());
@@ -102,20 +117,23 @@ public class OrderAssignedService {
 		return "Se ha finalizado el pedido asignado";
 	}
 	
-	public  List<AllOrderAssignedOutput> getAllAssignedOrders(){
+	public  List<AllOrderAssignedOutput> getAllAssignedOrders(int id){
 		
 		List<AllOrderAssignedOutput> AllOrderAssigned=new ArrayList<AllOrderAssignedOutput>();
 		List<OrderAssigned> orders= orderAssignedRepository.findAll();
 		for(OrderAssigned o: orders) {
-			AllOrderAssignedOutput newOrderA=new AllOrderAssignedOutput();
-			newOrderA.setIdOrderAssigned(o.getIdOrderAssigned());
-			newOrderA.setDate(o.getDate());
-			newOrderA.setHour(o.getHour());
-			newOrderA.setStatus(o.getStatus());
-			newOrderA.setIdOrder(o.getOrderP().getIdOrder());
-			newOrderA.setCommentary(o.getCommentary());
-			newOrderA.setReassigned(o.isReassigned());
-			 AllOrderAssigned.add(newOrderA);
+			if(o.getIdUserCallCenter()==id) {
+				AllOrderAssignedOutput newOrderA=new AllOrderAssignedOutput();
+				newOrderA.setIdOrderAssigned(o.getIdOrderAssigned());
+				newOrderA.setDate(o.getDate());
+				newOrderA.setHour(o.getHour());
+				newOrderA.setStatus(o.getStatus());
+				newOrderA.setIdOrder(o.getOrderP().getIdOrder());
+				newOrderA.setCommentary(o.getCommentary());
+				newOrderA.setReassigned(o.isReassigned());
+				 AllOrderAssigned.add(newOrderA);
+			}
+			
 		}
 		return AllOrderAssigned;
 	}

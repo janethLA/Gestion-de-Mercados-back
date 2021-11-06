@@ -15,12 +15,21 @@ public class OrderOutput {
 	private String status;
 	private LocalDate orderDate;
 	private LocalTime orderTime;
-	private String userName;
-	private int telephone;
-	private String email;
+	private double shippingCost;
+	
 	private String warehouseName;
 	private String sectorName;
-	private double shippingCost;
+	
+	private String finalUserName;
+	private int finalUserTelephone;
+	private String finalUserEmail;
+	private String finalUserWhatsappLink;
+	
+	private String deliveryName;
+	private int deliveryTelephone;
+	private String deliveryEmail;
+	private String deliveryWhatsappLink;
+	
     private List<OrderDetail> orderDetail;
     
 	public int getIdOrder() {
@@ -65,24 +74,6 @@ public class OrderOutput {
 	public void setOrderDetail(List<OrderDetail> orderDetail) {
 		this.orderDetail = orderDetail;
 	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-	public int getTelephone() {
-		return telephone;
-	}
-	public void setTelephone(int telephone) {
-		this.telephone = telephone;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
 	public String getWarehouseName() {
 		return warehouseName;
 	}
@@ -100,6 +91,54 @@ public class OrderOutput {
 	}
 	public void setShippingCost(double shippingCost) {
 		this.shippingCost = shippingCost;
+	}
+	public String getFinalUserName() {
+		return finalUserName;
+	}
+	public void setFinalUserName(String finalUserName) {
+		this.finalUserName = finalUserName;
+	}
+	public int getFinalUserTelephone() {
+		return finalUserTelephone;
+	}
+	public void setFinalUserTelephone(int finalUserTelephone) {
+		this.finalUserTelephone = finalUserTelephone;
+	}
+	public String getFinalUserEmail() {
+		return finalUserEmail;
+	}
+	public void setFinalUserEmail(String finalUserEmail) {
+		this.finalUserEmail = finalUserEmail;
+	}
+	public String getFinalUserWhatsappLink() {
+		return finalUserWhatsappLink;
+	}
+	public void setFinalUserWhatsappLink(String finalUserWhatsappLink) {
+		this.finalUserWhatsappLink = finalUserWhatsappLink;
+	}
+	public String getDeliveryName() {
+		return deliveryName;
+	}
+	public void setDeliveryName(String deliveryName) {
+		this.deliveryName = deliveryName;
+	}
+	public int getDeliveryTelephone() {
+		return deliveryTelephone;
+	}
+	public void setDeliveryTelephone(int deliveryTelephone) {
+		this.deliveryTelephone = deliveryTelephone;
+	}
+	public String getDeliveryEmail() {
+		return deliveryEmail;
+	}
+	public void setDeliveryEmail(String deliveryEmail) {
+		this.deliveryEmail = deliveryEmail;
+	}
+	public String getDeliveryWhatsappLink() {
+		return deliveryWhatsappLink;
+	}
+	public void setDeliveryWhatsappLink(String deliveryWhatsappLink) {
+		this.deliveryWhatsappLink = deliveryWhatsappLink;
 	}
     
 }

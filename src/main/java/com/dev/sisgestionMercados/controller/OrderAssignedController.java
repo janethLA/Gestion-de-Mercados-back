@@ -71,10 +71,10 @@ public class OrderAssignedController {
 	}
 	
 	@PreAuthorize("hasRole('ADMINISTRAR_PEDIDOS')")
-	@GetMapping("/allAssignedOrders")
-	public Iterable<AllOrderAssignedOutput> getAllAssignedOrders(){
+	@GetMapping("/allAssignedOrdersManaged/{id}")
+	public Iterable<AllOrderAssignedOutput> getAllAssignedOrders(@PathVariable Integer id){
 		
-		return orderAssignedService.getAllAssignedOrders();
+		return orderAssignedService.getAllAssignedOrders(id);
 	}
 	
 	@PreAuthorize("hasRole('VER_PEDIDOS')")

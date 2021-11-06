@@ -51,7 +51,7 @@ public class ReportController {
 		if(report!=null) {
 			return ResponseEntity.ok( report);
 		}else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}		
 	}
 	

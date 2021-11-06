@@ -12,12 +12,19 @@ public class OrderAssignedOutput {
 	private String status;
 	private LocalDate date;
 	private LocalTime hour;
-	private String userName;
-	private int userTelephone;
-	private String userEmail;
 	private String warehouseNameOfOrder;
 	private String warehouseAddressOfOrder;
 	private String warehouseSectorOfOrder;
+	
+	private String finalUserName;
+	private int finalUserTelephone;
+	private String finalUserEmail;
+	private String finalUserWhatsappLink;
+	
+	private String adminName;
+	private int adminTelephone;
+	private String adminEmail;
+	private String adminWhatsappLink;
 	
 	private OrderP order;
 	
@@ -51,24 +58,6 @@ public class OrderAssignedOutput {
 	public void setOrder(OrderP order) {
 		this.order = order;
 	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-	public int getUserTelephone() {
-		return userTelephone;
-	}
-	public void setUserTelephone(int userTelephone) {
-		this.userTelephone = userTelephone;
-	}
-	public String getUserEmail() {
-		return userEmail;
-	}
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
-	}
 	public String getWarehouseNameOfOrder() {
 		return warehouseNameOfOrder;
 	}
@@ -87,6 +76,53 @@ public class OrderAssignedOutput {
 	public void setWarehouseSectorOfOrder(String warehouseSectorOfOrder) {
 		this.warehouseSectorOfOrder = warehouseSectorOfOrder;
 	}
-    
+	public String getFinalUserName() {
+		return finalUserName;
+	}
+	public void setFinalUserName(String finalUserName) {
+		this.finalUserName = finalUserName;
+	}
+	public int getFinalUserTelephone() {
+		return finalUserTelephone;
+	}
+	public void setFinalUserTelephone(int finalUserTelephone) {
+		this.finalUserTelephone = finalUserTelephone;
+	}
+	public String getFinalUserEmail() {
+		return finalUserEmail;
+	}
+	public void setFinalUserEmail(String finalUserEmail) {
+		this.finalUserEmail = finalUserEmail;
+	}
+	public String getFinalUserWhatsappLink() {
+		return finalUserWhatsappLink;
+	}
+	public void setFinalUserWhatsappLink(String finalUserWhatsappLink) {
+		this.finalUserWhatsappLink = finalUserWhatsappLink;
+	}
+	public String getAdminName() {
+		return adminName;
+	}
+	public void setAdminName(String adminName) {
+		this.adminName = adminName;
+	}
+	public int getAdminTelephone() {
+		return adminTelephone;
+	}
+	public void setAdminTelephone(int adminTelephone) {
+		this.adminTelephone = adminTelephone;
+	}
+	public String getAdminEmail() {
+		return adminEmail;
+	}
+	public void setAdminEmail(String adminEmail) {
+		this.adminEmail = adminEmail;
+	}
+	public String getAdminWhatsappLink() {
+		return adminWhatsappLink;
+	}
+	public void setAdminWhatsappLink(String adminWhatsappLink) {
+		this.adminWhatsappLink = adminWhatsappLink;
+	}
 	
 }

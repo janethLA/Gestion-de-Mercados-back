@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.sisgestionMercados.Input.OrderInput;
 import com.dev.sisgestionMercados.Output.DeliveryUserOutput;
+import com.dev.sisgestionMercados.Output.OrderByUserOutput;
 import com.dev.sisgestionMercados.Output.OrderOutput;
 import com.dev.sisgestionMercados.entity.FinalUser;
 import com.dev.sisgestionMercados.entity.OrderP;
@@ -41,17 +42,17 @@ public class OrderController {
 	}
 	
 	@PreAuthorize("hasRole('FINAL_USER')")
-	@GetMapping("/allOrder/{id}")
-	public Iterable<OrderP> allOrderByUser(@PathVariable long id){
+	@GetMapping("/ordersByUser/{id}")
+	public Iterable<OrderByUserOutput> allOrderByUser(@PathVariable long id){
 		
 		return orderService.allOrderByUser(id);
 	}
 	
 	@PreAuthorize("hasRole('ADMINISTRAR_PEDIDOS')")	
-	@GetMapping("/allOrders")
-	public Iterable<OrderOutput> allOrders(){
+	@GetMapping("/allOrdersManaged/{id}")
+	public Iterable<OrderOutput> allOrdersByAdmin(@PathVariable Integer id){
 		
-		return orderService.allOrders2();
+		return orderService.allOrders2(id);
 	}
 	
 	@PreAuthorize("hasRole('ADMINISTRAR_PEDIDOS')")	
@@ -94,5 +95,12 @@ public class OrderController {
 	public ResponseEntity<?> finalizeOrder(@PathVariable Integer id){
 		
 		return ResponseEntity.ok(orderService.finalizeOrder(id));
+	}
+	
+	@PreAuthorize("hasRole('ADMINISTRAR_PEDIDOS')")
+	@PutMapping("/reassignOrderInProgress/{id}")
+	public ResponseEntity<?> reassignOrderInProgress(@PathVariable Integer id){
+		
+		return ResponseEntity.ok(orderService.reassignOrderInProgress(id));
 	}
 }

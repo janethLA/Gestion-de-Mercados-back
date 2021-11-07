@@ -249,6 +249,12 @@ public class OrderService {
 		OrderP o=orderRepository.findById(id).get();
 		o.setStatus("Cancelado");
 		o.setTotalPrice(0);
+		o.setShippingCost(0);
+		List<OrderDetail> orderDetails=o.getOrderDetail();
+		for(OrderDetail od: orderDetails) {
+			od.setSubtotal(0);
+		}
+		o.setOrderDetail(orderDetails); 
 		orderRepository.save(o);
 		return "Se ha cancelado el pedido";
 	}
@@ -266,7 +272,12 @@ public class OrderService {
     public String cancelOrderInProgressAndSent(int id) {
   		OrderP o=orderRepository.findById(id).get();
   		o.setStatus("Cancelado");
-  		o.setTotalPrice(0);
+  		o.setTotalPrice(0);o.setShippingCost(0);
+		List<OrderDetail> orderDetails=o.getOrderDetail();
+		for(OrderDetail od: orderDetails) {
+			od.setSubtotal(0);
+		}
+		o.setOrderDetail(orderDetails); 
   		OrderAssigned orderA=o.getOrderAssigned().get(o.getOrderAssigned().size()-1);
   		orderA.setStatus("Cancelado");
   		orderRepository.save(o);

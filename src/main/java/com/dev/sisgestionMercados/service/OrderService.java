@@ -147,7 +147,7 @@ public class OrderService {
 		List<OrderOutput> allOrders=new ArrayList<OrderOutput>();
 		for(OrderP o: orders) {
 		
-			if(o.getStatus().equalsIgnoreCase("Pendiente") ) {
+			if(o.getStatus().equalsIgnoreCase("Pendiente") || o.getStatus().equalsIgnoreCase("Cancelado") ) {
 				
 				OrderOutput order=new OrderOutput();
 				order.setIdOrder(o.getIdOrder());

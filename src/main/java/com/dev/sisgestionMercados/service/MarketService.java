@@ -72,7 +72,9 @@ public class MarketService {
 			newWarehouse.setLatitude(found.getLatitude());
 			newWarehouse.setLongitude(found.getLongitude());
 			newWarehouse.setWarehouseImage(found.getWarehouseImage());
+			newWarehouse.setSectorName(found.getSector().getSectorName());
 			allWarehousesByOrder.add(newWarehouse);
+			
 
 		}
 

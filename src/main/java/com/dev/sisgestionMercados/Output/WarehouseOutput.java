@@ -4,6 +4,7 @@ public class WarehouseOutput {
 	
 	private int idMarket;
 	private String warehouseName;
+	private String sectorName;
 	private String address;
 	private double latitude;
 	private double longitude;
@@ -44,6 +45,12 @@ public class WarehouseOutput {
 	}
 	public void setWarehouseImage(byte[] warehouseImage) {
 		this.warehouseImage = warehouseImage;
+	}
+	public String getSectorName() {
+		return sectorName;
+	}
+	public void setSectorName(String sectorName) {
+		this.sectorName = sectorName;
 	}
 	
 	

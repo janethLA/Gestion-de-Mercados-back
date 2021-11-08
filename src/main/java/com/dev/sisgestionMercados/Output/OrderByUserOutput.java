@@ -15,6 +15,8 @@ public class OrderByUserOutput {
 	private LocalDate orderDate;
 	private LocalTime orderTime;
 	private double shippingCost;
+	private String warehouseName;
+	private String sectorName;
 	private List<OrderDetail> orderDetail;
 	
 	private String adminName;
@@ -156,6 +158,21 @@ public class OrderByUserOutput {
 	public void setOrderDetail(List<OrderDetail> orderDetail) {
 		this.orderDetail = orderDetail;
 	}
-	
+
+	public String getWarehouseName() {
+		return warehouseName;
+	}
+
+	public void setWarehouseName(String warehouseName) {
+		this.warehouseName = warehouseName;
+	}
+
+	public String getSectorName() {
+		return sectorName;
+	}
+
+	public void setSectorName(String sectorName) {
+		this.sectorName = sectorName;
+	}
 	
 }

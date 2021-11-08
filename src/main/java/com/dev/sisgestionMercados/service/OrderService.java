@@ -93,6 +93,8 @@ public class OrderService {
 				order.setTotalPrice(o.getTotalPrice());
 				order.setQuantityProducts(o.getQuantityProducts());
 				order.setOrderDetail(o.getOrderDetail());
+				order.setWarehouseName(o.getOrderDetail().get(0).getProduct().getCategory().getWarehouse().getWarehouseName());	
+				order.setSectorName(o.getOrderDetail().get(0).getProduct().getCategory().getWarehouse().getSector().getSectorName());			
 				
 				/*PARA QUE EL USUARIO SE PONGA EN CONTACTO CON EL ADMIN , TAL VEZ PONER UN CONTACTO POR DEFECTO
 			    order.setAdminName(admin.getName());
@@ -113,6 +115,8 @@ public class OrderService {
 				order.setTotalPrice(o.getTotalPrice());
 				order.setQuantityProducts(o.getQuantityProducts());
 				order.setOrderDetail(o.getOrderDetail());
+				order.setWarehouseName(o.getOrderDetail().get(0).getProduct().getCategory().getWarehouse().getWarehouseName());	
+				order.setSectorName(o.getOrderDetail().get(0).getProduct().getCategory().getWarehouse().getSector().getSectorName());			
 				
 				int idAdmin=o.getOrderAssigned().get(o.getOrderAssigned().size()-1).getIdUserCallCenter();
 				UserS admin=userService.findById(idAdmin);
@@ -262,7 +266,7 @@ public class OrderService {
     public String orderSent(int id) {
     	OrderP order=orderRepository.findById(id).get();
 		OrderAssigned orderA=order.getOrderAssigned().get(order.getOrderAssigned().size()-1);
-		order.setStatus("Enviado");
+		order.setStatus("Enviando");
 		orderA.setStatus("Aceptado");
 		orderRepository.save(order);
 		orderAssignedService.save2(orderA);

@@ -20,6 +20,7 @@ import com.dev.sisgestionMercados.Input.OrderInput;
 import com.dev.sisgestionMercados.Output.DeliveryUserOutput;
 import com.dev.sisgestionMercados.Output.OrderByUserOutput;
 import com.dev.sisgestionMercados.Output.OrderOutput;
+import com.dev.sisgestionMercados.Output.OrderToPayOutput;
 import com.dev.sisgestionMercados.entity.FinalUser;
 import com.dev.sisgestionMercados.entity.OrderP;
 import com.dev.sisgestionMercados.service.OrderService;
@@ -102,5 +103,12 @@ public class OrderController {
 	public ResponseEntity<?> reassignOrderInProgress(@PathVariable Integer id){
 		
 		return ResponseEntity.ok(orderService.reassignOrderInProgress(id));
+	}
+	
+	@PreAuthorize("hasRole('ADMINISTRAR_PEDIDOS')")	
+	@GetMapping("/allOrdersCompletedForPay")
+	public Iterable<OrderToPayOutput> allOrdersCompleted(){
+		
+		return orderService.allOrdersCompleted();
 	}
 }

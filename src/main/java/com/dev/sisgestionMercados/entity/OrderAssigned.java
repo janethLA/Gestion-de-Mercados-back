@@ -35,6 +35,11 @@ public class OrderAssigned {
 	private boolean reassigned;
 	@Column
 	private int idUserCallCenter;
+	@Column
+	private LocalDate paymentDate;
+	@Column
+	private long receiptNumber;
+	
 	
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
 	@JoinColumn(name="idUser")
@@ -129,6 +134,21 @@ public class OrderAssigned {
 	public void setPayment(Payment payment) {
 		this.payment = payment;
 	}
-	
+
+	public LocalDate getPaymentDate() {
+		return paymentDate;
+	}
+
+	public void setPaymentDate(LocalDate paymentDate) {
+		this.paymentDate = paymentDate;
+	}
+
+	public long getReceiptNumber() {
+		return receiptNumber;
+	}
+
+	public void setReceiptNumber(long receiptNumber) {
+		this.receiptNumber = receiptNumber;
+	}
 	
 }

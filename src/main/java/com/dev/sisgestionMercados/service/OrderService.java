@@ -14,6 +14,7 @@ import com.dev.sisgestionMercados.Input.OrderInput;
 import com.dev.sisgestionMercados.Output.DeliveryUserOutput;
 import com.dev.sisgestionMercados.Output.OrderByUserOutput;
 import com.dev.sisgestionMercados.Output.OrderOutput;
+import com.dev.sisgestionMercados.Output.OrderToPayOutput;
 import com.dev.sisgestionMercados.Output.PrivilegeOutput;
 import com.dev.sisgestionMercados.entity.FinalUser;
 import com.dev.sisgestionMercados.entity.OrderAssigned;
@@ -311,6 +312,28 @@ public class OrderService {
 		orderAssignedService.save2(orderA);
 		return "Vuelve a reasignar el pedido";
 	}
+    
+    public List<OrderToPayOutput>  allOrdersCompleted() {
+    	List<OrderP> allOrders=orderRepository.findAll();
+    	List<OrderToPayOutput> allOrdersCompleted=new ArrayList<OrderToPayOutput>();
+    	
+    	for(OrderP o:allOrders) {
+    		if(o.getStatus().equals("Finalizado")) {
+    			OrderAssigned orderA=o.getOrderAssigned().get(o.getOrderAssigned().size()-1);
+        		if(  orderA.getStatus().equals("Finalizado")) {
+        			OrderToPayOutput order=new OrderToPayOutput() ;
+        			order.setIdOrder(o.getIdOrder());
+        			order.setDelivery(orderA.getUserS().getName());
+        			order.setDateOfOrderAssigned(orderA.getDate());
+        			order.setShippingCost(o.getShippingCost());
+        			order.setStatus(o.getStatus());
+        			allOrdersCompleted.add(order);
+        		}
+    		}
+    	
+    	}
+    	return allOrdersCompleted;
+    }
     
 }
 

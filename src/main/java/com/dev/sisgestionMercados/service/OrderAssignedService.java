@@ -152,6 +152,30 @@ public class OrderAssignedService {
    public void save2(OrderAssigned order) {
     	orderAssignedRepository.save(order);
     }
+   
+	public String payDelivery(int id,long receiptNumber, List<Integer> ids) {
+		UserS u = userService.findById(id);
+		List<OrderAssigned> allAsignedOrders = u.getOrderAssigned();
+	    
+		for (int j =0;j< allAsignedOrders.size();j++) {
+			
+			OrderAssigned o =allAsignedOrders.get(j);
+			
+			if (o.getStatus().equals("Finalizado")) {
+				for (int i = 0; i < ids.size(); i++) {
+					if (o.getOrderP().getIdOrder() == ids.get(i)) {
+                        o.setStatus("Pagado");
+                        o.setPaymentDate(LocalDate.now());
+                        o.setReceiptNumber(receiptNumber);
+                        orderAssignedRepository.save(o);
+                        
+					}
+				}
+
+			}
+		}
+		return "Se realizo el pago";
+	}
 
 }
 

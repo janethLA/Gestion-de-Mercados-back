@@ -1,5 +1,7 @@
 package com.dev.sisgestionMercados.controller;
 
+import java.util.List;
+
 import javax.annotation.security.PermitAll;
 
 import org.modelmapper.ModelMapper;
@@ -84,5 +86,11 @@ public class OrderAssignedController {
 		return ResponseEntity.ok(orderAssignedService.reportEmergency(id, commentary));
 	}
 	
+	@PreAuthorize("hasRole('ADMINISTRAR_PEDIDOS')")
+	@PutMapping("/payDelivery/{id}/{receiptNumber}")
+	public ResponseEntity<?> payDelivery(@PathVariable Integer id,@PathVariable long receiptNumber,@RequestBody List<Integer> ids){
+		
+		return ResponseEntity.ok(orderAssignedService.payDelivery(id,receiptNumber,ids));
+	}
 	
 }

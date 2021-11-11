@@ -323,6 +323,7 @@ public class OrderService {
         		if(  orderA.getStatus().equals("Finalizado")) {
         			OrderToPayOutput order=new OrderToPayOutput() ;
         			order.setIdOrder(o.getIdOrder());
+        			order.setIdDelivery(o.getFinalUser().getIdFinalUser());        			
         			order.setDelivery(orderA.getUserS().getName());
         			order.setDateOfOrderAssigned(orderA.getDate());
         			order.setShippingCost(o.getShippingCost());

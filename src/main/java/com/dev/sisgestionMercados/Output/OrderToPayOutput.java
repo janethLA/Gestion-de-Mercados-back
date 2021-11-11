@@ -6,7 +6,9 @@ import java.time.LocalTime;
 public class OrderToPayOutput {
 	
 	private int idOrder;
+	private long idDelivery;
 	private String delivery;
+	
 	private double shippingCost;
 	private LocalDate dateOfOrderAssigned;
 	private String status;
@@ -41,7 +43,11 @@ public class OrderToPayOutput {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	
+	public long getIdDelivery() {
+		return idDelivery;
+	}
+	public void setIdDelivery(long idDelivery) {
+		this.idDelivery = idDelivery;
+	}
 	
 }

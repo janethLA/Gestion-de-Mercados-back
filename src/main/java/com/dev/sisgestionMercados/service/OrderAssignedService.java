@@ -13,6 +13,8 @@ import com.dev.sisgestionMercados.Input.OrderAssignedInput;
 import com.dev.sisgestionMercados.Output.AllOrderAssignedOutput;
 import com.dev.sisgestionMercados.Output.OrderAssignedOutput;
 import com.dev.sisgestionMercados.Output.OrderOutput;
+import com.dev.sisgestionMercados.Output.OrderToPayOutput;
+import com.dev.sisgestionMercados.Output.OrdersCompletedByDeliveryOutput;
 import com.dev.sisgestionMercados.entity.OrderAssigned;
 import com.dev.sisgestionMercados.entity.OrderP;
 import com.dev.sisgestionMercados.entity.Payment;
@@ -71,7 +73,6 @@ public class OrderAssignedService {
 			o.setOrder(orderA.getOrderP());
 			
 			o.setFinalUserName(orderA.getOrderP().getFinalUser().getFinalUserName());
-			o.setFinalUserEmail(orderA.getOrderP().getFinalUser().getEmail());
 			o.setFinalUserTelephone(orderA.getOrderP().getFinalUser().getTelephone());
 			o.setFinalUserWhatsappLink(orderA.getOrderP().getFinalUser().getWhatsappLink());
 			
@@ -175,6 +176,30 @@ public class OrderAssignedService {
 			}
 		}
 		return "Se realizo el pago";
+	}
+	
+	public List<OrdersCompletedByDeliveryOutput> allOrdersCompletedForReport(int id) {
+		UserS u = userService.findById(id);
+		List<OrderAssigned> allAsignedOrders = u.getOrderAssigned();
+    	List<OrdersCompletedByDeliveryOutput> allOrdersCompleted=new ArrayList<OrdersCompletedByDeliveryOutput>();
+    	
+    	for(OrderAssigned o:allAsignedOrders) {
+    		if(o.getStatus().equals("Finalizado") ||o.getStatus().equals("Pagado") ) {
+    			
+        			OrdersCompletedByDeliveryOutput order=new OrdersCompletedByDeliveryOutput() ;
+        			order.setIdOrder(o.getOrderP().getIdOrder());
+        			order.setDelivery(o.getUserS().getName());
+        			order.setDateOfOrderAssigned(o.getDate());
+        			order.setPaymentDate(o.getPaymentDate());
+        			order.setReceiptNumber(o.getReceiptNumber());
+        			order.setShippingCost(o.getOrderP().getShippingCost());
+        			order.setStatusOfOrder(o.getOrderP().getStatus());
+        			order.setStatusOfOrderAssigned(o.getStatus());
+        			allOrdersCompleted.add(order);
+        		}
+    		}
+
+    	return allOrdersCompleted;
 	}
 
 }

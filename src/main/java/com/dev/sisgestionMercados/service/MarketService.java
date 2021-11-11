@@ -20,6 +20,7 @@ import com.dev.sisgestionMercados.entity.Warehouse;
 import com.dev.sisgestionMercados.entity.Category;
 import com.dev.sisgestionMercados.entity.Product;
 import com.dev.sisgestionMercados.entity.Sector;
+import com.dev.sisgestionMercados.entity.Setting;
 import com.dev.sisgestionMercados.repository.MarketRepository;
 
 @Service
@@ -31,6 +32,9 @@ public class MarketService {
 	private SectorService sectorService;
 	@Autowired
 	private ModelMapper modelMapper;
+	@Autowired
+	private SettingService settingService;
+	
 	
 	public MarketInput save(MarketInput market, MultipartFile image) {
 		Warehouse newMarket=new Warehouse();
@@ -164,10 +168,10 @@ public class MarketService {
 	}
 	
 	public Iterable<WarehouseSearchByAtributes> getAllWarehouseSearchByLocation(LocationInput location) {
-
+        Setting setting=settingService.findById(1);
 		List<Warehouse> allWarehouse = marketRepository.findAll();
 		List<WarehouseSearchByAtributes> allWarehouseSearch = new ArrayList<WarehouseSearchByAtributes>();
-		double distMax = 4000; // en metros = 4KM
+		double distMax = setting.getSearchDistance()*1000; // en metros = 4KM
 		Location userLocation = new Location(location.getLatitude(), location.getLongitude());
 
 		for (Warehouse found : allWarehouse) {

@@ -45,8 +45,7 @@ public class UserService {
 	private FinalUserService finalUserService;
 	@Autowired
 	private FinalUserRepository finalUserRepository;
-	@Autowired
-	private EmailService emailService ;
+	
 	
 	public UserS save(UserS user) {
 	    UserS persistedUser = userRepository.save(user);
@@ -196,37 +195,30 @@ public class UserService {
     	return userRepository.findById(id).get();
     }
     
-    public UserPasswordOutput sendEmail(String email) {
+    public UserPasswordOutput recoverByPhone(int telephone) {
     	String sms="";
     	UserPasswordOutput user=new UserPasswordOutput();
     	try {
-    		FinalUser u=finalUserRepository.findByEmail(email);
-    		System.out.println("--email: "+u.getEmail());
+    		FinalUser u=finalUserRepository.findByTelephone(telephone);
+    		System.out.println("User Final; "+u.getIdFinalUser());
     		String code=UUID.randomUUID().toString().toUpperCase().substring(0, 6);
     		u.setCode(code);
-    		String message="Su código de verificación es: "+code;
-    		String subject="Verifica tu Email!";
-    		emailService.sendEmail(email, subject, message);
-    		sms="Mensaje enviado";
     		user.setCode(code);
     		user.setIdFinalUser(u.getIdFinalUser());
     		user.setIdentifier(1);
     		finalUserRepository.save(u);
 		} catch (Exception e) {
 			try {
-				UserS u= userRepository.findByEmail(email);
-				System.out.println("email: "+u.getEmail());
+				UserS u= userRepository.findByTelephone(telephone);
+				System.out.println("User Final; "+u.getIdUser());
 	    		String code=UUID.randomUUID().toString().toUpperCase().substring(0, 6);
-	    		//u.setCode(code);
-	    		String message="Su código de verificación es: "+code;
-	    		String subject="Verifica tu Email!";
-	    		emailService.sendEmail(email, subject, message);
 	    		user.setCode(code);
 	    		user.setIdFinalUser(u.getIdUser());
 	    		user.setIdentifier(0);
 	    		sms="Mensaje enviado";
 			} catch (Exception e2) {
 				sms="No se pudo enviar el mensaje";
+				user=null;
 			}
 		}
     	return user ;
@@ -237,18 +229,18 @@ public class UserService {
     	String sms="";
     	
     	if(user.getIdentifier()==0) {
-    		int id=(int) user.getIdFinalUser();
+    		int id=(int) user.getIdUser();
     		UserS u=userRepository.findById(id).get();
     		u.setPassword(encoder.encode(user.getPassword()));
     		userRepository.save(u);
     		sms="Se actualizo la contraseña";
     	}else {
     		if(user.getIdentifier()==1) {
-    			int telephone=Integer.parseInt(user.getPassword());
-    			FinalUser u=finalUserRepository.findById(user.getIdFinalUser()).get();
-    			u.setTelephone(telephone);
+    			
+    			FinalUser u=finalUserRepository.findById(user.getIdUser()).get();
+    			u.setPassword(user.getPassword());
     			finalUserRepository.save(u);
-    			sms ="Se actualizo el telefono";
+    			sms ="Se actualizo la contraseña";
     		}else {
     			sms="No se cambio la contraseña";
     		}

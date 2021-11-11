@@ -59,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         		.antMatchers("/**/uniqueEmail/*").permitAll()
         		.antMatchers("/**/uniqueTelephoneAll/*").permitAll() // /updateTelephone
         		.antMatchers("/**/uniqueEmailAll/*").permitAll()
-        		.antMatchers("/**/sendEmail/*").permitAll()
+        		.antMatchers("/**/recoverByPhone/*").permitAll()
         		.antMatchers("/**/changePassword").permitAll()
         		//.antMatchers("/**/sendEmail/*").hasRole("ADMIN")
                 .anyRequest().authenticated()

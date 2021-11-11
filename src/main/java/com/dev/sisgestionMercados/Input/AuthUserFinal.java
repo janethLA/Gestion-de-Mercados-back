@@ -4,7 +4,7 @@ public class AuthUserFinal {
 
 	private String userName;
 	private int telephone;
-	private String email;
+	private String password;
 	
 	public String getUserName() {
 		return userName;
@@ -18,11 +18,11 @@ public class AuthUserFinal {
 	public void setTelephone(int telephone) {
 		this.telephone = telephone;
 	}
-	public String getEmail() {
-		return email;
+	public String getPassword() {
+		return password;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setPassword(String password) {
+		this.password = password;
 	}
-		
+	
 }

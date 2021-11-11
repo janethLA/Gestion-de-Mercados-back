@@ -69,7 +69,7 @@ public class AuthController {
             		return new ResponseEntity<>(new AuthenticationResponse(jwt,roles,authUserService.getIdUser(request.getUsername()),
     						authUserService.getNameUser(request.getUsername()) , authUserService.getName(request.getUsername())), HttpStatus.OK);
     	}else {
-    		if(userType==2 && authUserService.getTelephone(request.getUsername()).equals(request.getPassword())) {
+    		if(userType==2 && authUserService.getPassword(request.getUsername()).equals(request.getPassword())) {
                    // authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
                     UserDetails userDetails = authUserService.loadUserByUsername(request.getUsername());
                     String jwt = jwtUtil.generateToken(userDetails);
@@ -110,10 +110,15 @@ public class AuthController {
 	}
     
     @PermitAll
-   	@GetMapping("/sendEmail/{email}")
-   	public ResponseEntity<?> sendEmail(@PathVariable String email){
-   		
-   		return ResponseEntity.ok(userService.sendEmail(email));
+   	@GetMapping("/recoverByPhone/{telephone}")
+   	public ResponseEntity<?> recoverByPhone(@PathVariable Integer telephone){
+    	UserPasswordOutput u=userService.recoverByPhone(telephone);
+		if(u!=null) {
+			return ResponseEntity.ok(u);
+		}else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+ 
    	}
     
     @PermitAll

@@ -97,12 +97,13 @@ public class OrderService {
 				order.setWarehouseName(o.getOrderDetail().get(0).getProduct().getCategory().getWarehouse().getWarehouseName());	
 				order.setSectorName(o.getOrderDetail().get(0).getProduct().getCategory().getWarehouse().getSector().getSectorName());			
 				
-				/*PARA QUE EL USUARIO SE PONGA EN CONTACTO CON EL ADMIN , TAL VEZ PONER UN CONTACTO POR DEFECTO
-			    order.setAdminName(admin.getName());
-				order.setAdminTelephone(admin.getTelephone());
-				order.setAdminEmail(admin.getEmail());
-				order.setAdminWhatsappLink(admin.getWhatsappLink());
-				 */
+				//PARA QUE EL USUARIO SE PONGA EN CONTACTO CON EL ADMIN , TAL VEZ PONER UN CONTACTO POR DEFECTO
+				UserS userAdmin=userService.findById(1);
+			    order.setAdminName(userAdmin.getName());
+				order.setAdminTelephone(userAdmin.getTelephone());
+				order.setAdminEmail(userAdmin.getEmail());
+				order.setAdminWhatsappLink(userAdmin.getWhatsappLink());
+				 
 				
 				orderByUserOutput.add(order);
 				
@@ -166,7 +167,6 @@ public class OrderService {
 				order.setFinalUserName(o.getFinalUser().getFinalUserName());
 				order.setFinalUserTelephone(o.getFinalUser().getTelephone());
 				order.setFinalUserWhatsappLink(o.getFinalUser().getWhatsappLink());
-				order.setFinalUserEmail(o.getFinalUser().getEmail());
 				
 				try {
 					order.setShippingCost(o.getShippingCost());
@@ -190,7 +190,6 @@ public class OrderService {
 					order.setFinalUserName(o.getFinalUser().getFinalUserName());
 					order.setFinalUserTelephone(o.getFinalUser().getTelephone());
 					order.setFinalUserWhatsappLink(o.getFinalUser().getWhatsappLink());
-					order.setFinalUserEmail(o.getFinalUser().getEmail());
 					
 					UserS delivery=o.getOrderAssigned().get(o.getOrderAssigned().size()-1).getUserS();
 					order.setDeliveryName(delivery.getName());
@@ -303,8 +302,7 @@ public class OrderService {
     public String reassignOrderInProgress(int id) {
 		OrderP order=orderRepository.findById(id).get();
 		OrderAssigned orderA=order.getOrderAssigned().get(order.getOrderAssigned().size()-1);
-		System.out.println("Order size: "+order.getOrderAssigned().size() +" y el id ultimo del pedido asignado: "+orderA.getIdOrderAssigned());
-		//System.out.println("Order ultimo: "+order.getOrderAssigned().get(4).getIdOrderAssigned());
+		//System.out.println("Order size: "+order.getOrderAssigned().size() +" y el id ultimo del pedido asignado: "+orderA.getIdOrderAssigned());
 		orderA.setReassigned(true);
 		order.setStatus("Pendiente");
 		orderA.setStatus("Rechazado");
@@ -323,6 +321,7 @@ public class OrderService {
         		if(  orderA.getStatus().equals("Finalizado")) {
         			OrderToPayOutput order=new OrderToPayOutput() ;
         			order.setIdOrder(o.getIdOrder());
+        			order.setIdDelivery(orderA.getUserS().getIdUser());
         			order.setDelivery(orderA.getUserS().getName());
         			order.setDateOfOrderAssigned(orderA.getDate());
         			order.setShippingCost(o.getShippingCost());

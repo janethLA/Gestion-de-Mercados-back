@@ -22,6 +22,8 @@ import com.dev.sisgestionMercados.Input.OrderAssignedInput;
 import com.dev.sisgestionMercados.Input.OrderInput;
 import com.dev.sisgestionMercados.Output.AllOrderAssignedOutput;
 import com.dev.sisgestionMercados.Output.OrderAssignedOutput;
+import com.dev.sisgestionMercados.Output.OrderToPayOutput;
+import com.dev.sisgestionMercados.Output.OrdersCompletedByDeliveryOutput;
 import com.dev.sisgestionMercados.entity.OrderAssigned;
 import com.dev.sisgestionMercados.entity.OrderP;
 import com.dev.sisgestionMercados.service.OrderAssignedService;
@@ -91,6 +93,13 @@ public class OrderAssignedController {
 	public ResponseEntity<?> payDelivery(@PathVariable Integer id,@PathVariable long receiptNumber,@RequestBody List<Integer> ids){
 		
 		return ResponseEntity.ok(orderAssignedService.payDelivery(id,receiptNumber,ids));
+	}
+	
+	@PreAuthorize("hasRole('VER_PEDIDOS')")	
+	@GetMapping("/allOrdersCompletedForReport/{id}")
+	public Iterable<OrdersCompletedByDeliveryOutput> allOrdersCompletedForReport(@PathVariable Integer id){
+		
+		return orderAssignedService.allOrdersCompletedForReport(id);
 	}
 	
 }

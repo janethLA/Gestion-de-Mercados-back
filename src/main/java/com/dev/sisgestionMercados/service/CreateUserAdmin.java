@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.dev.sisgestionMercados.entity.Privilege;
 import com.dev.sisgestionMercados.entity.Role;
+import com.dev.sisgestionMercados.entity.Setting;
 import com.dev.sisgestionMercados.entity.UserRole;
 import com.dev.sisgestionMercados.entity.UserS;
 import com.dev.sisgestionMercados.repository.PrivilegeRepository;
@@ -33,6 +34,9 @@ public class CreateUserAdmin implements CommandLineRunner{
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 	
+	@Autowired
+	private SettingService settingService;
+	
 	@Override
 	public void run(String... args) throws Exception {
 		
@@ -49,7 +53,7 @@ public class CreateUserAdmin implements CommandLineRunner{
 			
 			Role role=new Role();
 			role.setRoleName("ADMIN");
-			role.setDescription("El admin se encarga de registrar usuarios, unidades de gasto, administracion, crear nuevos roles");
+			role.setDescription("El admin se encarga de registrar usuarios, administar pedidos, almacenes, configurar datos del sistema");
 			Role newRole=roleRepository.save(role);
 			
 			
@@ -72,13 +76,15 @@ public class CreateUserAdmin implements CommandLineRunner{
 			Privilege privilege6=new Privilege();
 			privilege6.setPrivilege("ROLE_VER_REPORTES");
 			//privilege6.setIdentifier(3);
+			Privilege privilege7=new Privilege();
+			privilege7.setPrivilege("ROLE_CONFIGURAR_SISTEMA");
 			
 			//Privilegios de usuario Encargado de actualizar precios
-			Privilege privilege7=new Privilege();
-			privilege7.setPrivilege("ROLE_VER_PRECIOS");
+			Privilege privilege10=new Privilege();
+			privilege10.setPrivilege("ROLE_ACTUALIZAR_PRECIOS");
 			//privilege7.setIdentifier(3);
 			Privilege privilege8=new Privilege();
-			privilege8.setPrivilege("ROLE_ACTUALIZAR_PRECIOS");
+			privilege8.setPrivilege("ROLE_ACTUALIZAR_IMAGEN");
 			
 			//Privilegios de Delivery
 			Privilege privilege9=new Privilege();
@@ -90,6 +96,7 @@ public class CreateUserAdmin implements CommandLineRunner{
 			Privilege privilegeAdmin4=privilegeReposiroty.save(privilege4);
 			Privilege privilegeAdmin5=privilegeReposiroty.save(privilege5);
 			Privilege privilegeAdmin6=privilegeReposiroty.save(privilege6);
+			Privilege privilegeAdmin7=privilegeReposiroty.save(privilege7);
 			
 			privilegeAdmin1.setRoles(newRole);
 			privilegeAdmin2.setRoles(newRole);
@@ -97,6 +104,7 @@ public class CreateUserAdmin implements CommandLineRunner{
 			privilegeAdmin4.setRoles(newRole);
 			privilegeAdmin5.setRoles(newRole);
 			privilegeAdmin6.setRoles(newRole);
+			privilegeAdmin7.setRoles(newRole);
 			
 			privilegeReposiroty.save(privilegeAdmin1);
 			privilegeReposiroty.save(privilegeAdmin2);
@@ -107,6 +115,7 @@ public class CreateUserAdmin implements CommandLineRunner{
 			privilegeReposiroty.save(privilege7);
 			privilegeReposiroty.save(privilege8);
 			privilegeReposiroty.save(privilege9);
+			privilegeReposiroty.save(privilege10);
 			
 			UserRole userRole=new UserRole();
 			UserRole userRole2=userRoleService.save(userRole);	
@@ -114,6 +123,10 @@ public class CreateUserAdmin implements CommandLineRunner{
 			userRole2.setUser(saveUser);
 			//userRole2.setSector(null);
 			userRoleService.save(userRole);		
+			
+			Setting setting=new Setting();
+			setting.setSearchDistance(4); //4 KM
+			settingService.save(setting);
 		}
 		
 	}

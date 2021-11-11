@@ -2,14 +2,16 @@ package com.dev.sisgestionMercados.Input;
 
 public class UserPasswordInput {
 
-	private long idFinalUser;
+	private long idUser;
 	private int identifier;
 	private String password;
-	public long getIdFinalUser() {
-		return idFinalUser;
+	
+	
+	public long getIdUser() {
+		return idUser;
 	}
-	public void setIdFinalUser(long idFinalUser) {
-		this.idFinalUser = idFinalUser;
+	public void setIdUser(long idUser) {
+		this.idUser = idUser;
 	}
 	public int getIdentifier() {
 		return identifier;

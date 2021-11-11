@@ -5,7 +5,7 @@ public class FinalUserAtributesOutput {
 	private long idFinalUser;
 	private String code;
 	private int telephone;
-	private String email;
+	private String password;
 	
 	public long getIdFinalUser() {
 		return idFinalUser;
@@ -25,11 +25,12 @@ public class FinalUserAtributesOutput {
 	public void setTelephone(int telephone) {
 		this.telephone = telephone;
 	}
-	public String getEmail() {
-		return email;
+	public String getPassword() {
+		return password;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setPassword(String password) {
+		this.password = password;
 	}
+	
 	
 }

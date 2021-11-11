@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dev.sisgestionMercados.Complement.Sms;
 import com.dev.sisgestionMercados.Input.AuthUserFinal;
 import com.dev.sisgestionMercados.Input.FinalUserInput;
 import com.dev.sisgestionMercados.Output.FinalUserAtributesOutput;
@@ -37,8 +36,7 @@ public class FinalUserService {
 	private PrivilegeService privilegeService ;
 	@Autowired
 	private UserService userService ;
-	@Autowired
-	private EmailService emailService ;
+	
 
 	@Transactional
 	public FinalUserInput save(FinalUser finalUser) {
@@ -120,7 +118,7 @@ public class FinalUserService {
 		FinalUserDataOutput user=new FinalUserDataOutput();
 		user.setIdFinalUser(finalUser.getIdFinalUser());
 		user.setUserName(finalUser.getUserName());
-		user.setEmail(finalUser.getEmail());
+		user.setPassword(finalUser.getPassword());
 		user.setFinalUserName(finalUser.getFinalUserName());
 		user.setTelephone(finalUser.getTelephone());
 		return user;
@@ -138,17 +136,16 @@ public class FinalUserService {
 		if(finalUser.getTelephone()!=0) {
 			code=UUID.randomUUID().toString().toUpperCase().substring(0, 6);
 			newFinalUser.setCode(code);
-			//newFinalUser.setTelephone(finalUser.getTelephone());
 		}
-		if(!finalUser.getEmail().isEmpty()) {
+		if(!finalUser.getPassword().isEmpty()) {
 			
-			newFinalUser.setEmail(finalUser.getEmail()); 
+			newFinalUser.setPassword(finalUser.getPassword()); 
 		}
 		finalUserRepository.save(newFinalUser);
 		finalUserInput.setIdFinalUser(newFinalUser.getIdFinalUser());
 		finalUserInput.setTelephone(finalUser.getTelephone());
 		finalUserInput.setCode(code);
-		finalUserInput.setEmail(newFinalUser.getEmail());
+		finalUserInput.setPassword(newFinalUser.getPassword());
 		
 		return finalUserInput;
 	}
@@ -166,7 +163,7 @@ public class FinalUserService {
 		return result;
 	}
 	
-	public String verifyEmail(FinalUserAtributesOutput user) {
+	/*public String verifyEmail(FinalUserAtributesOutput user) {
 		String result;
 		FinalUser userF=findById(user.getIdFinalUser());
 		if(userF.getCode().equals(user.getCode())) {
@@ -177,19 +174,19 @@ public class FinalUserService {
 			result="no ha sido verificado";
 		}
 		return result;
-	}
+	}*/
 	
     public boolean noExistsEmailAll(String email) {
 		    	
     	boolean result=true;
     	List <UserS> allUser = userService.findAll();
-		List <FinalUser> allUsers = finalUserRepository.findAll();
+		/*List <FinalUser> allUsers = finalUserRepository.findAll();
 		for(FinalUser a: allUsers) {
 			if(a.getEmail()!=null){
 			if(a.getEmail().equalsIgnoreCase(email)) {
 				result=false;
 			}}
-		}
+		}*/
 		for(UserS a:allUser) {
 			if(a.getEmail()!=null){
 			if(a.getEmail().equalsIgnoreCase(email)) {
@@ -243,7 +240,7 @@ public class FinalUserService {
     	return finalUserRepository.findAll();
     }
     
-    public boolean noExistsEmail(String email) {
+    /*public boolean noExistsEmail(String email) {
     	
     	boolean result=true;
 		List <FinalUser> allUsers = finalUserRepository.findAll();
@@ -255,6 +252,6 @@ public class FinalUserService {
 		}
 		
 		return result;
-	}
+	}*/
     
 }

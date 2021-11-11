@@ -22,7 +22,6 @@ public class OrderOutput {
 	
 	private String finalUserName;
 	private int finalUserTelephone;
-	private String finalUserEmail;
 	private String finalUserWhatsappLink;
 	
 	private String deliveryName;
@@ -103,12 +102,6 @@ public class OrderOutput {
 	}
 	public void setFinalUserTelephone(int finalUserTelephone) {
 		this.finalUserTelephone = finalUserTelephone;
-	}
-	public String getFinalUserEmail() {
-		return finalUserEmail;
-	}
-	public void setFinalUserEmail(String finalUserEmail) {
-		this.finalUserEmail = finalUserEmail;
 	}
 	public String getFinalUserWhatsappLink() {
 		return finalUserWhatsappLink;

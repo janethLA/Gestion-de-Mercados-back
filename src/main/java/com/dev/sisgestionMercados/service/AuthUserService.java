@@ -50,7 +50,7 @@ public class AuthUserService implements UserDetailsService {
 			List <GrantedAuthority> roles=new ArrayList<>();
 			 roles.add(new SimpleGrantedAuthority(us.getPrivilege().getPrivilege()));
 			 System.out.println("-------------------> "+us.getPrivilege().getPrivilege());
-		    userDetails=new User(us.getUserName(),Integer.toString(us.getTelephone()),roles);
+		    userDetails=new User(us.getUserName(),us.getPassword(),roles);
 		}
 		
 		return userDetails;
@@ -98,6 +98,9 @@ public class AuthUserService implements UserDetailsService {
 	}
 	public String getTelephone(String name) {
 		return Long.toString(finalUserRepository.findByUserName(name).getTelephone());
+	}
+	public String getPassword(String name) {
+		return finalUserRepository.findByUserName(name).getPassword();
 	}
 	
 }

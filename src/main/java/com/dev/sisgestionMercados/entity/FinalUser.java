@@ -32,7 +32,7 @@ public class FinalUser {
 	@Column
 	private String code;
 	@Column
-	private String email;
+	private String password;
 	@Column
 	private boolean active;
 	@Column
@@ -78,11 +78,11 @@ public class FinalUser {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public String getEmail() {
-		return email;
+	public String getPassword() {
+		return password;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	public boolean isActive() {
 		return active;

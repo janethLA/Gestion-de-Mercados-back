@@ -229,7 +229,7 @@ public class UserService {
     	String sms="";
     	
     	if(user.getIdentifier()==0) {
-    		int id=(int) user.getIdUser();
+    		int id=(int) user.getIdFinalUser();
     		UserS u=userRepository.findById(id).get();
     		u.setPassword(encoder.encode(user.getPassword()));
     		userRepository.save(u);
@@ -237,7 +237,7 @@ public class UserService {
     	}else {
     		if(user.getIdentifier()==1) {
     			
-    			FinalUser u=finalUserRepository.findById(user.getIdUser()).get();
+    			FinalUser u=finalUserRepository.findById(user.getIdFinalUser()).get();
     			u.setPassword(user.getPassword());
     			finalUserRepository.save(u);
     			sms ="Se actualizo la contraseña";

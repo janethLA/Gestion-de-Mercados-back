@@ -56,6 +56,7 @@ public class OrderService {
 		newOrder.setOrderDate(LocalDate.now());
 		newOrder.setOrderTime(LocalTime.now());
 		newOrder.setStatus("Pendiente");
+		newOrder.setSubstate("por pagar");
 		OrderP savedOrder=orderRepository.save(newOrder);
 		FinalUser finalUser=finalUserService.findById(id);
 		savedOrder.setFinalUser(finalUser);
@@ -163,16 +164,27 @@ public class OrderService {
 				order.setQuantityProducts(o.getQuantityProducts());
 				order.setStatus(o.getStatus());
 				order.setOrderDetail(o.getOrderDetail());
+				order.setSubstate(o.getSubstate());
+				if(!o.getOrderAssigned().isEmpty()) {
+					order.setReassigned(o.getOrderAssigned().get(0).isReassigned());
+					order.setIdPayment(o.getOrderAssigned().get(0).getPayment().getIdPayment());
+					order.setBuyerCost(o.getOrderAssigned().get(0).getBuyerCost());
+					order.setDeliveryCost(o.getOrderAssigned().get(0).getDeliveryCost());
+					order.setShippingCost(o.getShippingCost());
+					order.setIdUserOfBuyer(o.getOrderAssigned().get(0).getIdUserOfBuyer());
+					// TAL VEZ SE PODRIA MOSTRAR EN LOS ESTADOS PENDIENTES que hayan sido reasignados por lo menos una vez el contacto con el comprador:
+					int idBuyer=o.getOrderAssigned().get(0).getIdUserOfBuyer();
+					UserS buyer=userService.findById(idBuyer);
+					order.setBuyerName(buyer.getName());
+					order.setBuyerEmail(buyer.getEmail());
+					order.setBuyerTelephone(buyer.getTelephone());
+					order.setBuyerWhatsappLink(buyer.getWhatsappLink());
+				}
 			
 				order.setFinalUserName(o.getFinalUser().getFinalUserName());
 				order.setFinalUserTelephone(o.getFinalUser().getTelephone());
 				order.setFinalUserWhatsappLink(o.getFinalUser().getWhatsappLink());
-				
-				try {
-					order.setShippingCost(o.getShippingCost());
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
+		
 				order.setWarehouseName(o.getOrderDetail().get(0).getProduct().getCategory().getWarehouse().getWarehouseName());
 				order.setSectorName(o.getOrderDetail().get(0).getProduct().getCategory().getWarehouse().getSector().getSectorName());
 				allOrders.add(order);
@@ -186,6 +198,8 @@ public class OrderService {
 					order.setQuantityProducts(o.getQuantityProducts());
 					order.setStatus(o.getStatus());
 					order.setOrderDetail(o.getOrderDetail());
+					order.setReassigned(o.getOrderAssigned().get(0).isReassigned());
+					order.setSubstate(o.getSubstate());
 					
 					order.setFinalUserName(o.getFinalUser().getFinalUserName());
 					order.setFinalUserTelephone(o.getFinalUser().getTelephone());
@@ -196,6 +210,13 @@ public class OrderService {
 					order.setDeliveryTelephone(delivery.getTelephone());
 					order.setDeliveryWhatsappLink(delivery.getWhatsappLink());
 					order.setDeliveryEmail(delivery.getEmail());
+					
+					int idBuyer=o.getOrderAssigned().get(0).getIdUserOfBuyer();
+					UserS buyer=userService.findById(idBuyer);
+					order.setBuyerName(buyer.getName());
+					order.setBuyerEmail(buyer.getEmail());
+					order.setBuyerTelephone(buyer.getTelephone());
+					order.setBuyerWhatsappLink(buyer.getWhatsappLink());
 					
 					try {
 						order.setShippingCost(o.getShippingCost());
@@ -318,13 +339,13 @@ public class OrderService {
     	for(OrderP o:allOrders) {
     		if(o.getStatus().equals("Finalizado")) {
     			OrderAssigned orderA=o.getOrderAssigned().get(o.getOrderAssigned().size()-1);
-        		if(  orderA.getStatus().equals("Finalizado")) {
+        		if(  orderA.getStatus().equals("Finalizado")|| orderA.getStatus().equals("Pagado")) {
         			OrderToPayOutput order=new OrderToPayOutput() ;
         			order.setIdOrder(o.getIdOrder());
         			order.setIdDelivery(orderA.getUserS().getIdUser());
         			order.setDelivery(orderA.getUserS().getName());
         			order.setDateOfOrderAssigned(orderA.getDate());
-        			order.setShippingCost(o.getShippingCost());
+        			order.setDeliveryCost(orderA.getDeliveryCost());
         			order.setStatus(o.getStatus());
         			allOrdersCompleted.add(order);
         		}
@@ -332,6 +353,35 @@ public class OrderService {
     	
     	}
     	return allOrdersCompleted;
+    }
+    
+    public List<DeliveryUserOutput> getAllBuyers(){
+    	
+    	List<UserS> allUsers=userService.findAll();
+    	List<DeliveryUserOutput> allDeliveries=new ArrayList<DeliveryUserOutput>();
+    	for(UserS s: allUsers) {
+    		List<Privilege> privilege=s.getUserRole().get(0).getRole().getPrivileges();
+    		for(Privilege p :privilege) {
+    			if(p.getPrivilege().equalsIgnoreCase("ROLE_ACTUALIZAR_PRECIOS") || p.getPrivilege().equalsIgnoreCase("ROLE_ACTUALIZAR_IMAGEN")) {
+        			DeliveryUserOutput buyer=new DeliveryUserOutput();
+        			buyer.setIdUser(s.getIdUser());
+        			buyer.setName(s.getName());
+        			buyer.setTelephone(s.getTelephone());
+        			buyer.setEmail(s.getEmail());
+        			buyer.setSector(s.getUserRole().get(0).getSector().getSectorName());
+        			System.out.println("Nombre comprador: "+s.getName());
+        			allDeliveries.add(buyer);
+        		}
+    		}	
+    	}
+    	return allDeliveries;
+    }
+    
+    public String changeSubstate(int id, String subestate) {
+    	OrderP order=orderRepository.findById(id).get();
+		order.setSubstate(subestate);
+		orderRepository.save(order);
+		return "Se cambio el sub-estado a "+subestate;
     }
     
 }

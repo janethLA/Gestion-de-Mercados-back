@@ -111,4 +111,18 @@ public class OrderController {
 		
 		return orderService.allOrdersCompleted();
 	}
+	
+	@PreAuthorize("hasRole('ADMINISTRAR_PEDIDOS')")	
+	@GetMapping("/allBuyers")
+	public Iterable<DeliveryUserOutput> getAllBuyers(){
+		
+		return orderService.getAllDeliveries();
+	}
+	
+	@PreAuthorize("hasRole('ADMINISTRAR_PEDIDOS')")
+	@PutMapping("/changeSubstate/{id}")
+	public ResponseEntity<?> changeSubstate(@PathVariable Integer id, @RequestBody String substate){
+		
+		return ResponseEntity.ok(orderService.changeSubstate(id,substate));
+	}
 }

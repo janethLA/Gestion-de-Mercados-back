@@ -40,6 +40,18 @@ public class OrderAssigned {
 	@Column
 	private long receiptNumber;
 	
+	@Column
+	private int idUserOfBuyer;
+	@Column 
+	private LocalDate paymentDateOfBuyer;
+	@Column
+	private long receiptNumberOfBuyer;
+	@Column
+	private long receiptNumberOfCollect;
+	@Column
+	private double deliveryCost;
+	@Column
+	private double buyerCost;
 	
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
 	@JoinColumn(name="idUser")
@@ -149,6 +161,54 @@ public class OrderAssigned {
 
 	public void setReceiptNumber(long receiptNumber) {
 		this.receiptNumber = receiptNumber;
+	}
+
+	public int getIdUserOfBuyer() {
+		return idUserOfBuyer;
+	}
+
+	public void setIdUserOfBuyer(int idUserOfBuyer) {
+		this.idUserOfBuyer = idUserOfBuyer;
+	}
+
+	public LocalDate getPaymentDateOfBuyer() {
+		return paymentDateOfBuyer;
+	}
+
+	public void setPaymentDateOfBuyer(LocalDate paymentDateOfBuyer) {
+		this.paymentDateOfBuyer = paymentDateOfBuyer;
+	}
+
+	public long getReceiptNumberOfBuyer() {
+		return receiptNumberOfBuyer;
+	}
+
+	public void setReceiptNumberOfBuyer(long receiptNumberOfBuyer) {
+		this.receiptNumberOfBuyer = receiptNumberOfBuyer;
+	}
+
+	public long getReceiptNumberOfCollect() {
+		return receiptNumberOfCollect;
+	}
+
+	public void setReceiptNumberOfCollect(long receiptNumberOfCollect) {
+		this.receiptNumberOfCollect = receiptNumberOfCollect;
+	}
+
+	public double getDeliveryCost() {
+		return deliveryCost;
+	}
+
+	public void setDeliveryCost(double deliveryCost) {
+		this.deliveryCost = deliveryCost;
+	}
+
+	public double getBuyerCost() {
+		return buyerCost;
+	}
+
+	public void setBuyerCost(double buyerCost) {
+		this.buyerCost = buyerCost;
 	}
 	
 }

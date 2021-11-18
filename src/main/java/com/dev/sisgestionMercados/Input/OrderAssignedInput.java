@@ -8,6 +8,10 @@ public class OrderAssignedInput {
 	private int idUserCallCenter;
 	private int idPayment;
 	
+	private int idUserOfBuyer;
+	private double deliveryCost;
+	private double buyerCost;
+	
 	public int getIdUser() {
 		return idUser;
 	}
@@ -37,6 +41,24 @@ public class OrderAssignedInput {
 	}
 	public void setIdPayment(int idPayment) {
 		this.idPayment = idPayment;
+	}
+	public int getIdUserOfBuyer() {
+		return idUserOfBuyer;
+	}
+	public void setIdUserOfBuyer(int idUserOfBuyer) {
+		this.idUserOfBuyer = idUserOfBuyer;
+	}
+	public double getDeliveryCost() {
+		return deliveryCost;
+	}
+	public void setDeliveryCost(double deliveryCost) {
+		this.deliveryCost = deliveryCost;
+	}
+	public double getBuyerCost() {
+		return buyerCost;
+	}
+	public void setBuyerCost(double buyerCost) {
+		this.buyerCost = buyerCost;
 	}
 	
 }

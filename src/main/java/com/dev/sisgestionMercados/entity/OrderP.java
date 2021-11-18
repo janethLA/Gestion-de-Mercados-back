@@ -37,6 +37,8 @@ public class OrderP{
 	private LocalTime orderTime;
 	@Column
 	private double shippingCost;
+	@Column
+	private String substate;
 	
 	@OneToMany(mappedBy = "order",cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
 	@JsonManagedReference
@@ -111,5 +113,12 @@ public class OrderP{
 	public void setShippingCost(double shippingCost) {
 		this.shippingCost = shippingCost;
 	}
+	public String getSubstate() {
+		return substate;
+	}
+	public void setSubstate(String substate) {
+		this.substate = substate;
+	}
+	
 	
 }

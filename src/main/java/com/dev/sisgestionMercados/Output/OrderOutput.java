@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+import javax.persistence.Column;
+
 import com.dev.sisgestionMercados.entity.OrderDetail;
 
 
@@ -17,6 +19,14 @@ public class OrderOutput {
 	private LocalTime orderTime;
 	private double shippingCost;
 	
+	private boolean reassigned;
+	private int idPayment;
+	private String substate;
+	private int idUserOfBuyer;
+	private double deliveryCost;
+	private double buyerCost;  
+
+	
 	private String warehouseName;
 	private String sectorName;
 	
@@ -28,6 +38,11 @@ public class OrderOutput {
 	private int deliveryTelephone;
 	private String deliveryEmail;
 	private String deliveryWhatsappLink;
+	
+	private String buyerName;
+	private int buyerTelephone;
+	private String buyerEmail;
+	private String buyerWhatsappLink;
 	
     private List<OrderDetail> orderDetail;
     
@@ -133,5 +148,66 @@ public class OrderOutput {
 	public void setDeliveryWhatsappLink(String deliveryWhatsappLink) {
 		this.deliveryWhatsappLink = deliveryWhatsappLink;
 	}
+	public boolean isReassigned() {
+		return reassigned;
+	}
+	public void setReassigned(boolean reassigned) {
+		this.reassigned = reassigned;
+	}
+	public int getIdPayment() {
+		return idPayment;
+	}
+	public void setIdPayment(int idPayment) {
+		this.idPayment = idPayment;
+	}
+	public String getSubstate() {
+		return substate;
+	}
+	public void setSubstate(String substate) {
+		this.substate = substate;
+	}
+	public int getIdUserOfBuyer() {
+		return idUserOfBuyer;
+	}
+	public void setIdUserOfBuyer(int idUserOfBuyer) {
+		this.idUserOfBuyer = idUserOfBuyer;
+	}
+	public double getDeliveryCost() {
+		return deliveryCost;
+	}
+	public void setDeliveryCost(double deliveryCost) {
+		this.deliveryCost = deliveryCost;
+	}
+	public double getBuyerCost() {
+		return buyerCost;
+	}
+	public void setBuyerCost(double buyerCost) {
+		this.buyerCost = buyerCost;
+	}
+	public String getBuyerName() {
+		return buyerName;
+	}
+	public void setBuyerName(String buyerName) {
+		this.buyerName = buyerName;
+	}
+	public int getBuyerTelephone() {
+		return buyerTelephone;
+	}
+	public void setBuyerTelephone(int buyerTelephone) {
+		this.buyerTelephone = buyerTelephone;
+	}
+	public String getBuyerEmail() {
+		return buyerEmail;
+	}
+	public void setBuyerEmail(String buyerEmail) {
+		this.buyerEmail = buyerEmail;
+	}
+	public String getBuyerWhatsappLink() {
+		return buyerWhatsappLink;
+	}
+	public void setBuyerWhatsappLink(String buyerWhatsappLink) {
+		this.buyerWhatsappLink = buyerWhatsappLink;
+	}
+	
     
 }

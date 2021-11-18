@@ -43,17 +43,22 @@ public class OrderAssignedService {
 		OrderP o=orderService.findById(orderAssigned.getIdOrder());
 		o.setShippingCost(orderAssigned.getShippingCost());
 		Payment payment = paymentService.findById(orderAssigned.getIdPayment());
-		UserS u=userService.findById(orderAssigned.getIdUser());
+		UserS delivery=userService.findById(orderAssigned.getIdUser());
 		
 		OrderAssigned newOrderAssigned=new OrderAssigned();
 		newOrderAssigned.setStatus("Pendiente");
 		newOrderAssigned.setDate(LocalDate.now());
 		newOrderAssigned.setHour(LocalTime.now());
 		newOrderAssigned.setOrderP(o);
-		newOrderAssigned.setUserS(u);
+		newOrderAssigned.setUserS(delivery);
 		newOrderAssigned.setReassigned(false);
 		newOrderAssigned.setIdUserCallCenter(orderAssigned.getIdUserCallCenter());
 		newOrderAssigned.setPayment(payment);
+		
+		newOrderAssigned.setIdUserOfBuyer(orderAssigned.getIdUserOfBuyer());
+		newOrderAssigned.setBuyerCost(orderAssigned.getBuyerCost());
+		newOrderAssigned.setDeliveryCost(orderAssigned.getDeliveryCost());
+		
 		o.setStatus("En curso");
 		orderAssignedRepository.save(newOrderAssigned);
 		orderRepository.save(o);

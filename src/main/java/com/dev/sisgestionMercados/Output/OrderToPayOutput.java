@@ -8,7 +8,7 @@ public class OrderToPayOutput {
 	private int idOrder;
 	private int idDelivery;
 	private String delivery;
-	private double shippingCost;
+	private double deliveryCost;
 	private LocalDate dateOfOrderAssigned;
 	private String status;
 	
@@ -24,11 +24,11 @@ public class OrderToPayOutput {
 	public void setDelivery(String delivery) {
 		this.delivery = delivery;
 	}
-	public double getShippingCost() {
-		return shippingCost;
+	public double getDeliveryCost() {
+		return deliveryCost;
 	}
-	public void setShippingCost(double shippingCost) {
-		this.shippingCost = shippingCost;
+	public void setDeliveryCost(double deliveryCost) {
+		this.deliveryCost = deliveryCost;
 	}
 	public LocalDate getDateOfOrderAssigned() {
 		return dateOfOrderAssigned;

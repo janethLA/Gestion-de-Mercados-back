@@ -102,4 +102,11 @@ public class OrderAssignedController {
 		return orderAssignedService.allOrdersCompletedForReport(id);
 	}
 	
+	@PreAuthorize("hasRole('ADMINISTRAR_PEDIDOS')")
+	@PutMapping("/payBuyer/{id}/{receiptNumber}")
+	public ResponseEntity<?> payBuyer(@PathVariable Integer id,@PathVariable long receiptNumber,@RequestBody List<Integer> ids){
+		
+		return ResponseEntity.ok(orderAssignedService.payBuyer(id,receiptNumber,ids));
+	}
+	
 }

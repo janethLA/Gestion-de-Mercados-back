@@ -14,6 +14,8 @@ import com.dev.sisgestionMercados.Input.OrderInput;
 import com.dev.sisgestionMercados.Output.DeliveryUserOutput;
 import com.dev.sisgestionMercados.Output.OrderByUserOutput;
 import com.dev.sisgestionMercados.Output.OrderOutput;
+import com.dev.sisgestionMercados.Output.OrderToCollectDelivery;
+import com.dev.sisgestionMercados.Output.OrderToPayBuyerOutput;
 import com.dev.sisgestionMercados.Output.OrderToPayOutput;
 import com.dev.sisgestionMercados.Output.PrivilegeOutput;
 import com.dev.sisgestionMercados.entity.FinalUser;
@@ -347,6 +349,12 @@ public class OrderService {
         			order.setDateOfOrderAssigned(orderA.getDate());
         			order.setDeliveryCost(orderA.getDeliveryCost());
         			order.setStatus(o.getStatus());
+        			if(orderA.getStatus().equals("Finalizado")) {
+        				order.setPaymentStatusToDelivery("Por pagar");
+        			}else {
+        				order.setPaymentStatusToDelivery(orderA.getStatus());
+        			}
+        			
         			allOrdersCompleted.add(order);
         		}
     		}
@@ -384,5 +392,54 @@ public class OrderService {
 		return "Se cambio el sub-estado a "+subestate;
     }
     
+    public List<OrderToPayBuyerOutput>  allOrdersCompletedForPayToBuyer() {
+    	List<OrderP> allOrders=orderRepository.findAll();
+    	List<OrderToPayBuyerOutput> allOrdersCompleted=new ArrayList<OrderToPayBuyerOutput>();
+    	
+    	for(OrderP o:allOrders) {
+    		if(o.getStatus().equals("Finalizado")) {
+    			OrderAssigned orderA=o.getOrderAssigned().get(o.getOrderAssigned().size()-1);
+    			UserS buyer=userService.findById(orderA.getIdUserOfBuyer());
+        		if(  orderA.getStatus().equals("Finalizado")|| orderA.getStatus().equals("Pagado")) {
+        			OrderToPayBuyerOutput order=new OrderToPayBuyerOutput() ;
+        			order.setIdOrder(o.getIdOrder());
+        			order.setIdBuyer(buyer.getIdUser());
+        			order.setBuyerName(buyer.getName());
+        			order.setBuyerCost(orderA.getBuyerCost());
+        			order.setDateOfOrderAssigned(orderA.getDate());
+        			order.setStatus(o.getStatus());
+        			order.setPaymentStatusToBuyer(orderA.getPaymentStatusToBuyer());
+        			allOrdersCompleted.add(order);
+        		}
+    		}
+    	
+    	}
+    	return allOrdersCompleted;
+    }
+    
+    public List<OrderToCollectDelivery>  allOrdersToCollectDelivery() {
+    	List<OrderP> allOrders=orderRepository.findAll();
+    	List<OrderToCollectDelivery> allOrdersCompleted=new ArrayList<OrderToCollectDelivery>();
+    	
+    	for(OrderP o:allOrders) {
+    		if(o.getStatus().equals("Finalizado")) {
+    			OrderAssigned orderA=o.getOrderAssigned().get(o.getOrderAssigned().size()-1);
+        		if( o.getStatus().equalsIgnoreCase("Pagado al delivery")) {
+        			OrderToCollectDelivery order=new OrderToCollectDelivery() ;
+        			order.setIdOrder(o.getIdOrder());
+        			order.setIdDelivery(orderA.getUserS().getIdUser());
+        			order.setDeliveryName(orderA.getUserS().getName());
+        			order.setShippingCost(o.getShippingCost());
+        			order.setDateOfOrderAssigned(orderA.getDate());
+        			order.setTotalPrice(o.getTotalPrice());
+        			order.setStatusOfOrder(o.getStatus());
+        			order.setSubstateOfOrder(o.getSubstate());
+        			allOrdersCompleted.add(order);
+        		}
+    		}
+    	
+    	}
+    	return allOrdersCompleted;
+    }
 }
 

@@ -42,6 +42,8 @@ public class OrderAssigned {
 	
 	@Column
 	private int idUserOfBuyer;
+	@Column
+	private String paymentStatusToBuyer;
 	@Column 
 	private LocalDate paymentDateOfBuyer;
 	@Column
@@ -209,6 +211,14 @@ public class OrderAssigned {
 
 	public void setBuyerCost(double buyerCost) {
 		this.buyerCost = buyerCost;
+	}
+
+	public String getPaymentStatusToBuyer() {
+		return paymentStatusToBuyer;
+	}
+
+	public void setPaymentStatusToBuyer(String paymentStatusToBuyer) {
+		this.paymentStatusToBuyer = paymentStatusToBuyer;
 	}
 	
 }

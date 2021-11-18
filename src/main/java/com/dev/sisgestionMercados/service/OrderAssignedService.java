@@ -58,6 +58,7 @@ public class OrderAssignedService {
 		newOrderAssigned.setIdUserOfBuyer(orderAssigned.getIdUserOfBuyer());
 		newOrderAssigned.setBuyerCost(orderAssigned.getBuyerCost());
 		newOrderAssigned.setDeliveryCost(orderAssigned.getDeliveryCost());
+		newOrderAssigned.setPaymentStatusToBuyer("Por pagar");
 		
 		o.setStatus("En curso");
 		orderAssignedRepository.save(newOrderAssigned);
@@ -206,7 +207,65 @@ public class OrderAssignedService {
 
     	return allOrdersCompleted;
 	}
+	
+	public String payBuyer(int id, long receiptNumber, List<Integer> ids) {
+		//UserS u = userService.findById(id);
+		Iterable<OrderP> allOrders = orderService.allOrders();
+		List<OrderAssigned> allAsignedOrders = new ArrayList<OrderAssigned>();
+		for (OrderP o : allOrders) {
+			if (o.getStatus().equals("Finalizado") && !o.getOrderAssigned().isEmpty()) {
+				OrderAssigned orderA = o.getOrderAssigned().get(o.getOrderAssigned().size() - 1);
+				if (orderA.getIdUserOfBuyer() == id) {
+					allAsignedOrders.add(orderA);
+				}
+			}
+		}
 
+        for (int j =0;j< allAsignedOrders.size();j++) {
+			
+			OrderAssigned o =allAsignedOrders.get(j);
+			
+			if (o.getStatus().equals("Finalizado")) {
+				for (int i = 0; i < ids.size(); i++) {
+					if (o.getOrderP().getIdOrder() == ids.get(i)) {
+                        o.setPaymentStatusToBuyer("Pagado");
+                        o.setPaymentDateOfBuyer(LocalDate.now());
+                        o.setReceiptNumberOfBuyer(receiptNumber);
+                        orderAssignedRepository.save(o);
+                        
+					}
+				}
+
+			}
+		}
+        
+		return "Se realizó el pago al comprador";
+	}
+	
+	public String collectDelivery(int id,long receiptNumber, List<Integer> ids) {
+		UserS u = userService.findById(id);
+		List<OrderAssigned> allAsignedOrders = u.getOrderAssigned();
+	    
+		for (int j =0;j< allAsignedOrders.size();j++) {
+			
+			OrderAssigned o =allAsignedOrders.get(j);
+			
+			if (o.getStatus().equals("Finalizado")) {
+				for (int i = 0; i < ids.size(); i++) {
+					if (o.getOrderP().getIdOrder() == ids.get(i)) {
+                        o.getOrderP().setSubstate("Pagado");
+                        o.setReceiptNumberOfCollect(receiptNumber);
+                        orderAssignedRepository.save(o);
+                        orderService.save2(o.getOrderP());
+                        
+					}
+				}
+
+			}
+		}
+		return "Se realizo el cobro al Delivery exitosamente";
+	}
+	
 }
 
 

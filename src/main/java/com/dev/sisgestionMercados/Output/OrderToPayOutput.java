@@ -3,6 +3,8 @@ package com.dev.sisgestionMercados.Output;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import javax.persistence.Column;
+
 public class OrderToPayOutput {
 	
 	private int idOrder;
@@ -10,7 +12,9 @@ public class OrderToPayOutput {
 	private String delivery;
 	private double deliveryCost;
 	private LocalDate dateOfOrderAssigned;
+	private String paymentStatusToDelivery;
 	private String status;
+	
 	
 	public int getIdOrder() {
 		return idOrder;
@@ -48,7 +52,12 @@ public class OrderToPayOutput {
 	public void setIdDelivery(int idDelivery) {
 		this.idDelivery = idDelivery;
 	}
-	
+	public String getPaymentStatusToDelivery() {
+		return paymentStatusToDelivery;
+	}
+	public void setPaymentStatusToDelivery(String paymentStatusToDelivery) {
+		this.paymentStatusToDelivery = paymentStatusToDelivery;
+	}
 	
 	
 }

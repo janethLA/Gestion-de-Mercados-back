@@ -20,6 +20,8 @@ import com.dev.sisgestionMercados.Input.OrderInput;
 import com.dev.sisgestionMercados.Output.DeliveryUserOutput;
 import com.dev.sisgestionMercados.Output.OrderByUserOutput;
 import com.dev.sisgestionMercados.Output.OrderOutput;
+import com.dev.sisgestionMercados.Output.OrderToCollectDelivery;
+import com.dev.sisgestionMercados.Output.OrderToPayBuyerOutput;
 import com.dev.sisgestionMercados.Output.OrderToPayOutput;
 import com.dev.sisgestionMercados.entity.FinalUser;
 import com.dev.sisgestionMercados.entity.OrderP;
@@ -124,5 +126,19 @@ public class OrderController {
 	public ResponseEntity<?> changeSubstate(@PathVariable Integer id, @RequestBody String substate){
 		
 		return ResponseEntity.ok(orderService.changeSubstate(id,substate));
+	}
+	
+	@PreAuthorize("hasRole('ADMINISTRAR_PEDIDOS')")	
+	@GetMapping("/allOrdersCompletedForPayToBuyer")
+	public Iterable<OrderToPayBuyerOutput> allOrdersCompletedForPayToBuyer(){
+		
+		return orderService.allOrdersCompletedForPayToBuyer();
+	}
+	
+	@PreAuthorize("hasRole('ADMINISTRAR_PEDIDOS')")	
+	@GetMapping("/allOrdersToCollectDelivery")
+	public Iterable<OrderToCollectDelivery> allOrdersToCollectDelivery(){
+		
+		return orderService.allOrdersToCollectDelivery();
 	}
 }

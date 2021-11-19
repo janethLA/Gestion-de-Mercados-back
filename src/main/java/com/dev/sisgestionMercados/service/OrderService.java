@@ -370,7 +370,7 @@ public class OrderService {
     	for(UserS s: allUsers) {
     		List<Privilege> privilege=s.getUserRole().get(0).getRole().getPrivileges();
     		for(Privilege p :privilege) {
-    			if(p.getPrivilege().equalsIgnoreCase("ROLE_ACTUALIZAR_PRECIOS") || p.getPrivilege().equalsIgnoreCase("ROLE_ACTUALIZAR_IMAGEN")) {
+    			if(p.getPrivilege().equalsIgnoreCase("ROLE_ACTUALIZAR_PRECIOS")) {
         			DeliveryUserOutput buyer=new DeliveryUserOutput();
         			buyer.setIdUser(s.getIdUser());
         			buyer.setName(s.getName());

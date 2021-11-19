@@ -109,4 +109,11 @@ public class OrderAssignedController {
 		return ResponseEntity.ok(orderAssignedService.payBuyer(id,receiptNumber,ids));
 	}
 	
+	@PreAuthorize("hasRole('ADMINISTRAR_PEDIDOS')")
+	@PutMapping("/collectDelivery/{id}/{receiptNumber}")
+	public ResponseEntity<?> collectDelivery(@PathVariable Integer id,@PathVariable long receiptNumber,@RequestBody List<Integer> ids){
+		
+		return ResponseEntity.ok(orderAssignedService.collectDelivery(id,receiptNumber,ids));
+	}
+	
 }

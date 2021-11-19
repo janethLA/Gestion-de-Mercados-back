@@ -118,7 +118,7 @@ public class OrderController {
 	@GetMapping("/allBuyers")
 	public Iterable<DeliveryUserOutput> getAllBuyers(){
 		
-		return orderService.getAllDeliveries();
+		return orderService.getAllBuyers();
 	}
 	
 	@PreAuthorize("hasRole('ADMINISTRAR_PEDIDOS')")

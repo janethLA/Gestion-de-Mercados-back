@@ -422,9 +422,10 @@ public class OrderService {
     	List<OrderToCollectDelivery> allOrdersCompleted=new ArrayList<OrderToCollectDelivery>();
     	
     	for(OrderP o:allOrders) {
+    		//System.out.println("estado del pedido: "+o.getStatus());
     		if(o.getStatus().equals("Finalizado")) {
     			OrderAssigned orderA=o.getOrderAssigned().get(o.getOrderAssigned().size()-1);
-        		if( o.getStatus().equalsIgnoreCase("Pagado al delivery")) {
+        		if( o.getSubstate().equalsIgnoreCase("Pagado al delivery")) {
         			OrderToCollectDelivery order=new OrderToCollectDelivery() ;
         			order.setIdOrder(o.getIdOrder());
         			order.setIdDelivery(orderA.getUserS().getIdUser());

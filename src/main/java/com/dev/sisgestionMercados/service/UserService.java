@@ -83,17 +83,20 @@ public class UserService {
 		List <UserOutput> allUsersByOrder = new ArrayList<UserOutput>();
 		
 		for (UserS found : allUsers ) {
-		
-			UserOutput newUser = new UserOutput();
-			newUser.setIdUser(found.getIdUser());;
-			newUser.setName(found.getName());
-			newUser.setUserName(found.getUserName());
-			newUser.setEmail(found.getEmail());
-			newUser.setTelephone(found.getTelephone());
-			newUser.setPassword(found.getPassword());
-			newUser.setRole(found.getUserRole().get(0).getRole().getRoleName());
-			allUsersByOrder.add(newUser);
+		System.out.println("Nombre: "+found.getName()+" activo? :"+found.isActive());
+			if(found.isActive()==true) {
+				UserOutput newUser = new UserOutput();
+				newUser.setIdUser(found.getIdUser());;
+				newUser.setName(found.getName());
+				newUser.setUserName(found.getUserName());
+				newUser.setEmail(found.getEmail());
+				newUser.setTelephone(found.getTelephone());
+				newUser.setPassword(found.getPassword());
+				newUser.setRole(found.getUserRole().get(0).getRole().getRoleName());
+				allUsersByOrder.add(newUser);
 
+			}
+			
 		}
 
 		return allUsersByOrder;	

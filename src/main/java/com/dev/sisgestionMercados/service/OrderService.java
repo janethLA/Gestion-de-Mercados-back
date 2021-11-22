@@ -87,7 +87,7 @@ public class OrderService {
         List<OrderByUserOutput> orderByUserOutput=new ArrayList<OrderByUserOutput>();
 		for(OrderP o:allOrderByUser) {
 			
-			if(o.getStatus().equalsIgnoreCase("Pendiente")) {
+			if(o.getStatus().equalsIgnoreCase("Pendiente")|| o.getStatus().equalsIgnoreCase("Cancelado")) {
 				OrderByUserOutput order=new OrderByUserOutput();
 				order.setIdOrder(o.getIdOrder());
 				order.setOrderTime(o.getOrderTime());

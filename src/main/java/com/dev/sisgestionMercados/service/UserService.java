@@ -62,6 +62,7 @@ public class UserService {
 		newUser.setTelephone(user.getTelephone());
 		newUser.setRegistrationDate(LocalDate.now());
 		newUser.setWhatsappLink("https://wa.me/591"+user.getTelephone());
+		newUser.setActive(true);
 	    userRepository.save(newUser);
 	    putUserRole(user.getIdRole(),user.getIdSector(),newUser);
 	    return user;
@@ -159,12 +160,14 @@ public class UserService {
     public String deleteUser(int id) {
     	try {
     		UserS user=userRepository.findById(id).get();
-        	UserRole userRole= userRoleService.findById(user.getUserRole().get(0).getIdUserRole());
+    		user.setActive(false);
+        	/*UserRole userRole= userRoleService.findById(user.getUserRole().get(0).getIdUserRole());
         	userRoleService.delete(userRole);
-        	userRepository.delete(user);
-        	return "Se eliminó correctamente el usuario";
+        	userRepository.delete(user);*/
+    		userRepository.save(user);
+        	return "Se dio de baja correctamente el usuario";
     	}catch (Exception e) {
-			return "No se elimino el usuario";
+			return "No se dio de baja al usuario";
 		}
     	
     }

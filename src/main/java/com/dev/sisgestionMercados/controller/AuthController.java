@@ -61,7 +61,7 @@ public class AuthController {
     @PostMapping("/authenticate")
     public ResponseEntity<?> createToken(@RequestBody AuthenticationRequest request) {
     	int userType=authUserService.getUserType(request.getUsername());
-    	if(userType==1) {
+    	if(userType==1 && authUserService.getActiveUser(request.getUsername())==true) {
                 authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
                 UserDetails userDetails = authUserService.loadUserByUsername(request.getUsername());
                 String jwt = jwtUtil.generateToken(userDetails);
@@ -69,7 +69,7 @@ public class AuthController {
             		return new ResponseEntity<>(new AuthenticationResponse(jwt,roles,authUserService.getIdUser(request.getUsername()),
     						authUserService.getNameUser(request.getUsername()) , authUserService.getName(request.getUsername())), HttpStatus.OK);
     	}else {
-    		if(userType==2 && authUserService.getPassword(request.getUsername()).equals(request.getPassword())) {
+    		if(userType==2 && authUserService.getPassword(request.getUsername()).equals(request.getPassword()) && authUserService.getActiveFinalUser(request.getUsername())==true) {
                    // authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
                     UserDetails userDetails = authUserService.loadUserByUsername(request.getUsername());
                     String jwt = jwtUtil.generateToken(userDetails);

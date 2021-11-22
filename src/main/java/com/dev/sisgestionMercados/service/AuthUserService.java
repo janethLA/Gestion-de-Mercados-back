@@ -38,7 +38,6 @@ public class AuthUserService implements UserDetailsService {
 			List <Privilege> rol=us.getUserRole().get(0).getRole().getPrivileges();
 			for(Privilege r:rol) {
 				roles.add(new SimpleGrantedAuthority(r.getPrivilege()));
-				//System.out.println("-------------------> "+us.getUserRole().get(0).getRole().getPrivileges().get(i).getPrivilege());
 				i++;
 			}
 			
@@ -66,6 +65,9 @@ public class AuthUserService implements UserDetailsService {
 	}
 	public String getName(String name) {
 		return userRepository.findByUserName(name).getName();
+	}
+	public boolean getActiveUser(String name) {
+		return userRepository.findByUserName(name).isActive();
 	}
 	
 	public int getUserType(String username) {
@@ -101,6 +103,9 @@ public class AuthUserService implements UserDetailsService {
 	}
 	public String getPassword(String name) {
 		return finalUserRepository.findByUserName(name).getPassword();
+	}
+	public boolean getActiveFinalUser(String name) {
+		return finalUserRepository.findByUserName(name).isActive();
 	}
 	
 }

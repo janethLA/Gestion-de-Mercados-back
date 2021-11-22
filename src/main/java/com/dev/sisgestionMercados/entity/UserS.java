@@ -36,6 +36,8 @@ public class UserS {
 	private int telephone;
 	@Column
 	private String whatsappLink;
+	@Column
+	private boolean active;
 	
 	@OneToMany(mappedBy = "user",cascade = {CascadeType.ALL, CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH},fetch = FetchType.EAGER)
 	private List<UserRole> userRole;
@@ -126,6 +128,14 @@ public class UserS {
 
 	public void setWhatsappLink(String whatsappLink) {
 		this.whatsappLink = whatsappLink;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 	
 }

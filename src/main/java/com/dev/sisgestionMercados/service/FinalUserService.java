@@ -155,6 +155,7 @@ public class FinalUserService {
 		FinalUser userF=findById(user.getIdFinalUser());
 		if(userF.getCode().equals(user.getCode())) {
 			userF.setTelephone(user.getTelephone());
+			userF.setWhatsappLink("https://wa.me/591"+user.getTelephone());
 			finalUserRepository.save(userF);
 			result = "verificado, su número ha sido actualizado";
 		}else {

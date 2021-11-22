@@ -73,7 +73,11 @@ public class OrderAssignedService {
 		for (OrderAssigned orderA:allAsignedOrders) {
 			OrderAssignedOutput o=new OrderAssignedOutput();
 			o.setIdOrderAssigned(orderA.getIdOrderAssigned());
-			o.setStatus(orderA.getStatus());
+			if(orderA.getStatus().equalsIgnoreCase("Pagado")) {
+				o.setStatus("Finalizado");
+			}else {
+				o.setStatus(orderA.getStatus());
+			}
 			o.setDate(orderA.getDate());
 			o.setHour(orderA.getHour());
 			o.setOrder(orderA.getOrderP());

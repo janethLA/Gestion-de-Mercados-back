@@ -138,6 +138,7 @@ public class UserService {
 		}
 		if(user.getTelephone()!=0) {
 			updateUser.setTelephone(user.getTelephone());
+			updateUser.setWhatsappLink("https://wa.me/591"+user.getTelephone());
 		}
 		if(user.getIdRole()!=0) {
 			UserRole userRole=updateUser.getUserRole().get(0);

@@ -83,7 +83,7 @@ public class UserService {
 		List <UserOutput> allUsersByOrder = new ArrayList<UserOutput>();
 		
 		for (UserS found : allUsers ) {
-		System.out.println("Nombre: "+found.getName()+" activo? :"+found.isActive());
+		
 			if(found.isActive()==true) {
 				UserOutput newUser = new UserOutput();
 				newUser.setIdUser(found.getIdUser());;

@@ -368,19 +368,22 @@ public class OrderService {
     	List<UserS> allUsers=userService.findAll();
     	List<DeliveryUserOutput> allDeliveries=new ArrayList<DeliveryUserOutput>();
     	for(UserS s: allUsers) {
-    		List<Privilege> privilege=s.getUserRole().get(0).getRole().getPrivileges();
-    		for(Privilege p :privilege) {
-    			if(p.getPrivilege().equalsIgnoreCase("ROLE_ACTUALIZAR_PRECIOS")) {
-        			DeliveryUserOutput buyer=new DeliveryUserOutput();
-        			buyer.setIdUser(s.getIdUser());
-        			buyer.setName(s.getName());
-        			buyer.setTelephone(s.getTelephone());
-        			buyer.setEmail(s.getEmail());
-        			buyer.setSector(s.getUserRole().get(0).getSector().getSectorName());
-        			System.out.println("Nombre comprador: "+s.getName());
-        			allDeliveries.add(buyer);
-        		}
-    		}	
+    		if(!s.getUserRole().get(0).getRole().getRoleName().equalsIgnoreCase("ADMIN")) {
+    			List<Privilege> privilege=s.getUserRole().get(0).getRole().getPrivileges();
+        		for(Privilege p :privilege) {
+        			if(p.getPrivilege().equalsIgnoreCase("ROLE_ACTUALIZAR_PRECIOS") ) {
+            			DeliveryUserOutput buyer=new DeliveryUserOutput();
+            			buyer.setIdUser(s.getIdUser());
+            			buyer.setName(s.getName());
+            			buyer.setTelephone(s.getTelephone());
+            			buyer.setEmail(s.getEmail());
+            			buyer.setSector(s.getUserRole().get(0).getSector().getSectorName());
+            			System.out.println("Nombre comprador: "+s.getName());
+            			allDeliveries.add(buyer);
+            		}
+        		}	
+    		}
+    		
     	}
     	return allDeliveries;
     }

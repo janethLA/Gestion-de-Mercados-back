@@ -47,7 +47,8 @@ public class CreateUserAdmin implements CommandLineRunner{
 			newUser.setUserName("Admin");
 			newUser.setEmail("admin@gmail.com");
 			newUser.setPassword(encoder.encode("admin2021"));
-			newUser.setTelephone(72792314);
+			newUser.setTelephone(76767676);
+			newUser.setWhatsappLink("https://wa.me/59176767676");
 			newUser.setRegistrationDate(LocalDate.now());
 			UserS saveUser=userService.save(newUser);
 			
@@ -62,12 +63,8 @@ public class CreateUserAdmin implements CommandLineRunner{
 			privilege1.setPrivilege("ROLE_ADMINISTRAR_USUARIOS");
 			Privilege privilege2=new Privilege();
 			privilege2.setPrivilege("ROLE_ADMINISTRAR_ALMACENES");
-			Privilege privilege3=new Privilege();
-			privilege3.setPrivilege("ROLE_ADMINISTRAR_CLIENTES");
 			Privilege privilege4=new Privilege();
 			privilege4.setPrivilege("ROLE_ADMINISTRAR_PEDIDOS");
-			Privilege privilege5=new Privilege();
-			privilege5.setPrivilege("ROLE_ADMINISTRAR_ENVIOS");
 			Privilege privilege6=new Privilege();
 			privilege6.setPrivilege("ROLE_VER_REPORTES");
 			Privilege privilege7=new Privilege();
@@ -85,9 +82,7 @@ public class CreateUserAdmin implements CommandLineRunner{
 			
 			Privilege privilegeAdmin1=privilegeReposiroty.save(privilege1);
 			Privilege privilegeAdmin2=privilegeReposiroty.save(privilege2);
-			Privilege privilegeAdmin3=privilegeReposiroty.save(privilege3);
 			Privilege privilegeAdmin4=privilegeReposiroty.save(privilege4);
-			Privilege privilegeAdmin5=privilegeReposiroty.save(privilege5);
 			Privilege privilegeAdmin6=privilegeReposiroty.save(privilege6);
 			Privilege privilegeAdmin7=privilegeReposiroty.save(privilege7);
 			Privilege privilegeAdmin8=privilegeReposiroty.save(privilege8);
@@ -95,9 +90,7 @@ public class CreateUserAdmin implements CommandLineRunner{
 			
 			privilegeAdmin1.setRoles(newRole);
 			privilegeAdmin2.setRoles(newRole);
-			privilegeAdmin3.setRoles(newRole);
 			privilegeAdmin4.setRoles(newRole);
-			privilegeAdmin5.setRoles(newRole);
 			privilegeAdmin6.setRoles(newRole);
 			privilegeAdmin7.setRoles(newRole);
 			privilegeAdmin8.setRoles(newRole);
@@ -105,9 +98,7 @@ public class CreateUserAdmin implements CommandLineRunner{
 			
 			privilegeReposiroty.save(privilegeAdmin1);
 			privilegeReposiroty.save(privilegeAdmin2);
-			privilegeReposiroty.save(privilegeAdmin3);
 			privilegeReposiroty.save(privilegeAdmin4);
-			privilegeReposiroty.save(privilegeAdmin5);
 			privilegeReposiroty.save(privilegeAdmin6);
 			privilegeReposiroty.save(privilege7);
 			privilegeReposiroty.save(privilege8);

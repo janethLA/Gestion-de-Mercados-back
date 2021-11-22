@@ -10,6 +10,7 @@ public class UserOutput {
 	private String email;
 	private int telephone;
 	private String password;
+	private String role;
 	
 	public int getIdUser() {
 		return idUser;
@@ -48,6 +49,11 @@ public class UserOutput {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
 	
 }

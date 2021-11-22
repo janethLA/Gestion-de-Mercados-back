@@ -90,6 +90,7 @@ public class UserService {
 			newUser.setEmail(found.getEmail());
 			newUser.setTelephone(found.getTelephone());
 			newUser.setPassword(found.getPassword());
+			newUser.setRole(found.getUserRole().get(0).getRole().getRoleName());
 			allUsersByOrder.add(newUser);
 
 		}

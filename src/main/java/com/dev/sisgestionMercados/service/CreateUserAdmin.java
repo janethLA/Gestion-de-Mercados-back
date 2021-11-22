@@ -60,29 +60,22 @@ public class CreateUserAdmin implements CommandLineRunner{
 			//Privilegios de un administrador
 			Privilege privilege1=new Privilege();
 			privilege1.setPrivilege("ROLE_ADMINISTRAR_USUARIOS");
-			//privilegeAdmin.setIdentifier(1);
 			Privilege privilege2=new Privilege();
 			privilege2.setPrivilege("ROLE_ADMINISTRAR_ALMACENES");
-			//privilege2.setIdentifier(2);
 			Privilege privilege3=new Privilege();
 			privilege3.setPrivilege("ROLE_ADMINISTRAR_CLIENTES");
-			//privilege3.setIdentifier(2);
 			Privilege privilege4=new Privilege();
 			privilege4.setPrivilege("ROLE_ADMINISTRAR_PEDIDOS");
-			//privilege4.setIdentifier(2);
 			Privilege privilege5=new Privilege();
 			privilege5.setPrivilege("ROLE_ADMINISTRAR_ENVIOS");
-			//privilege5.setIdentifier(3);
 			Privilege privilege6=new Privilege();
 			privilege6.setPrivilege("ROLE_VER_REPORTES");
-			//privilege6.setIdentifier(3);
 			Privilege privilege7=new Privilege();
 			privilege7.setPrivilege("ROLE_CONFIGURAR_SISTEMA");
 			
 			//Privilegios de usuario Encargado de actualizar precios
 			Privilege privilege10=new Privilege();
 			privilege10.setPrivilege("ROLE_ACTUALIZAR_PRECIOS");
-			//privilege7.setIdentifier(3);
 			Privilege privilege8=new Privilege();
 			privilege8.setPrivilege("ROLE_ACTUALIZAR_IMAGEN");
 			
@@ -97,6 +90,8 @@ public class CreateUserAdmin implements CommandLineRunner{
 			Privilege privilegeAdmin5=privilegeReposiroty.save(privilege5);
 			Privilege privilegeAdmin6=privilegeReposiroty.save(privilege6);
 			Privilege privilegeAdmin7=privilegeReposiroty.save(privilege7);
+			Privilege privilegeAdmin8=privilegeReposiroty.save(privilege8);
+			Privilege privilegeAdmin10=privilegeReposiroty.save(privilege10);
 			
 			privilegeAdmin1.setRoles(newRole);
 			privilegeAdmin2.setRoles(newRole);
@@ -105,6 +100,8 @@ public class CreateUserAdmin implements CommandLineRunner{
 			privilegeAdmin5.setRoles(newRole);
 			privilegeAdmin6.setRoles(newRole);
 			privilegeAdmin7.setRoles(newRole);
+			privilegeAdmin8.setRoles(newRole);
+			privilegeAdmin10.setRoles(newRole);
 			
 			privilegeReposiroty.save(privilegeAdmin1);
 			privilegeReposiroty.save(privilegeAdmin2);
@@ -121,7 +118,6 @@ public class CreateUserAdmin implements CommandLineRunner{
 			UserRole userRole2=userRoleService.save(userRole);	
 			userRole2.setRole(newRole);
 			userRole2.setUser(saveUser);
-			//userRole2.setSector(null);
 			userRoleService.save(userRole);		
 			
 			Setting setting=new Setting();

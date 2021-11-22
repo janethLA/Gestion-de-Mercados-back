@@ -50,30 +50,31 @@ public class RoleService {
 		
 		for (Role found : allRoles) {
 		
-			List<Privilege> privileges = new ArrayList<Privilege>();
-			
-			for (int i = 0; i < found.getPrivileges().size(); i++) {
-				Privilege name = new Privilege();
-				String privilege = found.getPrivileges().get(i).getPrivilege().substring(5);
-				String newNameP = "";
-				for (int j = 0; j < privilege.length(); j++) {
-					char c = privilege.toLowerCase().charAt(j);
-					if (c == '_') {
-						c = ' ';
+			if(!found.getRoleName().equalsIgnoreCase("ADMIN")) {
+				List<Privilege> privileges = new ArrayList<Privilege>();
+				
+				for (int i = 0; i < found.getPrivileges().size(); i++) {
+					Privilege name = new Privilege();
+					String privilege = found.getPrivileges().get(i).getPrivilege().substring(5);
+					String newNameP = "";
+					for (int j = 0; j < privilege.length(); j++) {
+						char c = privilege.toLowerCase().charAt(j);
+						if (c == '_') {
+							c = ' ';
+						}
+						newNameP = newNameP + c;
 					}
-					newNameP = newNameP + c;
+					name.setIdPrivilege(found.getPrivileges().get(i).getIdPrivilege());
+					name.setPrivilege(newNameP);
+					privileges.add(name);
 				}
-				name.setIdPrivilege(found.getPrivileges().get(i).getIdPrivilege());
-				name.setPrivilege(newNameP);
-				privileges.add(name);
+				RoleOutput newRole = new RoleOutput();
+				newRole.setIdRole(found.getIdRole());
+				newRole.setRoleName(found.getRoleName());
+				newRole.setDescription(found.getDescription());
+				newRole.setPrivilege(privileges);
+				allRolesByOrder.add(newRole);
 			}
-			RoleOutput newRole = new RoleOutput();
-			newRole.setIdRole(found.getIdRole());
-			newRole.setRoleName(found.getRoleName());
-			newRole.setDescription(found.getDescription());
-			newRole.setPrivilege(privileges);
-			allRolesByOrder.add(newRole);
-			
 
 		}
 

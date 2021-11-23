@@ -403,7 +403,7 @@ public class OrderService {
     		if(o.getStatus().equals("Finalizado")) {
     			OrderAssigned orderA=o.getOrderAssigned().get(o.getOrderAssigned().size()-1);
     			UserS buyer=userService.findById(orderA.getIdUserOfBuyer());
-        		if(  orderA.getStatus().equals("Finalizado")|| orderA.getStatus().equals("Pagado")) {
+        		if(  orderA.getStatus().equals("Finalizado")|| orderA.getStatus().equalsIgnoreCase("pagado")) {
         			OrderToPayBuyerOutput order=new OrderToPayBuyerOutput() ;
         			order.setIdOrder(o.getIdOrder());
         			order.setIdBuyer(buyer.getIdUser());
@@ -428,7 +428,7 @@ public class OrderService {
     		//System.out.println("estado del pedido: "+o.getStatus());
     		if(o.getStatus().equals("Finalizado")) {
     			OrderAssigned orderA=o.getOrderAssigned().get(o.getOrderAssigned().size()-1);
-        		if( o.getSubstate().equalsIgnoreCase("Pagado al delivery") || (o.getSubstate().equalsIgnoreCase("Pagado") && orderA.getReceiptNumberOfCollect()!=0 )) {
+        		if( o.getSubstate().equalsIgnoreCase("pagado al delivery") || (o.getSubstate().equalsIgnoreCase("pagado") && orderA.getReceiptNumberOfCollect()!=0 )) {
         			OrderToCollectDelivery order=new OrderToCollectDelivery() ;
         			order.setIdOrder(o.getIdOrder());
         			order.setIdDelivery(orderA.getUserS().getIdUser());
@@ -437,8 +437,12 @@ public class OrderService {
         			order.setDateOfOrderAssigned(orderA.getDate());
         			order.setTotalPrice(o.getTotalPrice());
         			order.setStatusOfOrder(o.getStatus());
-        			order.setSubstateOfOrder(o.getSubstate());
-        			order.setReceiptNumberOfCollect(orderA.getReceiptNumberOfCollect());
+        			if(o.getSubstate().equalsIgnoreCase("pagado")) {
+        				order.setSubstateOfOrder("cobrado");
+        			}else {
+        				order.setSubstateOfOrder(o.getSubstate());
+        			}
+        			
         			allOrdersCompleted.add(order);
         		}
     		}

@@ -49,6 +49,7 @@ public class CreateUserAdmin implements CommandLineRunner{
 			newUser.setPassword(encoder.encode("admin2021"));
 			newUser.setTelephone(76767676);
 			newUser.setWhatsappLink("https://wa.me/59176767676");
+			newUser.setActive(true);
 			newUser.setRegistrationDate(LocalDate.now());
 			UserS saveUser=userService.save(newUser);
 			

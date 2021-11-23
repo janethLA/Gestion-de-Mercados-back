@@ -113,6 +113,7 @@ public class CreateUserAdmin implements CommandLineRunner{
 			
 			Setting setting=new Setting();
 			setting.setSearchDistance(4); //4 KM
+			setting.setGoogleKey("AIzaSyAlZsuin6kTiBDLiELbZhUpgAeZ6UiYgWo");
 			settingService.save(setting);
 		}
 		

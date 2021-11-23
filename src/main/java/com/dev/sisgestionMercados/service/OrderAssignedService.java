@@ -225,11 +225,16 @@ public class OrderAssignedService {
 			}
 		}
 
+		System.out.println("***********allAsignedOrders.add(orderA);"+allAsignedOrders.size());
+		
         for (int j =0;j< allAsignedOrders.size();j++) {
 			
 			OrderAssigned o =allAsignedOrders.get(j);
+			System.out.println("***********id Order: "+o.getOrderP().getIdOrder());
+			System.out.println("***********E Order: "+o.getOrderP().getIdOrder());
 			
-			if (o.getStatus().equals("Finalizado")) {
+			if (o.getOrderP().getStatus().equals("Finalizado")) {
+				System.out.println("***********id Order: "+o.getOrderP().getIdOrder());
 				for (int i = 0; i < ids.size(); i++) {
 					if (o.getOrderP().getIdOrder() == ids.get(i)) {
                         o.setPaymentStatusToBuyer("Pagado");

@@ -248,13 +248,14 @@ public class OrderAssignedService {
 	
 	public String collectDelivery(int id,long receiptNumber, List<Integer> ids) {
 		UserS u = userService.findById(id);
+		System.out.println( "--------------"+u.getUserName());
 		List<OrderAssigned> allAsignedOrders = u.getOrderAssigned();
-	    
+		System.out.println( "--------------tamanio de orderasigned"+allAsignedOrders.size());
 		for (int j =0;j< allAsignedOrders.size();j++) {
 			
 			OrderAssigned o =allAsignedOrders.get(j);
 			
-			if (o.getStatus().equals("Finalizado")) {
+			if (o.getOrderP().getSubstate().equalsIgnoreCase("Pagado al delivery")) {
 				for (int i = 0; i < ids.size(); i++) {
 					if (o.getOrderP().getIdOrder() == ids.get(i)) {
                         o.getOrderP().setSubstate("Pagado");

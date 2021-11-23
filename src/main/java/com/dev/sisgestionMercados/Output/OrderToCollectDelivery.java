@@ -12,6 +12,7 @@ public class OrderToCollectDelivery {
 	private LocalDate dateOfOrderAssigned;
 	private String statusOfOrder;
 	private String substateOfOrder;
+	
 	public int getIdOrder() {
 		return idOrder;
 	}
@@ -60,6 +61,5 @@ public class OrderToCollectDelivery {
 	public void setIdDelivery(int idDelivery) {
 		this.idDelivery = idDelivery;
 	}
-
 	
 }

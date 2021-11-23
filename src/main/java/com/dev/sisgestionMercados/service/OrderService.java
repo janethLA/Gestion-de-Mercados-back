@@ -428,7 +428,7 @@ public class OrderService {
     		//System.out.println("estado del pedido: "+o.getStatus());
     		if(o.getStatus().equals("Finalizado")) {
     			OrderAssigned orderA=o.getOrderAssigned().get(o.getOrderAssigned().size()-1);
-        		if( o.getSubstate().equalsIgnoreCase("Pagado al delivery")) {
+        		if( o.getSubstate().equalsIgnoreCase("Pagado al delivery") || (o.getSubstate().equalsIgnoreCase("Pagado") && orderA.getReceiptNumberOfCollect()!=0 )) {
         			OrderToCollectDelivery order=new OrderToCollectDelivery() ;
         			order.setIdOrder(o.getIdOrder());
         			order.setIdDelivery(orderA.getUserS().getIdUser());
@@ -438,6 +438,7 @@ public class OrderService {
         			order.setTotalPrice(o.getTotalPrice());
         			order.setStatusOfOrder(o.getStatus());
         			order.setSubstateOfOrder(o.getSubstate());
+        			order.setReceiptNumberOfCollect(orderA.getReceiptNumberOfCollect());
         			allOrdersCompleted.add(order);
         		}
     		}

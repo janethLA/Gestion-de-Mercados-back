@@ -112,7 +112,7 @@ public class OrderAssignedController {
 	@PreAuthorize("hasRole('ADMINISTRAR_PEDIDOS')")
 	@PutMapping("/collectDelivery/{id}/{receiptNumber}")
 	public ResponseEntity<?> collectDelivery(@PathVariable Integer id,@PathVariable long receiptNumber,@RequestBody List<Integer> ids){
-		
+		System.out.println("********************Entrarrrr: ");
 		return ResponseEntity.ok(orderAssignedService.collectDelivery(id,receiptNumber,ids));
 	}
 	

@@ -53,13 +53,37 @@ public class CreateUserAdmin implements CommandLineRunner{
 			newUser.setRegistrationDate(LocalDate.now());
 			UserS saveUser=userService.save(newUser);
 			
+			//Rol de superusuario (ADMIN)
 			Role role=new Role();
 			role.setRoleName("ADMIN");
 			role.setDescription("El admin se encarga de registrar usuarios, administar pedidos, almacenes, configurar datos del sistema");
 			Role newRole=roleRepository.save(role);
 			
+			//Rol de Administrdor de pedidos
+			Role role1=new Role();
+			role1.setRoleName("Administrador de Pedidos");
+			role1.setDescription("Encargado de asignar pedidos a un delivery y comprador, ver reporte de pedidos y gestionar pagos");
+			Role newRole1=roleRepository.save(role1);
 			
-			//Privilegios de un administrador
+			//Rol de Delivery
+			Role role2=new Role();
+			role2.setRoleName("Delivery");
+			role2.setDescription("Encargado de ver pedidos para entregar al usuario");
+			Role newRole2=roleRepository.save(role2);
+			
+			//Rol de Comprador y Actualizar productos
+			Role role3=new Role();
+			role3.setRoleName("Comprador y Actualizador de productos");
+			role3.setDescription("Encargado de actualizar precios e imagen y comprar los productos del pedido");
+			Role newRole3=roleRepository.save(role3);
+			
+			//Rol de Delivery-Comprador
+			Role role4=new Role();
+			role4.setRoleName("Delivery-Comprador");
+			role4.setDescription("Encargado de ver pedidos para entregar al usuario y comprar los productos del pedido");
+			Role newRole4=roleRepository.save(role4);
+			
+			//Privilegios del SuperUsuario (ADMIN)
 			Privilege privilege1=new Privilege();
 			privilege1.setPrivilege("ROLE_ADMINISTRAR_USUARIOS");
 			Privilege privilege2=new Privilege();
@@ -71,7 +95,12 @@ public class CreateUserAdmin implements CommandLineRunner{
 			Privilege privilege7=new Privilege();
 			privilege7.setPrivilege("ROLE_CONFIGURAR_SISTEMA");
 			
-			//Privilegios de usuario Encargado de actualizar precios
+			//Privilegios de un administrador de pedidos
+			Privilege privilege14=new Privilege();
+			privilege14.setPrivilege("ROLE_ADMINISTRAR_PEDIDOS");
+			
+			
+			//Privilegios de usuario Comprador y Actualizador de precios
 			Privilege privilege10=new Privilege();
 			privilege10.setPrivilege("ROLE_ACTUALIZAR_PRECIOS");
 			Privilege privilege8=new Privilege();
@@ -80,31 +109,73 @@ public class CreateUserAdmin implements CommandLineRunner{
 			//Privilegios de Delivery
 			Privilege privilege9=new Privilege();
 			privilege9.setPrivilege("ROLE_VER_PEDIDOS");
+
+			//Privilegios del Delivery-Comprador
+			Privilege privilege11=new Privilege();
+			privilege11.setPrivilege("ROLE_ACTUALIZAR_PRECIOS");
+			Privilege privilege12=new Privilege();
+			privilege12.setPrivilege("ROLE_ACTUALIZAR_IMAGEN");
+			Privilege privilege13=new Privilege();
+			privilege13.setPrivilege("ROLE_VER_PEDIDOS");
 			
-			Privilege privilegeAdmin1=privilegeReposiroty.save(privilege1);
-			Privilege privilegeAdmin2=privilegeReposiroty.save(privilege2);
-			Privilege privilegeAdmin4=privilegeReposiroty.save(privilege4);
-			Privilege privilegeAdmin6=privilegeReposiroty.save(privilege6);
-			Privilege privilegeAdmin7=privilegeReposiroty.save(privilege7);
-			Privilege privilegeAdmin8=privilegeReposiroty.save(privilege8);
-			Privilege privilegeAdmin10=privilegeReposiroty.save(privilege10);
 			
-			privilegeAdmin1.setRoles(newRole);
-			privilegeAdmin2.setRoles(newRole);
-			privilegeAdmin4.setRoles(newRole);
-			privilegeAdmin6.setRoles(newRole);
-			privilegeAdmin7.setRoles(newRole);
-			privilegeAdmin8.setRoles(newRole);
-			privilegeAdmin10.setRoles(newRole);
+			//Privilegios Asignados al Superusuario
+			privilegeReposiroty.save(privilege1);
+			privilegeReposiroty.save(privilege2);
+			privilegeReposiroty.save(privilege4);
+			privilegeReposiroty.save(privilege6);
+			privilegeReposiroty.save(privilege7);
+			privilegeReposiroty.save(privilege8);
+			privilegeReposiroty.save(privilege9);
+			privilegeReposiroty.save(privilege9);
+			privilegeReposiroty.save(privilege10);
 			
-			privilegeReposiroty.save(privilegeAdmin1);
-			privilegeReposiroty.save(privilegeAdmin2);
-			privilegeReposiroty.save(privilegeAdmin4);
-			privilegeReposiroty.save(privilegeAdmin6);
+			privilege1.setRoles(newRole);
+			privilege2.setRoles(newRole);
+			privilege4.setRoles(newRole);
+			privilege6.setRoles(newRole);
+			privilege7.setRoles(newRole);
+			privilege8.setRoles(newRole);
+			privilege10.setRoles(newRole);
+			
+			privilegeReposiroty.save(privilege1);
+			privilegeReposiroty.save(privilege2);
+			privilegeReposiroty.save(privilege4);
+			privilegeReposiroty.save(privilege6);
 			privilegeReposiroty.save(privilege7);
 			privilegeReposiroty.save(privilege8);
 			privilegeReposiroty.save(privilege9);
 			privilegeReposiroty.save(privilege10);
+			
+			
+			//Privilegios Asignados al Administrador de pedidos
+			privilegeReposiroty.save(privilege14);
+			privilege14.setRoles(newRole1);
+			privilegeReposiroty.save(privilege14);
+			
+			//Privilegios Asignados al Delivery
+			privilegeReposiroty.save(privilege9);
+			privilege9.setRoles(newRole2);
+			privilegeReposiroty.save(privilege9);
+			
+			//Privilegios Asignados al Comprador y Actualizar productos
+			privilegeReposiroty.save(privilege10);
+			privilegeReposiroty.save(privilege8);
+			privilege10.setRoles(newRole3);
+			privilege8.setRoles(newRole3);
+			privilegeReposiroty.save(privilege10);
+			privilegeReposiroty.save(privilege8);
+			
+			//Privilegios Asignados al Delivery-Comprador
+			privilegeReposiroty.save(privilege11);
+			privilegeReposiroty.save(privilege12);
+			privilegeReposiroty.save(privilege13);
+			privilege11.setRoles(newRole4);
+			privilege12.setRoles(newRole4);
+			privilege13.setRoles(newRole4);
+			privilegeReposiroty.save(privilege11);
+			privilegeReposiroty.save(privilege12);
+			privilegeReposiroty.save(privilege13);
 			
 			UserRole userRole=new UserRole();
 			UserRole userRole2=userRoleService.save(userRole);	

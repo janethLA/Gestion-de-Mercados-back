@@ -22,6 +22,7 @@ import com.dev.sisgestionMercados.Input.OrderAssignedInput;
 import com.dev.sisgestionMercados.Input.OrderInput;
 import com.dev.sisgestionMercados.Output.AllOrderAssignedOutput;
 import com.dev.sisgestionMercados.Output.OrderAssignedOutput;
+import com.dev.sisgestionMercados.Output.OrderForBuyerOutput;
 import com.dev.sisgestionMercados.Output.OrderToPayOutput;
 import com.dev.sisgestionMercados.Output.OrdersCompletedByDeliveryOutput;
 import com.dev.sisgestionMercados.entity.OrderAssigned;
@@ -112,8 +113,15 @@ public class OrderAssignedController {
 	@PreAuthorize("hasRole('ADMINISTRAR_PEDIDOS')")
 	@PutMapping("/collectDelivery/{id}/{receiptNumber}")
 	public ResponseEntity<?> collectDelivery(@PathVariable Integer id,@PathVariable long receiptNumber,@RequestBody List<Integer> ids){
-		System.out.println("********************Entrarrrr: ");
+		
 		return ResponseEntity.ok(orderAssignedService.collectDelivery(id,receiptNumber,ids));
+	}
+	
+	@PreAuthorize("hasRole('ACTUALIZAR_PRECIOS')")
+	@GetMapping("/assignedOrdersForBuyer/{id}")
+	public Iterable<OrderForBuyerOutput> assignedOrdersForBuyer(@PathVariable Integer id){
+		
+		return orderAssignedService.assignedOrdersForBuyer(id);
 	}
 	
 }

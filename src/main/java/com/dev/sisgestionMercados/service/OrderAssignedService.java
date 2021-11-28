@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.dev.sisgestionMercados.Input.OrderAssignedInput;
 import com.dev.sisgestionMercados.Output.AllOrderAssignedOutput;
 import com.dev.sisgestionMercados.Output.OrderAssignedOutput;
+import com.dev.sisgestionMercados.Output.OrderForBuyerOutput;
 import com.dev.sisgestionMercados.Output.OrderOutput;
 import com.dev.sisgestionMercados.Output.OrderToPayOutput;
 import com.dev.sisgestionMercados.Output.OrdersCompletedByDeliveryOutput;
@@ -19,6 +20,7 @@ import com.dev.sisgestionMercados.entity.OrderAssigned;
 import com.dev.sisgestionMercados.entity.OrderP;
 import com.dev.sisgestionMercados.entity.Payment;
 import com.dev.sisgestionMercados.entity.UserS;
+import com.dev.sisgestionMercados.entity.Warehouse;
 import com.dev.sisgestionMercados.repository.OrderAssignedRepository;
 import com.dev.sisgestionMercados.repository.OrderRepository;
 
@@ -275,6 +277,45 @@ public class OrderAssignedService {
 		}
 		return "Se realizo el cobro al Delivery exitosamente";
 	}
+	
+	public  List<OrderForBuyerOutput> assignedOrdersForBuyer(int id){
+		
+		List<OrderForBuyerOutput> AllOrderAssigned=new ArrayList<OrderForBuyerOutput>();
+		List<OrderAssigned> orders= orderAssignedRepository.findAll();
+		for(OrderAssigned o: orders) {
+			if(o.getIdUserOfBuyer()==id && o.isReassigned()==false && o.getOrderP().getStatus().equalsIgnoreCase("En curso")) {
+				OrderForBuyerOutput newOrderA=new OrderForBuyerOutput();
+				newOrderA.setIdOrder(o.getOrderP().getIdOrder());
+				newOrderA.setOrderAssignedTime(o.getHour());
+				newOrderA.setOrderAssignedDate(o.getDate());
+				newOrderA.setShippingCost(o.getOrderP().getShippingCost());
+				newOrderA.setStatusOrder(o.getOrderP().getStatus());
+				newOrderA.setTotalPrice(o.getOrderP().getTotalPrice());
+				newOrderA.setQuantityProducts(o.getOrderP().getQuantityProducts());
+				newOrderA.setOrderDetail(o.getOrderP().getOrderDetail());
+				Warehouse warehouse=o.getOrderP().getOrderDetail().get(0).getProduct().getCategory().getWarehouse();
+				newOrderA.setWarehouseName(warehouse.getWarehouseName());	
+				newOrderA.setSectorName(warehouse.getSector().getSectorName());
+				
+				int idAdmin=o.getIdUserCallCenter();
+				UserS admin=userService.findById(idAdmin);
+				newOrderA.setAdminName(admin.getName());
+				newOrderA.setAdminTelephone(admin.getTelephone());
+				newOrderA.setAdminWhatsappLink(admin.getWhatsappLink());
+				
+				UserS delivery=o.getUserS();
+				newOrderA.setDeliveryName(delivery.getName());
+				newOrderA.setDeliveryTelephone(delivery.getTelephone());
+				newOrderA.setDeliveryWhatsappLink(delivery.getWhatsappLink());
+		
+			    AllOrderAssigned.add(newOrderA);
+			}
+			
+		}
+		return AllOrderAssigned;
+	
+	}
+	
 	
 }
 

@@ -101,7 +101,8 @@ public class OrderService {
 				order.setSectorName(o.getOrderDetail().get(0).getProduct().getCategory().getWarehouse().getSector().getSectorName());			
 				
 				//PARA QUE EL USUARIO SE PONGA EN CONTACTO CON EL ADMIN , TAL VEZ PONER UN CONTACTO POR DEFECTO
-				UserS userAdmin=userService.findById(1);
+				
+				UserS userAdmin=getUserAdmin();
 			    order.setAdminName(userAdmin.getName());
 				order.setAdminTelephone(userAdmin.getTelephone());
 				order.setAdminEmail(userAdmin.getEmail());
@@ -144,6 +145,29 @@ public class OrderService {
 			
 		}
 		return orderByUserOutput;
+	}
+	
+	private UserS getUserAdmin() {
+		List<UserS> allUsers=userService.findAll();
+    	UserS userAdmin=new UserS();
+    	int cont=0;
+    	for(int i=0;i< allUsers.size();i++) {
+    		UserS s=allUsers.get(i);
+    		System.out.println("Nombre ADMIN ANTES"+ s.getName());
+    		List<Privilege> privilege=s.getUserRole().get(0).getRole().getPrivileges();
+    		for(Privilege p :privilege) {
+    			if(p.getPrivilege().equalsIgnoreCase("ROLE_ADMINISTRAR_PEDIDOS") ) {
+    				cont++;
+    				if(cont==2 && s.isActive()) {
+    					userAdmin=s;
+    				}
+    				if(cont==2 && !s.isActive()) {
+    					cont--;
+    				}				
+        		}
+    		}	
+    	}
+    	return userAdmin;
 	}
 	
     public Iterable<OrderP> allOrders(){

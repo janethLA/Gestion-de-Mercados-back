@@ -22,6 +22,8 @@ public class RoleService {
 	private RoleRepository roleRepository;
 	@Autowired
 	private ModelMapper modelMapper;
+	@Autowired
+	private PrivilegeService privilegeService;
 
 
 	@Transactional
@@ -96,5 +98,31 @@ public class RoleService {
 				}}
 			}
 			return result;
-		}
+	}
+	 
+	public String addPrivileges(int id,List<String> privileges) {
+		System.out.println("LLega!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		Role persistedRole = roleRepository.getById(id);
+		List<Privilege> listP= persistedRole.getPrivileges();
+	     for(int i=0;i<privileges.size();i++) {
+	    	 String nameP=privileges.get(i);
+	    	 String newNameP="ROLE_";
+				for (int j=0;j<nameP.length();j++) {
+					char c= nameP.toUpperCase().charAt(j);
+							if(c==' ') {
+								c='_';
+							}
+					newNameP=newNameP+c;
+				}
+		    Privilege p=new Privilege();
+		    p.setPrivilege(newNameP);
+		    p.setRoles(persistedRole);
+		    Privilege savedPrivilege=privilegeService.save(p);
+			listP.add(savedPrivilege); 
+		    
+	     }
+	     roleRepository.save(persistedRole);
+	     System.out.println("TAMANIO DE LA LSITA DE PERMISOS: "+persistedRole.getPrivileges()) ;
+	     return "Se agregó correctamente los permisos";
+	}
 }

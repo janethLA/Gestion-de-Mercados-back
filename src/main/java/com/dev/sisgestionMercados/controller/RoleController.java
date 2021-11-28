@@ -1,5 +1,7 @@
 package com.dev.sisgestionMercados.controller;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,6 +55,14 @@ public class RoleController {
 	public ResponseEntity<?> uniqueSectorName(@PathVariable String roleName){
 		
 		return ResponseEntity.ok(roleService.noExistsRoleName(roleName));//Devuelve true en caso de que el nombre es unico, devuelva false si ya existe ese nombre
+	}
+	
+	@PreAuthorize("hasRole('ADMINISTRAR_USUARIOS')")	
+	@PutMapping("/addPrivileges/{id}")
+	public ResponseEntity<?> addPrivileges(@PathVariable Integer id, @RequestBody List<String> privileges){
+		
+		return ResponseEntity.ok(roleService.addPrivileges(id, privileges));
+		
 	}
 }
 

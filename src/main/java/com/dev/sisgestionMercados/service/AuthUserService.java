@@ -48,7 +48,6 @@ public class AuthUserService implements UserDetailsService {
 			int i=0;
 			List <GrantedAuthority> roles=new ArrayList<>();
 			 roles.add(new SimpleGrantedAuthority(us.getPrivilege().getPrivilege()));
-			 System.out.println("-------------------> "+us.getPrivilege().getPrivilege());
 		    userDetails=new User(us.getUserName(),us.getPassword(),roles);
 		}
 		

@@ -47,8 +47,8 @@ public class CreateUserAdmin implements CommandLineRunner{
 			newUser.setUserName("Admin");
 			newUser.setEmail("admin@gmail.com");
 			newUser.setPassword(encoder.encode("admin2021"));
-			newUser.setTelephone(76767676);
-			newUser.setWhatsappLink("https://wa.me/59176767676");
+			//newUser.setTelephone(76767676);
+			//newUser.setWhatsappLink("https://wa.me/59176767676");
 			newUser.setActive(true);
 			newUser.setRegistrationDate(LocalDate.now());
 			UserS saveUser=userService.save(newUser);
@@ -59,7 +59,7 @@ public class CreateUserAdmin implements CommandLineRunner{
 			role.setDescription("El admin se encarga de registrar usuarios, administar pedidos, almacenes, configurar datos del sistema");
 			Role newRole=roleRepository.save(role);
 			
-			//Rol de Administrdor de pedidos
+			//Rol de Administrador de pedidos
 			Role role1=new Role();
 			role1.setRoleName("Administrador de Pedidos");
 			role1.setDescription("Encargado de asignar pedidos a un delivery y comprador, ver reporte de pedidos y gestionar pagos");
@@ -94,6 +94,10 @@ public class CreateUserAdmin implements CommandLineRunner{
 			privilege6.setPrivilege("ROLE_VER_REPORTES");
 			Privilege privilege7=new Privilege();
 			privilege7.setPrivilege("ROLE_CONFIGURAR_SISTEMA");
+			Privilege privilege16=new Privilege();
+			privilege16.setPrivilege("ROLE_ACTUALIZAR_PRECIOS");
+			Privilege privilege15=new Privilege();
+			privilege15.setPrivilege("ROLE_ACTUALIZAR_IMAGEN");
 			
 			//Privilegios de un administrador de pedidos
 			Privilege privilege14=new Privilege();
@@ -129,6 +133,8 @@ public class CreateUserAdmin implements CommandLineRunner{
 			privilegeReposiroty.save(privilege9);
 			privilegeReposiroty.save(privilege9);
 			privilegeReposiroty.save(privilege10);
+			privilegeReposiroty.save(privilege16);
+			privilegeReposiroty.save(privilege15);
 			
 			privilege1.setRoles(newRole);
 			privilege2.setRoles(newRole);
@@ -137,6 +143,8 @@ public class CreateUserAdmin implements CommandLineRunner{
 			privilege7.setRoles(newRole);
 			privilege8.setRoles(newRole);
 			privilege10.setRoles(newRole);
+			privilege16.setRoles(newRole);
+			privilege15.setRoles(newRole);
 			
 			privilegeReposiroty.save(privilege1);
 			privilegeReposiroty.save(privilege2);
@@ -146,6 +154,8 @@ public class CreateUserAdmin implements CommandLineRunner{
 			privilegeReposiroty.save(privilege8);
 			privilegeReposiroty.save(privilege9);
 			privilegeReposiroty.save(privilege10);
+			privilegeReposiroty.save(privilege16);
+			privilegeReposiroty.save(privilege15);
 			
 			
 			//Privilegios Asignados al Administrador de pedidos

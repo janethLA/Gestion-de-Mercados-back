@@ -54,7 +54,7 @@ public class RoleController {
 	@GetMapping("/uniqueRoleName/{roleName}")
 	public ResponseEntity<?> uniqueSectorName(@PathVariable String roleName){
 		
-		return ResponseEntity.ok(roleService.noExistsRoleName(roleName));//Devuelve true en caso de que el nombre es unico, devuelva false si ya existe ese nombre
+		return ResponseEntity.ok(roleService.noExistsRoleName(roleName));
 	}
 	
 	@PreAuthorize("hasRole('ADMINISTRAR_USUARIOS')")	

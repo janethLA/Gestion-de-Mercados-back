@@ -42,34 +42,6 @@ public class ProductService {
 	@Autowired
 	private MarketService marketService;
 
-	/*public ProductOutput save(int idCategory,MultipartFile image) {
-		Category category=categoryService.getById(idCategory);
-		Product newProduct=new Product();
-		ProductOutput p=new ProductOutput();
-		//newProduct.setProductName(product.getProductName());
-		//newProduct.setDescription(product.getDescription());
-		//newProduct.setCategory(category);
-		//List<Price> prices=new ArrayList<Price>();
-		//Price price=new Price();
-		//price.setPrice(product.getPrice());
-		//newProduct.setPrice(prices);
-		
-		if(!image.isEmpty()) {
-			Path path=Paths.get("src//main//resources//static//images");
-			String pathAbolute=path.toFile().getAbsolutePath();
-			try {
-				byte[] bytes=image.getBytes();
-				Path pathComplete=Paths.get(pathAbolute+"//"+image.getOriginalFilename());
-				Files.write(pathComplete, bytes);
-				newProduct.setImage(image.getOriginalFilename());
-				
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-		}
-		productRepository.save(newProduct);
-	    return p;
-	}*/
 	
 	public ProductInput save(ProductInput product,int idCategory,MultipartFile image) {
 		
@@ -91,16 +63,12 @@ public class ProductService {
 		List<Price> prices=new ArrayList<Price>();
 		Price price=new Price();
 		price.setPrice(product.getPrice());
-		//newProduct.setPrice(prices);
-		
 		if(!image.isEmpty()) {
-			//Path path=Paths.get("src//main//resources//static//images");
-			//String pathAbolute=path.toFile().getAbsolutePath();
+		
 			try {
 				byte[] bytes=image.getBytes();
-				//Path pathComplete=Paths.get(pathAbolute+"//"+image.getOriginalFilename());
-				//Files.write(pathComplete, bytes);
-				newProduct.setImage(bytes);//aquiii
+			
+				newProduct.setImage(bytes);
 				
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -112,34 +80,7 @@ public class ProductService {
 		
 	    return p;
 	}
-	
-	/*public Iterable<ProductOutput> getAllProducts(){
-		List <Product> products= productRepository.findAll();
-		List <ProductOutput> allProducts= new ArrayList<ProductOutput>();
-		for(Product newProduct: products) {
-			ProductOutput product=new ProductOutput();
-			product.setIdProduct(newProduct.getIdProduct());
-			product.setProductName(newProduct.getProductName());
-			product.setDescription(newProduct.getDescription());
-			product.setMeasurement(newProduct.getMeasurement());
-			product.setExpirationDate(newProduct.getExpirationDate());	
-			product.setQuantity(newProduct.getQuantity());
-			try {
-				product.setPrice(newProduct.getPrice().get(newProduct.getPrice().size()-1).getPrice());
-				product.setCategoryName(newProduct.getCategory().getCategoryName());
-				product.setWarehouseName(newProduct.getCategory().getWarehouse().getWarehouseName());
-			}catch (Exception e) {
-				// TODO: handle exception
-			}
-			
-			product.setImage(newProduct.getImage());
-			
-		    allProducts.add(product);
-		}
 		
-		return allProducts;
-	}*/
-	
 	public Iterable<Product> getAllProducts(){
 		List <Product> products= productRepository.findAll();
 		
@@ -173,7 +114,7 @@ public class ProductService {
 	}
 	
 	public Iterable<CategorySearchOutput> getAllByproductName(int id, String productName) {
-		System.out.println("productName: "+productName);
+		
 		Warehouse found = marketService.getById(id);
 		List<CategorySearchOutput> allCategorySearch = new ArrayList<CategorySearchOutput>();
 	
@@ -182,7 +123,6 @@ public class ProductService {
 
 		for (Category foundCategory : categories) {
 
-			System.out.println("Nombre de categoria: " + foundCategory.getCategoryName());
 			CategorySearchOutput category = new CategorySearchOutput();
 			category.setIdCategory(foundCategory.getIdCategory());
 			category.setCategoryName(foundCategory.getCategoryName());
@@ -190,8 +130,6 @@ public class ProductService {
 			List<Product> products = foundCategory.getProduct();
 			List<ProductSearchOutput> allProductSearch = new ArrayList<ProductSearchOutput>();
 			for (Product foundProduct : products) {
-
-				System.out.println("Nombre del producto : " + foundProduct.getProductName());
 
 				if (foundProduct.getProductName().equalsIgnoreCase(productName)
 						|| StringUtils.stripAccents(foundProduct.getProductName()).equalsIgnoreCase(productName)

@@ -103,7 +103,6 @@ public class MarketService {
 			
 			if( userLocation.distanceTo( newLocation ) <= distMax ){
 				
-				System.out.println("Nombre del Almacen: "+found.getWarehouseName());
 				List <ProductSearch> allProductSearch = new ArrayList<ProductSearch>();
 				WarehouseSearch warehouse=new WarehouseSearch();
 				warehouse.setIdMarket(found.getIdMarket());
@@ -113,12 +112,10 @@ public class MarketService {
 				
 				for (Category category : categories) {
 					
-					System.out.println("Nombre de categoria: "+category.getCategoryName());
 					List <Product> products=category.getProduct(); 
 					
 					for (Product foundProduct: products) {
 						
-						System.out.println("Nombre del producto : "+foundProduct.getProductName());
 						ProductSearch product=new ProductSearch();
 						product.setIdProduct(foundProduct.getIdProduct());
 						product.setProductName(foundProduct.getProductName());
@@ -152,7 +149,6 @@ public class MarketService {
        
 		for (Warehouse found : allWarehouse ) {
 			
-				System.out.println("Nombre del Almacen: "+found.getWarehouseName());
 				WarehouseSearchByAtributes warehouse=new WarehouseSearchByAtributes();
 				warehouse.setIdMarket(found.getIdMarket());
 				warehouse.setWarehouseName(found.getWarehouseName());
@@ -179,8 +175,6 @@ public class MarketService {
 			Location newLocation = new Location(found.getLatitude(), found.getLongitude());
 
 			if (userLocation.distanceTo(newLocation) <= distMax) {
-
-				System.out.println("Nombre del Almacen: " + found.getWarehouseName());
 
 				WarehouseSearchByAtributes warehouse = new WarehouseSearchByAtributes();
 				warehouse.setIdMarket(found.getIdMarket());

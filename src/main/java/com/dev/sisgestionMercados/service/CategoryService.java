@@ -26,8 +26,6 @@ public class CategoryService {
 	
 	public Category save(Category category,int idWarehouse) {
 		Warehouse warehouse=marketService.getById(idWarehouse);
-		System.out.println("alllllllllllllllmacen es: "+warehouse.getIdMarket());
-		//Category newCategory =new Category();
 		category.setWarehouse(warehouse);
 		categoryRepository.save(category);
 	    return category;

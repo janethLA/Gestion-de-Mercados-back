@@ -165,9 +165,6 @@ public class UserService {
     	try {
     		UserS user=userRepository.findById(id).get();
     		user.setActive(false);
-        	/*UserRole userRole= userRoleService.findById(user.getUserRole().get(0).getIdUserRole());
-        	userRoleService.delete(userRole);
-        	userRepository.delete(user);*/
     		userRepository.save(user);
         	return "Se dio de baja correctamente el usuario";
     	}catch (Exception e) {

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.dev.sisgestionMercados.Output.PrivilegeOutput;
 import com.dev.sisgestionMercados.entity.Privilege;
-import com.dev.sisgestionMercados.entity.UserS;
 import com.dev.sisgestionMercados.repository.PrivilegeRepository;
 
 

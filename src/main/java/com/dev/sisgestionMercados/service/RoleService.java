@@ -101,7 +101,7 @@ public class RoleService {
 	}
 	 
 	public String addPrivileges(int id,List<String> privileges) {
-		System.out.println("LLega!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		
 		Role persistedRole = roleRepository.getById(id);
 		List<Privilege> listP= persistedRole.getPrivileges();
 	     for(int i=0;i<privileges.size();i++) {
@@ -122,7 +122,7 @@ public class RoleService {
 		    
 	     }
 	     roleRepository.save(persistedRole);
-	     System.out.println("TAMANIO DE LA LSITA DE PERMISOS: "+persistedRole.getPrivileges()) ;
+	    
 	     return "Se agregó correctamente los permisos";
 	}
 }

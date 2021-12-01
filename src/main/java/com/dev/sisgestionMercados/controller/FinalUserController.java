@@ -89,17 +89,4 @@ public class FinalUserController {
 		return ResponseEntity.ok(finalUserService.verifyTelephone(finalUser));
 	}
 	
-	/*@PreAuthorize("hasRole('FINAL_USER')")
-	@PutMapping("/updateEmail")
-	public ResponseEntity<?> verifyEmail(@RequestBody FinalUserAtributesOutput finalUser){
-		
-		return ResponseEntity.ok(finalUserService.verifyEmail(finalUser));
-	}
-	
-	@PermitAll
-	@GetMapping("/uniqueEmail/{email}")
-	public ResponseEntity<?> uniqueEmail(@PathVariable String email){
-		
-		return ResponseEntity.ok(finalUserService.noExistsEmail(email));
-	}*/
 }

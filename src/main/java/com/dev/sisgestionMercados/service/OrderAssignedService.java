@@ -215,7 +215,6 @@ public class OrderAssignedService {
 	}
 	
 	public String payBuyer(int id, long receiptNumber, List<Integer> ids) {
-		//UserS u = userService.findById(id);
 		Iterable<OrderP> allOrders = orderService.allOrders();
 		List<OrderAssigned> allAsignedOrders = new ArrayList<OrderAssigned>();
 		for (OrderP o : allOrders) {
@@ -226,17 +225,12 @@ public class OrderAssignedService {
 				}
 			}
 		}
-
-		System.out.println("***********allAsignedOrders.add(orderA);"+allAsignedOrders.size());
 		
         for (int j =0;j< allAsignedOrders.size();j++) {
 			
 			OrderAssigned o =allAsignedOrders.get(j);
-			System.out.println("***********id Order: "+o.getOrderP().getIdOrder());
-			System.out.println("***********E Order: "+o.getOrderP().getIdOrder());
 			
 			if (o.getOrderP().getStatus().equals("Finalizado")) {
-				System.out.println("***********id Order: "+o.getOrderP().getIdOrder());
 				for (int i = 0; i < ids.size(); i++) {
 					if (o.getOrderP().getIdOrder() == ids.get(i)) {
                         o.setPaymentStatusToBuyer("Pagado");
@@ -255,9 +249,7 @@ public class OrderAssignedService {
 	
 	public String collectDelivery(int id,long receiptNumber, List<Integer> ids) {
 		UserS u = userService.findById(id);
-		System.out.println( "--------------"+u.getUserName());
 		List<OrderAssigned> allAsignedOrders = u.getOrderAssigned();
-		System.out.println( "--------------tamanio de orderasigned"+allAsignedOrders.size());
 		for (int j =0;j< allAsignedOrders.size();j++) {
 			
 			OrderAssigned o =allAsignedOrders.get(j);

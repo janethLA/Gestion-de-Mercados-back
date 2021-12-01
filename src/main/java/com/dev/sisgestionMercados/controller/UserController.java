@@ -1,10 +1,9 @@
 package com.dev.sisgestionMercados.controller;
 
-import javax.annotation.security.PermitAll;
+
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,9 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.sisgestionMercados.Input.UserInput;
-import com.dev.sisgestionMercados.Output.SectorOutput;
 import com.dev.sisgestionMercados.Output.UserOutput;
-import com.dev.sisgestionMercados.repository.UserRepository;
 import com.dev.sisgestionMercados.service.UserService;
 
 

@@ -53,15 +53,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         		.antMatchers("/**/allSector").permitAll()
         		.antMatchers("/**/codeVerification").permitAll()  
         		.antMatchers("/**/loginUserFinal").permitAll() 
-        		.antMatchers("/**/searchOfAllWarehouses").permitAll() //
+        		.antMatchers("/**/searchOfAllWarehouses").permitAll() 
         		.antMatchers("/**/allWarehouse").permitAll()
         		.antMatchers("/**/loginAccount/*").permitAll()
         		.antMatchers("/**/uniqueEmail/*").permitAll()
-        		.antMatchers("/**/uniqueTelephoneAll/*").permitAll() // /updateTelephone
+        		.antMatchers("/**/uniqueTelephoneAll/*").permitAll() 
         		.antMatchers("/**/uniqueEmailAll/*").permitAll()
         		.antMatchers("/**/recoverByPhone/*").permitAll()
         		.antMatchers("/**/changePassword").permitAll()
-        		//.antMatchers("/**/sendEmail/*").hasRole("ADMIN")
+        		.antMatchers("/**/getGoogleMapsKey").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -74,20 +74,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-	
-	/*@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http
-			.authorizeRequests()
-				//.antMatchers("/", "/home").permitAll()
-				.anyRequest().authenticated();
-				//.and().httpBasic();
-			//.formLogin()
-				//.loginPage("/login")
-				//.permitAll()
-				//.and()
-			//.logout()
-				//.htt
-	}*/
 	
 }

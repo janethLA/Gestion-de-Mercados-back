@@ -1,5 +1,7 @@
 package com.dev.sisgestionMercados.controller;
 
+import javax.annotation.security.PermitAll;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -61,7 +63,7 @@ public class SettingController {
 		return settingService.getSetting();
 	}
 
-	@PreAuthorize("hasRole('CONFIGURAR_SISTEMA')")
+	@PermitAll
 	@GetMapping("/getGoogleMapsKey")
 	public String getGoogleMapsKey() {
 

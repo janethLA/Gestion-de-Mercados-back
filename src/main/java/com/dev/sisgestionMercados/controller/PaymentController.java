@@ -35,8 +35,6 @@ public class PaymentController {
 	@PreAuthorize("hasRole('ADMINISTRAR_PEDIDOS')")	
 	@PostMapping("/createPayment")
 	public ResponseEntity<?> savePayment( @RequestParam("qr") MultipartFile image,@ModelAttribute Payment payment) {
-		//System.out.println("NOMBRE: " +image.getOriginalFilename());
-		//System.out.println("bytes: " +image.getBytes());
 		Payment p=paymentService.savePayment(image,payment);
 		if(p!=null) {
 			return ResponseEntity.ok(p);

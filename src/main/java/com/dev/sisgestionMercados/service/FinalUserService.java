@@ -64,15 +64,6 @@ public class FinalUserService {
 		}
 		saved.setIdFinalUser(persistedFinalUser.getIdFinalUser());
 		saved.setCode(code);
-		/*Para enviar mensaje de texto
-		String phone=  Integer.toString(persistedFinalUser.getTelephone());
-		Sms message=new Sms();
-		message.sendSms(code, phone);
-		
-		Para enviar email
-		String message="Su código de verificación es: "+code;
-		String subject="Verifica tu Email!";
-		emailService.sendEmail(finalUser.getEmail(), subject, message);*/
 		
 	    return saved;
 	}
@@ -164,30 +155,11 @@ public class FinalUserService {
 		return result;
 	}
 	
-	/*public String verifyEmail(FinalUserAtributesOutput user) {
-		String result;
-		FinalUser userF=findById(user.getIdFinalUser());
-		if(userF.getCode().equals(user.getCode())) {
-			userF.setEmail(user.getEmail());
-			finalUserRepository.save(userF);
-			result = "verificado, su email ha sido actualizado";
-		}else {
-			result="no ha sido verificado";
-		}
-		return result;
-	}*/
 	
     public boolean noExistsEmailAll(String email) {
 		    	
     	boolean result=true;
     	List <UserS> allUser = userService.findAll();
-		/*List <FinalUser> allUsers = finalUserRepository.findAll();
-		for(FinalUser a: allUsers) {
-			if(a.getEmail()!=null){
-			if(a.getEmail().equalsIgnoreCase(email)) {
-				result=false;
-			}}
-		}*/
 		for(UserS a:allUser) {
 			if(a.getEmail()!=null){
 			if(a.getEmail().equalsIgnoreCase(email)) {
@@ -204,13 +176,13 @@ public class FinalUserService {
 		List <FinalUser> allUsers = finalUserRepository.findAll();
 		for(FinalUser a: allUsers) {
 			if(a.getTelephone()!=0){
-			if(a.getTelephone()==telephone) {
+			if(a.getTelephone()==telephone &&  a.isActive()) {
 				result=false;
 			}}
 		}
 		for(UserS a:allUser) {
 			if(a.getTelephone()!=0){
-			if(a.getTelephone()==telephone) {
+			if(a.getTelephone()==telephone && a.isActive()) {
 				result=false;
 			}}
 		}
@@ -240,19 +212,5 @@ public class FinalUserService {
     public List<FinalUser> findAll(){
     	return finalUserRepository.findAll();
     }
-    
-    /*public boolean noExistsEmail(String email) {
-    	
-    	boolean result=true;
-		List <FinalUser> allUsers = finalUserRepository.findAll();
-		for(FinalUser a: allUsers) {
-			if(a.getEmail()!=null){
-			if(a.getEmail().equalsIgnoreCase(email)) {
-				result=false;
-			}}
-		}
-		
-		return result;
-	}*/
-    
+        
 }

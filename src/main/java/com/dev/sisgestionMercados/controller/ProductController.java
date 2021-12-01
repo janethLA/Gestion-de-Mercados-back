@@ -20,10 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dev.sisgestionMercados.Input.ProductInput;
-import com.dev.sisgestionMercados.Output.ProductOutput;
 import com.dev.sisgestionMercados.Output.CategorySearchOutput;
-import com.dev.sisgestionMercados.Output.WarehouseSearchByAtributes;
-import com.dev.sisgestionMercados.entity.Category;
 import com.dev.sisgestionMercados.entity.Price;
 import com.dev.sisgestionMercados.entity.Product;
 import com.dev.sisgestionMercados.service.ProductService;

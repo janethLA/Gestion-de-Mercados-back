@@ -47,20 +47,12 @@ public class MarketController {
 		return ResponseEntity.ok(marketService.save(market,image));
 	}
 	
-	//@PreAuthorize("hasRole('ADMINISTRAR_ALMACENES')")	
 	@PermitAll
 	@GetMapping("/allWarehouse")
 	public Iterable<WarehouseOutput> getAllWarehouse(){
 		
 		return marketService.getAllWarehouse();
 	}
-	
-	/*@PermitAll
-	@GetMapping("/productSearch")
-	public Iterable<WarehouseSearch> getAllProductSaerch(@RequestParam("longitude") double longitude, @RequestParam("latitude") double latitude, @RequestParam("productName") String productName){
-		
-		return marketService.getAllProductSearch(longitude, latitude,productName);
-	}*/
 	
 	@PermitAll
 	@GetMapping("/warehouseSearch/{sectorName}")
@@ -72,7 +64,7 @@ public class MarketController {
 	@PermitAll
 	@PostMapping("/warehouseSearch")
 	public ResponseEntity<?> getAllWarehouseSearchByLocation(@RequestBody LocationInput location){
-		System.out.println("Llega: "+location.getLatitude()+" y "+location.getLongitude());
+		
 		return  ResponseEntity.ok(marketService.getAllWarehouseSearchByLocation(location));
 	}
     

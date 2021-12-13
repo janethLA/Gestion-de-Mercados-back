@@ -274,8 +274,15 @@ public class OrderAssignedService {
 		
 		List<OrderForBuyerOutput> AllOrderAssigned=new ArrayList<OrderForBuyerOutput>();
 		List<OrderAssigned> orders= orderAssignedRepository.findAll();
+		System.out.println("--------->"+orders.size());
 		for(OrderAssigned o: orders) {
+			System.out.println("--------->ENTRA");
+			System.out.println("--------->o.getIdUserOfBuyer()"+o.getIdUserOfBuyer());
+			System.out.println("--------->o.isReassigned()"+o.isReassigned());
+			System.out.println("--------->o.getOrderP().getStatus()"+o.getOrderP().getStatus());
+			
 			if(o.getIdUserOfBuyer()==id && o.isReassigned()==false && o.getOrderP().getStatus().equalsIgnoreCase("En curso")) {
+				System.out.println("--------->ENTRA1");
 				OrderForBuyerOutput newOrderA=new OrderForBuyerOutput();
 				newOrderA.setIdOrder(o.getOrderP().getIdOrder());
 				newOrderA.setOrderAssignedTime(o.getHour());

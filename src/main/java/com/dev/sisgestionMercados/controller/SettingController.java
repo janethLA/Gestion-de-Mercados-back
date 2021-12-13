@@ -56,7 +56,7 @@ public class SettingController {
 	}
 
 
-	@PreAuthorize("hasRole('CONFIGURAR_SISTEMA')")
+	@PreAuthorize("hasRole('CONFIGURAR_SISTEMA') or hasRole('ADMINISTRAR_PEDIDOS')" )
 	@GetMapping("/getSetting")
 	public Setting getSetting() {
 
